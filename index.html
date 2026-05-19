@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM - 映像制作・SNS管理</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f0;
+  --color-background-tertiary: #eeede8;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666660;
+  --color-border-tertiary: rgba(0,0,0,0.12);
+  --color-border-secondary: rgba(0,0,0,0.2);
+  --color-text-danger: #a32d2d;
+  --color-text-success: #3b6d11;
+  --color-text-info: #185fa5;
+  --color-background-info: #e6f1fb;
+  --color-background-secondary-info: #e6f1fb;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary);background:var(--color-background-tertiary);min-height:100vh}
+.hidden{display:none!important}
+input,select,textarea,button{font-family:var(--font-sans);font-size:14px}
+button{cursor:pointer}
+
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--color-background-tertiary)}
+.login-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:2rem;width:360px}
+.login-card h1{font-size:20px;font-weight:500;margin-bottom:0.25rem}
+.login-card p{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.5rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:13px;color:var(--color-text-secondary);margin-bottom:4px}
+.field input,.field select{width:100%;padding:8px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
+.btn-primary{width:100%;padding:9px;background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer}
+.btn-primary:hover{opacity:0.85}
+.btn-secondary{padding:7px 14px;background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer}
+.btn-secondary:hover{background:var(--color-background-secondary)}
+.btn-danger{padding:7px 14px;background:transparent;color:var(--color-text-danger);border:0.5px solid #f09595;border-radius:var(--border-radius-md);font-size:13px;cursor:pointer}
+.error-msg{color:var(--color-text-danger);font-size:12px;margin-top:8px}
+
+#main-layout{display:flex;min-height:100vh}
+#sidebar{width:220px;background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10}
+#content{margin-left:220px;flex:1;padding:1.5rem;min-height:100vh}
+
+.sidebar-header{padding:1.25rem 1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sidebar-header h2{font-size:15px;font-weight:500}
+.sidebar-header p{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.sidebar-nav{flex:1;padding:0.75rem 0}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 1rem;font-size:13px;color:var(--color-text-secondary);cursor:pointer;border-left:2px solid transparent}
+.nav-item:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-item.active{color:var(--color-text-primary);border-left-color:var(--color-text-primary);background:var(--color-background-secondary);font-weight:500}
+.nav-item i{font-size:16px}
+.sidebar-footer{padding:1rem;border-top:0.5px solid var(--color-border-tertiary)}
+.user-info{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--color-background-info);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--color-text-info);flex-shrink:0}
+.user-name{font-size:13px;font-weight:500}
+.user-role{font-size:11px;color:var(--color-text-secondary)}
+
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.page-header h1{font-size:20px;font-weight:500}
+
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
+.stat-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem}
+.stat-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.stat-value{font-size:22px;font-weight:500}
+
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;font-weight:500;color:var(--color-text-secondary);padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+td{padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--color-background-secondary)}
+
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-active{background:#EAF3DE;color:#3B6D11}
+.badge-negotiating{background:#FAEEDA;color:#854F0B}
+.badge-consulting{background:#E6F1FB;color:#185FA5}
+.badge-ended{background:#F1EFE8;color:#5F5E5A}
+.badge-lost{background:#FCEBEB;color:#A32D2D}
+.badge-material{background:#FAEEDA;color:#854F0B}
+.badge-editing{background:#E6F1FB;color:#185FA5}
+.badge-submitted{background:#EEEDFE;color:#534AB7}
+.badge-posted{background:#EAF3DE;color:#3B6D11}
+.badge-admin{background:#FCEBEB;color:#A32D2D}
+.badge-director{background:#EEEDFE;color:#534AB7}
+.badge-editor{background:#E6F1FB;color:#185FA5}
+
+.filter-bar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filter-bar select,.filter-bar input{padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-size:13px}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);padding:1.5rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:17px;font-weight:500;margin-bottom:1.25rem}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid .full{grid-column:1/-1}
+
+.cal-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.cal-item:last-child{border-bottom:none}
+.cal-date{width:90px;font-size:12px;color:var(--color-text-secondary);flex-shrink:0}
+.cal-no{width:50px;font-weight:500;flex-shrink:0}
+.cal-client{flex:1;font-weight:500}
+.cal-editor{width:80px;font-size:12px;color:var(--color-text-secondary)}
+.cal-status{width:120px}
+
+.alert{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--border-radius-md);margin-bottom:8px;font-size:13px}
+.alert-warn{background:#FAEEDA;color:#854F0B;border:0.5px solid #FAC775}
+.alert-info{background:#E6F1FB;color:#185FA5;border:0.5px solid #B5D4F4}
+.alert i{font-size:16px;margin-top:1px;flex-shrink:0}
+
+.status-select{padding:4px 8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-size:12px}
+.section-title{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px;margin-top:1.25rem}
+.empty{text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:13px}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="login-screen">
+  <div class="login-card">
+    <h1>CRM ログイン</h1>
+    <p>映像制作・SNSマーケティング管理システム</p>
+    <div class="field">
+      <label>メールアドレス</label>
+      <input type="email" id="login-email" placeholder="example@email.com">
+    </div>
+    <div class="field">
+      <label>パスワード</label>
+      <input type="password" id="login-password" placeholder="パスワード">
+    </div>
+    <div id="login-error" class="error-msg hidden"></div>
+    <button class="btn-primary" onclick="doLogin()" style="margin-top:0.5rem">ログイン</button>
+    <p style="font-size:11px;color:var(--color-text-secondary);margin-top:1rem;text-align:center">
+      テスト: admin@crm.com / admin123（経営層）<br>
+      director@crm.com / dir123（ディレクター）<br>
+      editor@crm.com / edit123（編集者）
+    </p>
+  </div>
+</div>
+
+<div id="main-layout" class="hidden">
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h2>CRM</h2>
+      <p>映像制作・SNS管理</p>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="avatar" id="sidebar-avatar"></div>
+        <div>
+          <div class="user-name" id="sidebar-name"></div>
+          <div class="user-role" id="sidebar-role"></div>
+        </div>
+      </div>
+      <button class="btn-secondary" style="width:100%;font-size:12px" onclick="doLogout()">ログアウト</button>
+    </div>
+  </div>
+  <div id="content"></div>
+</div>
+
+<div id="modal-container"></div>
+</div>
+
+<script>
+const DAYS = ['日','月','火','水','木','金','土'];
+
+const DEFAULT_DATA = {
+  users: [
+    {id:'u1',name:'村瀬',email:'admin@crm.com',password:'admin123',role:'admin',lineId:'',isActive:true},
+    {id:'u2',name:'服部',email:'director@crm.com',password:'dir123',role:'director',lineId:'',isActive:true},
+    {id:'u3',name:'青木',email:'editor@crm.com',password:'edit123',role:'editor',lineId:'',isActive:true},
+    {id:'u4',name:'京層',email:'kyoso@crm.com',password:'kyoso123',role:'editor',lineId:'',isActive:true},
+  ],
+  clients: [
+    {id:'c1',name:'成田モータース',contactName:'成田さん',industry:'車屋',serviceType:'SNS運用代行',referrer:'ゆうしくん',status:'active',contractStart:'2025-12-01',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['水','金'],goal:'中古車を販売したい',memo:'',contractAmount:150000,memberIds:{director:'u2',editor:'u3',checker:'u1'}},
+    {id:'c2',name:'ホソカワ建装',contactName:'細川さん',industry:'クロス工事',serviceType:'SNS運用代行',referrer:'直接',status:'active',contractStart:'2025-01-01',contractPeriod:'1年間',monthlyCount:8,postDays:['水','金'],goal:'20代〜30代経験者、未経験者を採用したい',memo:'',contractAmount:120000,memberIds:{director:'u2',editor:'u3',checker:'u1'}},
+    {id:'c3',name:'サウナバグ',contactName:'船屋さん',industry:'サウナ',serviceType:'動画編集のみ',referrer:'直接',status:'active',contractStart:'2026-02-08',contractPeriod:'3ヶ月',monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:80000,memberIds:{director:'u2',editor:'u4',checker:'u1'}},
+    {id:'c4',name:'YURAMEKI協同組合',contactName:'白頭さん',industry:'古民家経営',serviceType:'SNS運用代行',referrer:'直接',status:'active',contractStart:'2025-01-01',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['金'],goal:'集客をしていきたい',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u3',checker:'u1'}},
+    {id:'c5',name:'スポットライト',contactName:'和田さん',industry:'補助金助成金',serviceType:'内製化研修',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'6ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:200000,memberIds:{director:'u1',editor:'u3',checker:'u1'}},
+    {id:'c6',name:'バントラ',contactName:'林さん',industry:'トラック販売',serviceType:'SNS運用代行',referrer:'直接',status:'lost',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:'',checker:''}},
+    {id:'c7',name:'日章運輸',contactName:'勝田さん',industry:'ディーゼルマフラー洗浄',serviceType:'SNS運用代行',referrer:'直接',status:'negotiating',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'提携店を増やしたい、SNS発信による信頼獲得',memo:'',contractAmount:0,memberIds:{director:'u2',editor:'',checker:''}},
+  ],
+  videos: [
+    {id:'v1',clientId:'c1',videoNo:85,status:'posted',shootDate:'2026-04-20',editDueDate:'2026-04-28',clientSubmitDate:'2026-04-30',postDate:'2026-05-01',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v2',clientId:'c1',videoNo:86,status:'posted',shootDate:'2026-04-22',editDueDate:'2026-04-30',clientSubmitDate:'2026-05-04',postDate:'2026-05-06',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v3',clientId:'c1',videoNo:87,status:'posted',shootDate:'2026-04-25',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v4',clientId:'c1',videoNo:88,status:'posted',shootDate:'2026-05-01',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-11',postDate:'2026-05-13',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v5',clientId:'c1',videoNo:89,status:'submitted_to_client',shootDate:'2026-05-05',editDueDate:'2026-05-11',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v6',clientId:'c2',videoNo:30,status:'posted',shootDate:'2026-04-25',editDueDate:'2026-04-28',clientSubmitDate:'2026-04-30',postDate:'2026-05-01',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v7',clientId:'c2',videoNo:31,status:'posted',shootDate:'2026-04-28',editDueDate:'2026-05-02',clientSubmitDate:'2026-05-04',postDate:'2026-05-06',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v8',clientId:'c2',videoNo:32,status:'posted',shootDate:'2026-05-01',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v9',clientId:'c2',videoNo:33,status:'submitted_to_client',shootDate:'2026-05-05',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v10',clientId:'c2',videoNo:34,status:'editing',shootDate:'2026-05-10',editDueDate:'2026-05-12',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v11',clientId:'c3',videoNo:1,status:'material_submitted',shootDate:'2026-05-01',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-11',postDate:'2026-05-13',editorId:'u4',driveUrl:'',memo:''},
+    {id:'v12',clientId:'c4',videoNo:19,status:'posted',shootDate:'2026-04-28',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3',driveUrl:'',memo:''},
+    {id:'v13',clientId:'c4',videoNo:20,status:'editing',shootDate:'2026-05-08',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3',driveUrl:'',memo:''},
+  ],
+  notifications: []
+};
+
+let state = {currentUser:null,currentPage:'dashboard'};
+let db = {};
+
+function loadDB(){const s=localStorage.getItem('crm_db');if(s){db=JSON.parse(s);}else{db=JSON.parse(JSON.stringify(DEFAULT_DATA));saveDB();}}
+function saveDB(){localStorage.setItem('crm_db',JSON.stringify(db));}
+function genId(){return 'id_'+Math.random().toString(36).substr(2,9);}
+
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const password=document.getElementById('login-password').value;
+  const user=db.users.find(u=>u.email===email&&u.password===password&&u.isActive);
+  if(!user){const el=document.getElementById('login-error');el.textContent='メールアドレスまたはパスワードが違います';el.classList.remove('hidden');return;}
+  state.currentUser=user;
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('main-layout').classList.remove('hidden');
+  renderSidebar();navigate('dashboard');
+}
+
+function doLogout(){
+  state.currentUser=null;
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('main-layout').classList.add('hidden');
+  document.getElementById('login-email').value='';
+  document.getElementById('login-password').value='';
+}
+
+function isAdmin(){return state.currentUser?.role==='admin';}
+function isDirector(){return state.currentUser?.role==='director';}
+function isEditor(){return state.currentUser?.role==='editor';}
+function canSeeContracts(){return isAdmin();}
+
+function renderSidebar(){
+  const u=state.currentUser;
+  document.getElementById('sidebar-avatar').textContent=u.name.charAt(0);
+  document.getElementById('sidebar-name').textContent=u.name;
+  const roleMap={admin:'経営層',director:'ディレクター',editor:'編集者'};
+  document.getElementById('sidebar-role').textContent=roleMap[u.role];
+  const pages=[
+    {id:'dashboard',icon:'ti-layout-dashboard',label:'ダッシュボード',roles:['admin','director','editor']},
+    {id:'calendar',icon:'ti-calendar',label:'投稿カレンダー',roles:['admin','director','editor']},
+    {id:'clients',icon:'ti-building',label:'クライアント',roles:['admin','director']},
+    {id:'videos',icon:'ti-video',label:'動画進捗',roles:['admin','director','editor']},
+    {id:'members',icon:'ti-users',label:'メンバー管理',roles:['admin']},
+  ];
+  const nav=document.getElementById('sidebar-nav');
+  nav.innerHTML=pages.filter(p=>p.roles.includes(u.role)).map(p=>`<div class="nav-item ${state.currentPage===p.id?'active':''}" onclick="navigate('${p.id}')"><i class="ti ${p.icon}"></i>${p.label}</div>`).join('');
+}
+
+function navigate(page){
+  state.currentPage=page;renderSidebar();
+  const content=document.getElementById('content');
+  const pages={dashboard:renderDashboard,calendar:renderCalendar,clients:renderClients,videos:renderVideos,members:renderMembers};
+  if(pages[page])content.innerHTML=pages[page]();
+}
+
+function getUser(id){return db.users.find(u=>u.id===id)||null;}
+function getClient(id){return db.clients.find(c=>c.id===id)||null;}
+
+function statusBadge(s){
+  const map={active:'契約中',negotiating:'商談中',consulting:'ご相談',ended:'契約終了',lost:'失注',material_submitted:'素材提出済',editing:'編集中',submitted_to_client:'お客様提出済',posted:'投稿済'};
+  const cls={active:'badge-active',negotiating:'badge-negotiating',consulting:'badge-consulting',ended:'badge-ended',lost:'badge-lost',material_submitted:'badge-material',editing:'badge-editing',submitted_to_client:'badge-submitted',posted:'badge-posted'};
+  return `<span class="badge ${cls[s]||''}">${map[s]||s}</span>`;
+}
+
+function roleBadge(r){
+  const map={admin:'経営層',director:'ディレクター',editor:'編集者'};
+  const cls={admin:'badge-admin',director:'badge-director',editor:'badge-editor'};
+  return `<span class="badge ${cls[r]||''}">${map[r]||r}</span>`;
+}
+
+function fmtDate(d){
+  if(!d)return '-';
+  const dt=new Date(d);
+  return `${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;
+}
+
+function visibleClients(){
+  if(isAdmin()||isDirector())return db.clients;
+  return db.clients.filter(c=>c.memberIds.editor===state.currentUser.id||c.memberIds.director===state.currentUser.id);
+}
+
+function visibleVideos(){
+  if(isAdmin()||isDirector())return db.videos;
+  return db.videos.filter(v=>v.editorId===state.currentUser.id);
+}
+
+function getDaysUntil(dateStr){
+  if(!dateStr)return null;
+  const today=new Date();today.setHours(0,0,0,0);
+  const d=new Date(dateStr);d.setHours(0,0,0,0);
+  return Math.round((d-today)/86400000);
+}
+
+function generateSchedule(startDate,postDaysOfWeek,count){
+  const dayMap={'日':0,'月':1,'火':2,'水':3,'木':4,'金':5,'土':6};
+  const targetDays=postDaysOfWeek.map(d=>dayMap[d]).filter(d=>d!==undefined);
+  if(!targetDays.length)return[];
+  const result=[];
+  const cur=new Date(startDate||new Date());cur.setHours(0,0,0,0);
+  while(result.length<count){
+    if(targetDays.includes(cur.getDay())){
+      const postDate=new Date(cur);
+      const clientSubmit=new Date(cur);clientSubmit.setDate(clientSubmit.getDate()-2);
+      const editDue=new Date(cur);editDue.setDate(editDue.getDate()-4);
+      const shoot=new Date(cur);shoot.setDate(shoot.getDate()-7);
+      result.push({postDate:postDate.toISOString().split('T')[0],clientSubmitDate:clientSubmit.toISOString().split('T')[0],editDueDate:editDue.toISOString().split('T')[0],shootDate:shoot.toISOString().split('T')[0]});
+    }
+    cur.setDate(cur.getDate()+1);
+  }
+  return result;
+}
+
+function getAlerts(){
+  const alerts=[];
+  visibleVideos().filter(v=>v.status!=='posted').forEach(v=>{
+    const c=getClient(v.clientId);
+    const cname=c?c.name:'不明';
+    const editDays=getDaysUntil(v.editDueDate);
+    const submitDays=getDaysUntil(v.clientSubmitDate);
+    const postDays2=getDaysUntil(v.postDate);
+    if((isAdmin()||isEditor())&&editDays!==null&&editDays>=0&&editDays<=2&&v.status==='material_submitted'){
+      alerts.push({type:'warn',msg:`【編集完了リマインド】${cname} No.${v.videoNo} — 編集完了日まであと${editDays}日（${fmtDate(v.editDueDate)}）`});
+    }
+    if((isAdmin()||isDirector())&&submitDays!==null&&submitDays>=0&&submitDays<=1&&v.status==='editing'){
+      alerts.push({type:'warn',msg:`【お客様提出リマインド】${cname} No.${v.videoNo} — 提出日まであと${submitDays}日（${fmtDate(v.clientSubmitDate)}）`});
+    }
+    if((isAdmin()||isDirector())&&postDays2!==null&&postDays2===0&&v.status==='submitted_to_client'){
+      alerts.push({type:'info',msg:`【本日投稿】${cname} No.${v.videoNo} — 本日が投稿日です`});
+    }
+  });
+  return alerts;
+}
+
+function renderDashboard(){
+  const clients=visibleClients();
+  const videos=visibleVideos();
+  const active=clients.filter(c=>c.status==='active').length;
+  const negotiating=clients.filter(c=>c.status==='negotiating'||c.status==='consulting').length;
+  const inProgress=videos.filter(v=>v.status!=='posted').length;
+  const today=new Date().toISOString().split('T')[0];
+  const alerts=getAlerts();
+  const alertsHtml=alerts.length?alerts.map(a=>`<div class="alert alert-${a.type}"><i class="ti ti-bell"></i><span>${a.msg}</span></div>`).join(''):'<div class="alert alert-info"><i class="ti ti-check"></i><span>本日のリマインドはありません</span></div>';
+  const upcoming=visibleVideos().filter(v=>v.status!=='posted').sort((a,b)=>(a.postDate||'').localeCompare(b.postDate||'')).slice(0,8);
+  const upcomingRows=upcoming.map(v=>{
+    const c=getClient(v.clientId);const editor=getUser(v.editorId);
+    return `<div class="cal-item"><div class="cal-date">${fmtDate(v.postDate)}</div><div class="cal-no">No.${v.videoNo}</div><div class="cal-client">${c?.name||'-'}</div><div class="cal-editor">${editor?.name||'-'}</div><div class="cal-status">${statusBadge(v.status)}</div></div>`;
+  }).join('')||'<div class="empty">進行中の動画はありません</div>';
+  return `<div class="page-header"><h1>ダッシュボード</h1></div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">契約中クライアント</div><div class="stat-value">${active}</div></div>
+      <div class="stat-card"><div class="stat-label">商談中・ご相談</div><div class="stat-value">${negotiating}</div></div>
+      <div class="stat-card"><div class="stat-label">進行中の動画</div><div class="stat-value">${inProgress}</div></div>
+      <div class="stat-card"><div class="stat-label">今月の投稿予定</div><div class="stat-value">${visibleVideos().filter(v=>v.postDate&&v.postDate.startsWith(today.substr(0,7))).length}</div></div>
+    </div>
+    <div class="card"><div class="section-title" style="margin-top:0">通知・リマインド</div>${alertsHtml}</div>
+    <div class="card"><div class="section-title" style="margin-top:0">直近の投稿予定</div>${upcomingRows}</div>`;
+}
+
+function renderCalendar(){
+  const allVideos=visibleVideos().sort((a,b)=>(a.postDate||'').localeCompare(b.postDate||''));
+  const clients=visibleClients();
+  const clientFilter=state.calClientFilter||'';
+  const statusFilter=state.calStatusFilter||'';
+  const filtered=allVideos.filter(v=>{
+    if(clientFilter&&v.clientId!==clientFilter)return false;
+    if(statusFilter&&v.status!==statusFilter)return false;
+    return true;
+  });
+  const clientOptions=clients.map(c=>`<option value="${c.id}" ${clientFilter===c.id?'selected':''}>${c.name}</option>`).join('');
+  const rows=filtered.map(v=>{
+    const c=getClient(v.clientId);const editor=getUser(v.editorId);
+    return `<div class="cal-item">
+      <div class="cal-date">${fmtDate(v.postDate)}</div>
+      <div class="cal-no">No.${v.videoNo}</div>
+      <div class="cal-client">${c?.name||'-'}</div>
+      <div style="width:90px;font-size:12px;color:var(--color-text-secondary)">${fmtDate(v.editDueDate)}</div>
+      <div style="width:90px;font-size:12px;color:var(--color-text-secondary)">${fmtDate(v.clientSubmitDate)}</div>
+      <div class="cal-editor">${editor?.name||'-'}</div>
+      <div class="cal-status"><select class="status-select" onchange="updateVideoStatus('${v.id}',this.value)">
+        <option value="material_submitted" ${v.status==='material_submitted'?'selected':''}>素材提出済</option>
+        <option value="editing" ${v.status==='editing'?'selected':''}>編集中</option>
+        <option value="submitted_to_client" ${v.status==='submitted_to_client'?'selected':''}>お客様提出済</option>
+        <option value="posted" ${v.status==='posted'?'selected':''}>投稿済</option>
+      </select></div>
+    </div>`;
+  }).join('')||'<div class="empty">該当する動画がありません</div>';
+  const addBtn=isAdmin()||isDirector()?`<button class="btn-secondary" onclick="showAddVideoModal()"><i class="ti ti-plus"></i> 動画追加</button>`:'';
+  return `<div class="page-header"><h1>投稿カレンダー</h1>${addBtn}</div>
+    <div class="filter-bar">
+      <select onchange="state.calClientFilter=this.value;navigate('calendar')"><option value="">全クライアント</option>${clientOptions}</select>
+      <select onchange="state.calStatusFilter=this.value;navigate('calendar')">
+        <option value="">全ステータス</option>
+        <option value="material_submitted" ${statusFilter==='material_submitted'?'selected':''}>素材提出済</option>
+        <option value="editing" ${statusFilter==='editing'?'selected':''}>編集中</option>
+        <option value="submitted_to_client" ${statusFilter==='submitted_to_client'?'selected':''}>お客様提出済</option>
+        <option value="posted" ${statusFilter==='posted'?'selected':''}>投稿済</option>
+      </select>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="display:flex;gap:12px;padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;font-weight:500;color:var(--color-text-secondary)">
+        <div style="width:90px">投稿日</div><div style="width:50px">No.</div><div style="flex:1">クライアント</div>
+        <div style="width:90px">編集完了日</div><div style="width:90px">お客様提出日</div><div style="width:80px">編集担当</div><div style="width:120px">ステータス</div>
+      </div>${rows}
+    </div>`;
+}
+
+function renderClients(){
+  const clients=visibleClients();
+  const statusFilter=state.clientStatusFilter||'';
+  const search=state.clientSearch||'';
+  const filtered=clients.filter(c=>{
+    if(statusFilter&&c.status!==statusFilter)return false;
+    if(search&&!c.name.includes(search)&&!(c.contactName||'').includes(search))return false;
+    return true;
+  });
+  const addBtn=isAdmin()?`<button class="btn-secondary" onclick="showAddClientModal()"><i class="ti ti-plus"></i> 新規登録</button>`:'';
+  const rows=filtered.map(c=>{
+    const director=getUser(c.memberIds?.director);const editor=getUser(c.memberIds?.editor);
+    return `<tr onclick="showClientDetail('${c.id}')" style="cursor:pointer">
+      <td><strong>${c.name}</strong></td><td>${c.contactName||'-'}</td><td>${c.industry||'-'}</td>
+      <td>${c.serviceType||'-'}</td><td>${statusBadge(c.status)}</td>
+      <td>${director?.name||'-'}</td><td>${editor?.name||'-'}</td>
+      ${canSeeContracts()?`<td>${c.contractAmount?'¥'+c.contractAmount.toLocaleString():'-'}</td>`:''}
+    </tr>`;
+  }).join('')||`<tr><td colspan="8" class="empty">クライアントが見つかりません</td></tr>`;
+  return `<div class="page-header"><h1>クライアント</h1>${addBtn}</div>
+    <div class="filter-bar">
+      <input type="text" placeholder="名前で検索..." value="${search}" oninput="state.clientSearch=this.value;navigate('clients')" style="width:200px">
+      <select onchange="state.clientStatusFilter=this.value;navigate('clients')">
+        <option value="">全ステータス</option>
+        <option value="active" ${statusFilter==='active'?'selected':''}>契約中</option>
+        <option value="negotiating" ${statusFilter==='negotiating'?'selected':''}>商談中</option>
+        <option value="consulting" ${statusFilter==='consulting'?'selected':''}>ご相談</option>
+        <option value="ended" ${statusFilter==='ended'?'selected':''}>契約終了</option>
+        <option value="lost" ${statusFilter==='lost'?'selected':''}>失注</option>
+      </select>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table><thead><tr><th>クライアント名</th><th>担当者</th><th>業種</th><th>施策</th><th>ステータス</th><th>ディレクター</th><th>編集者</th>${canSeeContracts()?'<th>契約金額</th>':''}</tr></thead><tbody>${rows}</tbody></table>
+    </div>`;
+}
+
+function renderVideos(){
+  const videos=visibleVideos().filter(v=>v.status!=='posted').sort((a,b)=>(a.postDate||'').localeCompare(b.postDate||''));
+  const rows=videos.map(v=>{
+    const c=getClient(v.clientId);const editor=getUser(v.editorId);
+    const editDays=getDaysUntil(v.editDueDate);
+    const editWarn=editDays!==null&&editDays<=2&&editDays>=0?'color:var(--color-text-danger);font-weight:500':'';
+    return `<tr><td>${c?.name||'-'}</td><td>No.${v.videoNo}</td>
+      <td><select class="status-select" onchange="updateVideoStatus('${v.id}',this.value)">
+        <option value="material_submitted" ${v.status==='material_submitted'?'selected':''}>素材提出済</option>
+        <option value="editing" ${v.status==='editing'?'selected':''}>編集中</option>
+        <option value="submitted_to_client" ${v.status==='submitted_to_client'?'selected':''}>お客様提出済</option>
+        <option value="posted" ${v.status==='posted'?'selected':''}>投稿済</option>
+      </select></td>
+      <td style="${editWarn}">${fmtDate(v.editDueDate)}</td>
+      <td>${fmtDate(v.clientSubmitDate)}</td><td>${fmtDate(v.postDate)}</td><td>${editor?.name||'-'}</td>
+      <td>${v.driveUrl?`<a href="${v.driveUrl}" target="_blank" style="color:var(--color-text-info)"><i class="ti ti-external-link"></i></a>`:'-'}</td>
+    </tr>`;
+  }).join('')||`<tr><td colspan="8" class="empty">進行中の動画はありません</td></tr>`;
+  return `<div class="page-header"><h1>動画進捗</h1></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table><thead><tr><th>クライアント</th><th>No.</th><th>ステータス</th><th>編集完了日</th><th>お客様提出日</th><th>投稿日</th><th>編集担当</th><th>Drive</th></tr></thead><tbody>${rows}</tbody></table>
+    </div>`;
+}
+
+function renderMembers(){
+  const rows=db.users.map(u=>`<tr>
+    <td>${u.name}</td><td>${u.email}</td><td>${roleBadge(u.role)}</td>
+    <td><span style="color:${u.isActive?'var(--color-text-success)':'var(--color-text-danger)'}">${u.isActive?'有効':'無効'}</span></td>
+    <td>
+      <button class="btn-secondary" style="font-size:12px;padding:4px 10px;margin-right:6px" onclick="showEditMemberModal('${u.id}')"><i class="ti ti-edit"></i> 編集</button>
+      ${u.id!==state.currentUser.id?`<button class="btn-danger" style="font-size:12px;padding:4px 10px" onclick="toggleMember('${u.id}')">${u.isActive?'無効化':'有効化'}</button>`:''}
+    </td>
+  </tr>`).join('');
+  return `<div class="page-header"><h1>メンバー管理</h1><button class="btn-secondary" onclick="showAddMemberModal()"><i class="ti ti-plus"></i> メンバー追加</button></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table><thead><tr><th>名前</th><th>メール</th><th>権限</th><th>状態</th><th>操作</th></tr></thead><tbody>${rows}</tbody></table>
+    </div>`;
+}
+
+function updateVideoStatus(videoId,newStatus){
+  const v=db.videos.find(x=>x.id===videoId);if(v){v.status=newStatus;saveDB();}
+}
+
+function toggleMember(userId){
+  const u=db.users.find(x=>x.id===userId);if(u){u.isActive=!u.isActive;saveDB();navigate('members');}
+}
+
+function showModal(html){document.getElementById('modal-container').innerHTML=`<div class="modal-overlay" onclick="closeModalOnOverlay(event)">${html}</div>`;}
+function closeModal(){document.getElementById('modal-container').innerHTML='';}
+function closeModalOnOverlay(e){if(e.target.classList.contains('modal-overlay'))closeModal();}
+
+function showClientDetail(clientId){
+  const c=db.clients.find(x=>x.id===clientId);if(!c)return;
+  const director=getUser(c.memberIds?.director);const editor=getUser(c.memberIds?.editor);
+  const videos=db.videos.filter(v=>v.clientId===c.id).sort((a,b)=>b.videoNo-a.videoNo).slice(0,5);
+  const videoRows=videos.map(v=>`<div class="cal-item"><div class="cal-no">No.${v.videoNo}</div><div style="flex:1;font-size:12px">${fmtDate(v.postDate)}</div><div>${statusBadge(v.status)}</div></div>`).join('')||'<div class="empty">動画なし</div>';
+  const contractInfo=canSeeContracts()?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><div><span style="font-size:11px;color:var(--color-text-secondary)">契約金額</span><br><strong>${c.contractAmount?'¥'+c.contractAmount.toLocaleString():'-'}</strong></div><div><span style="font-size:11px;color:var(--color-text-secondary)">契約期間</span><br><strong>${c.contractPeriod||'-'}</strong></div></div>`:'';
+  showModal(`<div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><h2 style="margin:0">${c.name}</h2>${statusBadge(c.status)}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">担当者</span><br><strong>${c.contactName||'-'}</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">業種</span><br><strong>${c.industry||'-'}</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">施策内容</span><br><strong>${c.serviceType||'-'}</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">紹介者</span><br><strong>${c.referrer||'-'}</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">投稿曜日</span><br><strong>${c.postDays?.join('・')||'-'}</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">月本数</span><br><strong>${c.monthlyCount||'-'}本</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">ディレクター</span><br><strong>${director?.name||'-'}</strong></div>
+      <div><span style="font-size:11px;color:var(--color-text-secondary)">編集者</span><br><strong>${editor?.name||'-'}</strong></div>
+    </div>
+    ${contractInfo}
+    ${c.goal?`<div style="margin-top:12px;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:13px"><span style="font-size:11px;color:var(--color-text-secondary)">目標・課題</span><br>${c.goal}</div>`:''}
+    <div class="section-title">直近の動画</div>
+    <div style="border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden">${videoRows}</div>
+    <div class="modal-footer">
+      ${isAdmin()?`<button class="btn-secondary" onclick="showEditClientModal('${c.id}')">編集</button>`:''}
+      <button class="btn-secondary" onclick="closeModal()">閉じる</button>
+    </div>
+  </div>`);
+}
+
+function showAddClientModal(){
+  const userOptions=db.users.filter(u=>u.isActive).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+  showModal(`<div class="modal"><h2>クライアント新規登録</h2>
+    <div class="form-grid">
+      <div class="full field"><label>クライアント名</label><input id="nc-name" placeholder="株式会社〇〇"></div>
+      <div class="field"><label>担当者名</label><input id="nc-contact" placeholder="山田さん"></div>
+      <div class="field"><label>業種</label><input id="nc-industry" placeholder="建設業"></div>
+      <div class="full field"><label>施策内容</label><select id="nc-service"><option>SNS運用代行</option><option>動画編集のみ</option><option>内製化研修</option><option>広告動画制作</option><option>SNSアドバイザー</option></select></div>
+      <div class="field"><label>紹介者</label><input id="nc-referrer" placeholder="直接 / 〇〇さん"></div>
+      <div class="field"><label>ステータス</label><select id="nc-status"><option value="consulting">ご相談</option><option value="negotiating">商談中</option><option value="active">契約中</option></select></div>
+      <div class="field"><label>契約開始日</label><input type="date" id="nc-start"></div>
+      <div class="field"><label>契約期間</label><input id="nc-period" placeholder="12ヶ月"></div>
+      <div class="field"><label>月本数</label><input type="number" id="nc-count" value="8" min="1"></div>
+      <div class="field"><label>投稿曜日（カンマ区切り）</label><input id="nc-days" placeholder="水,金"></div>
+      <div class="field"><label>ディレクター</label><select id="nc-director"><option value="">-</option>${userOptions}</select></div>
+      <div class="field"><label>編集者</label><select id="nc-editor"><option value="">-</option>${userOptions}</select></div>
+      <div class="full field"><label>契約金額（経営層のみ表示）</label><input type="number" id="nc-amount" placeholder="150000"></div>
+      <div class="full field"><label>目標・課題</label><textarea id="nc-goal" rows="2" style="width:100%;padding:8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary)"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveNewClient()">登録する</button></div>
+  </div>`);
+}
+
+function saveNewClient(){
+  const name=document.getElementById('nc-name').value.trim();
+  if(!name){alert('クライアント名を入力してください');return;}
+  const days=document.getElementById('nc-days').value.split(',').map(d=>d.trim()).filter(Boolean);
+  const newClient={id:genId(),name,contactName:document.getElementById('nc-contact').value.trim(),industry:document.getElementById('nc-industry').value.trim(),serviceType:document.getElementById('nc-service').value,referrer:document.getElementById('nc-referrer').value.trim(),status:document.getElementById('nc-status').value,contractStart:document.getElementById('nc-start').value,contractPeriod:document.getElementById('nc-period').value.trim(),monthlyCount:parseInt(document.getElementById('nc-count').value)||0,postDays:days,goal:document.getElementById('nc-goal').value.trim(),memo:'',contractAmount:parseInt(document.getElementById('nc-amount').value)||0,memberIds:{director:document.getElementById('nc-director').value,editor:document.getElementById('nc-editor').value,checker:state.currentUser.id}};
+  db.clients.push(newClient);
+  if(newClient.status==='active'&&days.length&&newClient.monthlyCount>0){
+    const schedules=generateSchedule(newClient.contractStart||new Date().toISOString().split('T')[0],days,newClient.monthlyCount*2);
+    schedules.forEach((s,i)=>{db.videos.push({id:genId(),clientId:newClient.id,videoNo:i+1,status:'material_submitted',shootDate:s.shootDate,editDueDate:s.editDueDate,clientSubmitDate:s.clientSubmitDate,postDate:s.postDate,editorId:newClient.memberIds.editor||'',driveUrl:'',memo:''});});
+  }
+  saveDB();closeModal();navigate('clients');
+}
+
+function showAddVideoModal(){
+  const clients=visibleClients().filter(c=>c.status==='active');
+  const clientOptions=clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  const editorOptions=db.users.filter(u=>u.isActive&&(u.role==='editor'||u.role==='admin')).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+  showModal(`<div class="modal"><h2>動画追加</h2>
+    <div class="form-grid">
+      <div class="full field"><label>クライアント</label><select id="nv-client">${clientOptions}</select></div>
+      <div class="field"><label>動画No.</label><input type="number" id="nv-no" placeholder="1" min="1"></div>
+      <div class="field"><label>ステータス</label><select id="nv-status"><option value="material_submitted">素材提出済</option><option value="editing">編集中</option><option value="submitted_to_client">お客様提出済</option><option value="posted">投稿済</option></select></div>
+      <div class="field"><label>撮影・素材提出日</label><input type="date" id="nv-shoot"></div>
+      <div class="field"><label>編集完了日</label><input type="date" id="nv-edit"></div>
+      <div class="field"><label>お客様提出日</label><input type="date" id="nv-submit"></div>
+      <div class="field"><label>投稿日</label><input type="date" id="nv-post"></div>
+      <div class="full field"><label>編集担当</label><select id="nv-editor"><option value="">-</option>${editorOptions}</select></div>
+      <div class="full field"><label>Google Drive URL</label><input id="nv-drive" placeholder="https://drive.google.com/..."></div>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveNewVideo()">追加する</button></div>
+  </div>`);
+}
+
+function saveNewVideo(){
+  const clientId=document.getElementById('nv-client').value;
+  const no=parseInt(document.getElementById('nv-no').value);
+  if(!clientId||!no){alert('クライアントと動画No.を入力してください');return;}
+  db.videos.push({id:genId(),clientId,videoNo:no,status:document.getElementById('nv-status').value,shootDate:document.getElementById('nv-shoot').value,editDueDate:document.getElementById('nv-edit').value,clientSubmitDate:document.getElementById('nv-submit').value,postDate:document.getElementById('nv-post').value,editorId:document.getElementById('nv-editor').value,driveUrl:document.getElementById('nv-drive').value.trim(),memo:''});
+  saveDB();closeModal();navigate('calendar');
+}
+
+function showAddMemberModal(){
+  showModal(`<div class="modal"><h2>メンバー追加</h2>
+    <div class="form-grid">
+      <div class="field"><label>名前</label><input id="nm-name" placeholder="山田 太郎"></div>
+      <div class="field"><label>権限</label><select id="nm-role"><option value="editor">編集者</option><option value="director">ディレクター</option><option value="admin">経営層</option></select></div>
+      <div class="full field"><label>メールアドレス</label><input type="email" id="nm-email" placeholder="yamada@example.com"></div>
+      <div class="full field"><label>パスワード</label><input type="password" id="nm-pass" placeholder="初期パスワード"></div>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveNewMember()">追加する</button></div>
+  </div>`);
+}
+
+function saveNewMember(){
+  const name=document.getElementById('nm-name').value.trim();
+  const email=document.getElementById('nm-email').value.trim();
+  const pass=document.getElementById('nm-pass').value;
+  if(!name||!email||!pass){alert('すべての項目を入力してください');return;}
+  if(db.users.find(u=>u.email===email)){alert('このメールアドレスは既に使用されています');return;}
+  db.users.push({id:genId(),name,email,password:pass,role:document.getElementById('nm-role').value,lineId:'',isActive:true});
+  saveDB();closeModal();navigate('members');
+}
+
+function showEditMemberModal(userId){
+  const u=db.users.find(x=>x.id===userId);if(!u)return;
+  showModal(`<div class="modal"><h2>${u.name} の編集</h2>
+    <div class="form-grid">
+      <div class="field"><label>名前</label><input id="em-name" value="${u.name}"></div>
+      <div class="field"><label>権限</label><select id="em-role"><option value="editor" ${u.role==='editor'?'selected':''}>編集者</option><option value="director" ${u.role==='director'?'selected':''}>ディレクター</option><option value="admin" ${u.role==='admin'?'selected':''}>経営層</option></select></div>
+      <div class="full field"><label>メールアドレス</label><input type="email" id="em-email" value="${u.email}"></div>
+      <div class="full field"><label>新しいパスワード（変更する場合のみ）</label><input type="password" id="em-pass" placeholder="変更しない場合は空白"></div>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveEditMember('${userId}')">保存する</button></div>
+  </div>`);
+}
+
+function saveEditMember(userId){
+  const u=db.users.find(x=>x.id===userId);if(!u)return;
+  u.name=document.getElementById('em-name').value.trim()||u.name;
+  u.email=document.getElementById('em-email').value.trim()||u.email;
+  u.role=document.getElementById('em-role').value;
+  const newPass=document.getElementById('em-pass').value;if(newPass)u.password=newPass;
+  saveDB();closeModal();navigate('members');
+}
+
+function showEditClientModal(clientId){
+  const c=db.clients.find(x=>x.id===clientId);if(!c)return;
+  const userOptions=db.users.filter(u=>u.isActive).map(u=>`<option value="${u.id}" ${c.memberIds?.director===u.id?'selected':''}>${u.name}</option>`).join('');
+  const editorOptions=db.users.filter(u=>u.isActive).map(u=>`<option value="${u.id}" ${c.memberIds?.editor===u.id?'selected':''}>${u.name}</option>`).join('');
+  showModal(`<div class="modal"><h2>${c.name} の編集</h2>
+    <div class="form-grid">
+      <div class="field"><label>ステータス</label><select id="ec-status"><option value="active" ${c.status==='active'?'selected':''}>契約中</option><option value="negotiating" ${c.status==='negotiating'?'selected':''}>商談中</option><option value="consulting" ${c.status==='consulting'?'selected':''}>ご相談</option><option value="ended" ${c.status==='ended'?'selected':''}>契約終了</option><option value="lost" ${c.status==='lost'?'selected':''}>失注</option></select></div>
+      <div class="field"><label>月本数</label><input type="number" id="ec-count" value="${c.monthlyCount}"></div>
+      <div class="field"><label>投稿曜日</label><input id="ec-days" value="${c.postDays?.join(',')}" placeholder="水,金"></div>
+      <div class="field"><label>契約金額</label><input type="number" id="ec-amount" value="${c.contractAmount}"></div>
+      <div class="field"><label>ディレクター</label><select id="ec-director"><option value="">-</option>${userOptions}</select></div>
+      <div class="field"><label>編集者</label><select id="ec-editor"><option value="">-</option>${editorOptions}</select></div>
+      <div class="full field"><label>目標・課題</label><textarea id="ec-goal" rows="2" style="width:100%;padding:8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary)">${c.goal||''}</textarea></div>
+      <div class="full field"><label>備考</label><textarea id="ec-memo" rows="2" style="width:100%;padding:8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary)">${c.memo||''}</textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeModal()">キャンセル</button><button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveEditClient('${clientId}')">保存する</button></div>
+  </div>`);
+}
+
+function saveEditClient(clientId){
+  const c=db.clients.find(x=>x.id===clientId);if(!c)return;
+  c.status=document.getElementById('ec-status').value;
+  c.monthlyCount=parseInt(document.getElementById('ec-count').value)||0;
+  c.postDays=document.getElementById('ec-days').value.split(',').map(d=>d.trim()).filter(Boolean);
+  c.contractAmount=parseInt(document.getElementById('ec-amount').value)||0;
+  c.memberIds.director=document.getElementById('ec-director').value;
+  c.memberIds.editor=document.getElementById('ec-editor').value;
+  c.goal=document.getElementById('ec-goal').value.trim();
+  c.memo=document.getElementById('ec-memo').value.trim();
+  saveDB();closeModal();navigate('clients');
+}
+
+loadDB();
+document.getElementById('login-password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
