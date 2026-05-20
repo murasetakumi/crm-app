@@ -8,7 +8,7 @@
 <style>
 :root{
   --bg:#fff;--bg2:#f7f7f5;--bg3:#efefec;
-  --tx:#111;--tx2:#888;--tx3:#bbb;
+  --tx:#111;--tx2:#888;--tx3:#ccc;
   --bd:#e8e8e4;
   --grn:#2d7a3a;--grnbg:#eaf5ec;--grnbr:#a8d8b0;
   --blu:#1a5fa0;--blubg:#e8f0fb;--blubr:#93baea;
@@ -25,7 +25,7 @@ input,select,textarea,button{font-family:inherit;font-size:15px}
 button{cursor:pointer}
 a{color:var(--blu);text-decoration:none}
 
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem;background:var(--bg2)}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem}
 .login-card{background:var(--bg);border-radius:var(--r);padding:2rem;width:100%;max-width:360px;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
 .login-card h1{font-size:22px;font-weight:600;margin-bottom:6px}
 .login-card p{font-size:13px;color:var(--tx2);margin-bottom:1.5rem}
@@ -38,6 +38,7 @@ a{color:var(--blu);text-decoration:none}
 .btn:active{opacity:0.85}
 .btn-ghost{padding:10px 16px;background:transparent;color:var(--tx);border:1px solid var(--bd);border-radius:var(--r2);font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .btn-ghost:active{background:var(--bg2)}
+.btn-red{padding:10px 16px;background:transparent;color:var(--red);border:1px solid var(--redbr);border-radius:var(--r2);font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .err{color:var(--red);font-size:13px;margin-top:8px}
 
 #app-shell{display:flex;flex-direction:column;min-height:100vh}
@@ -53,7 +54,7 @@ a{color:var(--blu);text-decoration:none}
 .bnav-item.active{color:var(--tx)}
 .bnav-item span{font-weight:500}
 
-#content{flex:1;padding:1rem;padding-bottom:80px;max-width:640px;margin:0 auto;width:100%}
+#content{flex:1;padding:1rem;padding-bottom:80px;max-width:680px;margin:0 auto;width:100%}
 
 #drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:30}
 #drawer-overlay.open{display:block}
@@ -63,12 +64,27 @@ a{color:var(--blu);text-decoration:none}
 .avatar{width:38px;height:38px;border-radius:50%;background:var(--blubg);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--blu);flex-shrink:0}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;display:flex;align-items:flex-end;justify-content:center}
-.modal{background:var(--bg);border-radius:var(--r) var(--r) 0 0;padding:1.5rem;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
+.modal{background:var(--bg);border-radius:var(--r) var(--r) 0 0;padding:1.5rem;width:100%;max-width:560px;max-height:92vh;overflow-y:auto}
 .modal-handle{width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 1.25rem}
 .modal h2{font-size:17px;font-weight:600;margin-bottom:1.25rem}
 .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--bd)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form-grid .full{grid-column:1/-1}
+
+/* Type selector */
+.type-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.type-btn{padding:16px;border:2px solid var(--bd);border-radius:var(--r2);cursor:pointer;background:var(--bg);text-align:center;transition:all 0.15s}
+.type-btn:active{opacity:0.8}
+.type-btn.selected{border-color:var(--tx);background:var(--tx);color:#fff}
+.type-btn i{font-size:24px;display:block;margin-bottom:6px}
+.type-btn .type-label{font-size:14px;font-weight:600}
+.type-btn .type-desc{font-size:11px;opacity:0.7;margin-top:3px}
+
+/* Checkbox group */
+.check-group{display:flex;gap:8px;flex-wrap:wrap}
+.check-item{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--bd);border-radius:var(--r2);cursor:pointer;font-size:13px;background:var(--bg)}
+.check-item.selected{border-color:var(--tx);background:var(--tx);color:#fff}
+.check-item input{display:none}
 
 /* Calendar */
 .cal-nav{display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -83,7 +99,7 @@ a{color:var(--blu);text-decoration:none}
 .cal-hdr{background:var(--bg2);text-align:center;padding:7px 2px;font-size:11px;font-weight:600;color:var(--tx2)}
 .cal-hdr.sun{color:var(--red)}
 .cal-hdr.sat{color:var(--blu)}
-.cal-cell{background:var(--bg);min-height:72px;padding:4px 3px;cursor:pointer;position:relative}
+.cal-cell{background:var(--bg);min-height:72px;padding:4px 3px;cursor:pointer}
 .cal-cell:active{background:var(--bg2)}
 .cal-cell.other{background:#fafaf8}
 .cal-cell.today .cal-dn{background:var(--tx);color:#fff;border-radius:50%}
@@ -91,7 +107,6 @@ a{color:var(--blu);text-decoration:none}
 .cal-dn.sun{color:var(--red)}
 .cal-dn.sat{color:var(--blu)}
 .cal-ev{font-size:10px;padding:2px 4px;border-radius:3px;margin-bottom:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;line-height:1.4;cursor:pointer}
-/* Event colors by status */
 .ev-material{background:var(--ambbg);color:var(--amb)}
 .ev-editing{background:var(--blubg);color:var(--blu)}
 .ev-submitted{background:var(--purbg);color:var(--pur)}
@@ -100,7 +115,6 @@ a{color:var(--blu);text-decoration:none}
 .ev-overdue{background:var(--redbg);color:var(--red)}
 .ev-urgent{background:#fff3cd;color:#7a5000}
 
-/* Left bar colors for video cards */
 .bar-material{background:var(--amb)}
 .bar-editing{background:var(--blu)}
 .bar-submitted{background:var(--pur)}
@@ -116,9 +130,9 @@ a{color:var(--blu);text-decoration:none}
 .vc-name{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vc-meta{font-size:12px;color:var(--tx2);margin-top:2px}
 
-.ss-option{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;border-bottom:1px solid var(--bd)}
-.ss-option:last-child{border-bottom:none}
-.ss-option:active{background:var(--bg2)}
+.ss-opt{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;border-bottom:1px solid var(--bd)}
+.ss-opt:last-child{border-bottom:none}
+.ss-opt:active{background:var(--bg2)}
 .ss-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
 .alert{display:flex;align-items:flex-start;gap:8px;padding:12px;border-radius:var(--r2);margin-bottom:8px;font-size:13px;line-height:1.5}
@@ -126,6 +140,18 @@ a{color:var(--blu);text-decoration:none}
 .alert-info{background:var(--blubg);color:var(--blu)}
 .alert-ok{background:var(--grnbg);color:var(--grn)}
 .alert i{font-size:16px;flex-shrink:0;margin-top:1px}
+
+/* Overview table */
+.overview-table{width:100%;border-collapse:collapse;font-size:13px}
+.overview-table th{text-align:left;padding:10px 8px;border-bottom:2px solid var(--bd);font-size:11px;font-weight:600;color:var(--tx2);white-space:nowrap}
+.overview-table td{padding:10px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.overview-table tr:last-child td{border-bottom:none}
+.overview-table tr:hover td{background:var(--bg2)}
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.progress-bar{height:6px;border-radius:3px;background:var(--bg3);overflow:hidden;min-width:60px}
+.progress-fill{height:100%;border-radius:3px;background:var(--grn)}
+.progress-fill.warn{background:#e08a00}
+.progress-fill.danger{background:var(--red)}
 
 .section-label{font-size:12px;font-weight:600;color:var(--tx2);padding:8px 0 6px;border-bottom:1px solid var(--bd);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
 .prow{background:var(--bg);border-radius:var(--r2);padding:14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;border:1px solid var(--bd)}
@@ -135,17 +161,14 @@ a{color:var(--blu);text-decoration:none}
 .prow-name{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prow-meta{font-size:12px;color:var(--tx2);margin-top:2px}
 
+.pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.lbtn{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--r2);font-size:12px;background:var(--bg2);color:var(--tx2);border:1px solid var(--bd);text-decoration:none}
+.empty{text-align:center;padding:3rem 1rem;color:var(--tx2);font-size:14px}
 table{width:100%;border-collapse:collapse}
 th{text-align:left;font-size:12px;font-weight:500;color:var(--tx2);padding:8px;border-bottom:1px solid var(--bd)}
 td{padding:12px 8px;border-bottom:1px solid var(--bd);font-size:14px;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 
-.pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:500}
-
-.lbtn{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--r2);font-size:12px;background:var(--bg2);color:var(--tx2);border:1px solid var(--bd);text-decoration:none}
-.empty{text-align:center;padding:3rem 1rem;color:var(--tx2);font-size:14px}
-
-/* Quick add */
 .quick-add-banner{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r2);padding:14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 </style>
 </head>
@@ -159,7 +182,7 @@ tr:last-child td{border-bottom:none}
     <div class="field"><label>パスワード</label><input type="password" id="login-password" placeholder="1 でテストログイン" autocomplete="current-password"></div>
     <div id="login-error" class="err hidden"></div>
     <button class="btn" onclick="doLogin()" style="margin-top:4px">ログイン</button>
-    <p style="font-size:11px;color:var(--tx2);margin-top:12px;text-align:center;line-height:1.8">1/1→経営層　director@crm.com/dir123→ディレクター　editor@crm.com/edit123→編集者</p>
+    <p style="font-size:11px;color:var(--tx2);margin-top:12px;text-align:center;line-height:1.8">1/1→経営層　director@crm.com/dir123→ディレクター</p>
   </div>
 </div>
 
@@ -171,6 +194,7 @@ tr:last-child td{border-bottom:none}
   <div id="content"></div>
   <nav id="bottom-nav">
     <button class="bnav-item active" id="bnav-calendar" onclick="navigate('calendar')"><i class="ti ti-calendar"></i><span>カレンダー</span></button>
+    <button class="bnav-item hidden" id="bnav-overview" onclick="navigate('overview')"><i class="ti ti-layout-list"></i><span>管理</span></button>
     <button class="bnav-item" id="bnav-prospects" onclick="navigate('prospects')"><i class="ti ti-users"></i><span>見込み</span></button>
     <button class="bnav-item hidden" id="bnav-members" onclick="navigate('members')"><i class="ti ti-settings"></i><span>設定</span></button>
   </nav>
@@ -195,133 +219,116 @@ tr:last-child td{border-bottom:none}
 <script>
 const DAYS=['日','月','火','水','木','金','土'];
 const MONTHS=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-
-// Status → color class for calendar events
-const EV_CLS={
-  material_submitted:'ev-material',
-  editing:'ev-editing',
-  submitted_to_client:'ev-submitted',
-  posted:'ev-posted',
-  delivered:'ev-delivered'
-};
-// Status → bar color class for video cards
-const BAR_CLS={
-  material_submitted:'bar-material',
-  editing:'bar-editing',
-  submitted_to_client:'bar-submitted',
-  posted:'bar-posted',
-  delivered:'bar-delivered'
-};
-// Status → dot color
-const DOT_COLOR={
-  material_submitted:'#c07800',
-  editing:'#1a5fa0',
-  submitted_to_client:'#5c44c2',
-  posted:'#2d7a3a',
-  delivered:'#0e6b58'
-};
+const DOT_COLOR={material_submitted:'#c07800',editing:'#1a5fa0',submitted_to_client:'#5c44c2',posted:'#2d7a3a',delivered:'#0e6b58'};
 const SM={material_submitted:'素材提出済',editing:'編集中',submitted_to_client:'お客様提出済',posted:'投稿済',delivered:'納品完了'};
 const CSM={active:'契約中',negotiating:'商談中',consulting:'ご相談',ended:'契約終了',lost:'失注'};
-const PROSPECT_COLOR={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx3)',lost:'var(--red)'};
+const PROSPECT_COLOR={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx2)',lost:'var(--red)'};
 
-function getEvClass(v){
+function getEvCls(v,calView){
   const s=v.status;
-  if(s==='posted'||s==='delivered')return EV_CLS[s];
-  // Check urgency based on current view date
-  const ref=CALVIEW==='edit'?v.editDueDate:CALVIEW==='submit'?v.clientSubmitDate:v.postDate;
+  if(s==='posted')return'ev-posted';
+  if(s==='delivered')return'ev-delivered';
+  const ref=calView==='edit'?v.editDueDate:calView==='submit'?v.clientSubmitDate:v.postDate;
   const d=daysUntil(ref);
   if(d!==null&&d<0)return'ev-overdue';
   if(d!==null&&d<=2)return'ev-urgent';
-  return EV_CLS[s]||'ev-editing';
+  if(s==='material_submitted')return'ev-material';
+  if(s==='editing')return'ev-editing';
+  if(s==='submitted_to_client')return'ev-submitted';
+  return'ev-editing';
 }
-function getBarClass(v){
+function getBarCls(v,calView){
   const s=v.status;
-  if(s==='posted'||s==='delivered')return BAR_CLS[s];
-  const ref=CALVIEW==='edit'?v.editDueDate:CALVIEW==='submit'?v.clientSubmitDate:v.postDate;
+  if(s==='posted')return'bar-posted';
+  if(s==='delivered')return'bar-delivered';
+  const ref=calView==='edit'?v.editDueDate:calView==='submit'?v.clientSubmitDate:v.postDate;
   const d=daysUntil(ref);
   if(d!==null&&d<0)return'bar-overdue';
   if(d!==null&&d<=2)return'bar-urgent';
-  return BAR_CLS[s]||'bar-editing';
+  if(s==='material_submitted')return'bar-material';
+  if(s==='editing')return'bar-editing';
+  if(s==='submitted_to_client')return'bar-submitted';
+  return'bar-editing';
 }
 
-const ALL_CLIENTS=[
-  {id:'c1',name:'成田モータース',contactName:'成田さん',industry:'車屋',serviceType:'SNS運用代行',contractType:'regular',referrer:'ゆうしくん',status:'active',contractStart:'2025-12-01',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['水','金'],goal:'中古車を販売したい',memo:'',contractAmount:150000,memberIds:{director:'u2',editor:'u3'},links:{drive:'https://drive.google.com/drive/folders/19qALv5P8mWiM4xLKDfmwZUPABV7rrmmu',gemini:'https://gemini.google.com/share/694eb38ea70f',sheet:''}},
-  {id:'c2',name:'ホソカワ建装',contactName:'細川さん',industry:'クロス工事',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2025-01-01',contractPeriod:'1年間',monthlyCount:8,postDays:['水','金'],goal:'20代〜30代採用したい',memo:'',contractAmount:120000,memberIds:{director:'u2',editor:'u3'},links:{drive:'https://drive.google.com/drive/folders/1Ol49RqHSVtfgukYuOuXM1MYnHu4S_Mw8',gemini:'https://gemini.google.com/share/6374edd72131',sheet:''}},
-  {id:'c3',name:'サウナバグ',contactName:'船屋さん',industry:'サウナ',serviceType:'動画編集のみ',contractType:'delivery',referrer:'直接',status:'active',contractStart:'2026-02-08',contractPeriod:'3ヶ月',monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:80000,memberIds:{director:'u2',editor:'u4'},links:{drive:'',gemini:'https://gemini.google.com/share/8c93f25efb20',sheet:''}},
-  {id:'c4',name:'YURAMEKI協同組合',contactName:'白頭さん',industry:'古民家経営',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2025-01-01',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['金'],goal:'集客をしていきたい',memo:'古民家UTSUWA・古民家SO 各4本',contractAmount:100000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c5',name:'スポットライト',contactName:'和田さん',industry:'補助金助成金',serviceType:'内製化研修',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'6ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:200000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c6',name:'中京ストレージ',contactName:'長岡さん',industry:'電気通信',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'12ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c7',name:'江島産業',contactName:'稲積さん',industry:'ゼネコン',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'12ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u6'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c8',name:'Suzu Trade Japan',contactName:'高瀬さん',industry:'英語レッスン',serviceType:'SNSアドバイザー',contractType:'delivery',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:50000,memberIds:{director:'u3',editor:'u2'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c9',name:'マナビズム',contactName:'今井さん',industry:'学習塾',serviceType:'動画編集のみ',contractType:'delivery',referrer:'和田さん',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:8,postDays:['金'],goal:'',memo:'',contractAmount:60000,memberIds:{director:'u3',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c10',name:'中元大介',contactName:'中元さん',industry:'スポーツMC',serviceType:'動画編集のみ',contractType:'delivery',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'6ヶ月',monthlyCount:2,postDays:['金'],goal:'',memo:'',contractAmount:40000,memberIds:{director:'u3',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c11',name:'スズキ＆アソシエイツ',contactName:'伊豫田さん',industry:'ハーレー',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-04-12',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:150000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:'https://gemini.google.com/share/001e40e4e9a6',sheet:''}},
-  {id:'c12',name:'アシスト',contactName:'秋山さん',industry:'HP制作/営業',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-05-01',contractPeriod:'',monthlyCount:6,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c13',name:'はりきゅう治療院山小屋',contactName:'近藤さん',industry:'治療院',serviceType:'SNS運用代行',contractType:'regular',referrer:'',status:'active',contractStart:'',contractPeriod:'',monthlyCount:5,postDays:['金'],goal:'集客',memo:'月4本',contractAmount:80000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c14',name:'GOLGODA13',contactName:'長流さん',industry:'スノボーショップ',serviceType:'SNS運用代行',contractType:'regular',referrer:'ロルバーン',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u1',editor:'u4'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c15',name:'高鷲スノーパーク',contactName:'大城さん',industry:'ゲレンデ',serviceType:'広告動画制作',contractType:'spot',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u1',editor:'u1'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c16',name:'GLOVA',contactName:'みづきさん',industry:'物販',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:80000,memberIds:{director:'u1',editor:'u1'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c17',name:'日章運輸',contactName:'勝田さん',industry:'ディーゼルマフラー洗浄',serviceType:'SNS運用代行',contractType:'spot',referrer:'直接',status:'negotiating',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'提携店を増やしたい',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c18',name:'アイズ継手技巧',contactName:'石橋さん',industry:'継手専門建設業',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'negotiating',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'採用800万使っても0人',memo:'グループ会社もまとめて',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c19',name:'ネイルサロン kiyomi',contactName:'kiyomiさん',industry:'ネイルサロン',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'negotiating',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'4月ごろ運用開始の可能性大',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c20',name:'MLABO',contactName:'西山さん',industry:'経営コンサル',serviceType:'SNS運用代行',contractType:'regular',referrer:'和田さん',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c21',name:'Sauna Base SHIFUKU',contactName:'船屋さん',industry:'サウナ',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c22',name:'龍城サウナ',contactName:'隼人さん',industry:'サウナ',serviceType:'広告動画制作',contractType:'spot',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c23',name:'駒井さん',contactName:'駒井さん',industry:'雀荘',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u1',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c24',name:'愛知牧場',contactName:'つばささん',industry:'牧場',serviceType:'',contractType:'spot',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u1',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c25',name:'悠久サロン',contactName:'渡辺さん',industry:'美容サロン',serviceType:'',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c26',name:'眉毛サロン',contactName:'宮城さん',industry:'眉毛サロン',serviceType:'',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c27',name:'株式会社AILAS',contactName:'平澤さん',industry:'建設業（海外拠点あり）',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c28',name:'株式会社YOU1',contactName:'籾山さん',industry:'福祉施設',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c29',name:'那須くん',contactName:'那須くん',industry:'出張バーバー',serviceType:'SNS運用代行',contractType:'spot',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c30',name:'Harinezumi',contactName:'佐藤さん',industry:'リフォーム',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c31',name:'バントラ',contactName:'林さん',industry:'トラック販売',serviceType:'SNS運用代行',contractType:'spot',referrer:'直接',status:'lost',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c32',name:'エステサロン永瀬',contactName:'永瀬さん',industry:'エステサロン',serviceType:'投稿代行',contractType:'spot',referrer:'しゅうへいさん',status:'lost',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c33',name:'税理士事務所杉原さん',contactName:'杉原さん',industry:'税理士事務所',serviceType:'SNS運用代行',contractType:'spot',referrer:'成田さん',status:'lost',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c34',name:'taikei建設',contactName:'むねくん',industry:'建設業',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'lost',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c35',name:'アドプランナー',contactName:'植松さん',industry:'求人メディア',serviceType:'',contractType:'spot',referrer:'',status:'lost',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c36',name:'mirAI塾',contactName:'鈴木さん',industry:'生成AI塾',serviceType:'SNS運用代行',contractType:'regular',referrer:'',status:'ended',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c37',name:'日本教育総合学校',contactName:'今井さん',industry:'塾/チア/福祉',serviceType:'SNS運用代行',contractType:'regular',referrer:'',status:'ended',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c38',name:'アグリサポート',contactName:'立松さん',industry:'農業法人',serviceType:'PV制作',contractType:'spot',referrer:'古閑さん',status:'consulting',contractStart:'',contractPeriod:'',monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:'',sheet:''}},
-];
+const DEFAULT_DATA={
+  users:[
+    {id:'u1',name:'村瀬',email:'admin@crm.com',password:'admin123',role:'admin',isActive:true},
+    {id:'u2',name:'服部',email:'director@crm.com',password:'dir123',role:'director',isActive:true},
+    {id:'u3',name:'青木',email:'editor@crm.com',password:'edit123',role:'editor',isActive:true},
+    {id:'u4',name:'京層',email:'kyoso@crm.com',password:'kyoso123',role:'editor',isActive:true},
+    {id:'u5',name:'中村',email:'nakamura@crm.com',password:'naka123',role:'editor',isActive:true},
+    {id:'u6',name:'うりさん',email:'uri@crm.com',password:'uri123',role:'editor',isActive:true},
+    {id:'u7',name:'ファミリア',email:'familia@crm.com',password:'fam123',role:'editor',isActive:true},
+  ],
+  clients:[
+    {id:'c1',name:'成田モータース',contactName:'成田さん',industry:'車屋',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'ゆうしくん',status:'active',contractStart:'2025-12-01',contractMonths:12,monthlyCount:8,postDays:['水','金'],goal:'中古車を販売したい',memo:'',contractAmount:150000,memberIds:{director:'u2',editor:'u3'},links:{drive:'https://drive.google.com/drive/folders/19qALv5P8mWiM4xLKDfmwZUPABV7rrmmu',gemini:'https://gemini.google.com/share/694eb38ea70f'}},
+    {id:'c2',name:'ホソカワ建装',contactName:'細川さん',industry:'クロス工事',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2025-01-01',contractMonths:12,monthlyCount:8,postDays:['水','金'],goal:'20代〜30代採用したい',memo:'',contractAmount:120000,memberIds:{director:'u2',editor:'u3'},links:{drive:'https://drive.google.com/drive/folders/1Ol49RqHSVtfgukYuOuXM1MYnHu4S_Mw8',gemini:'https://gemini.google.com/share/6374edd72131'}},
+    {id:'c3',name:'サウナバグ',contactName:'船屋さん',industry:'サウナ',planType:'spot',serviceType:'動画編集のみ',platforms:['TikTok'],postingIncluded:false,referrer:'直接',status:'active',contractStart:'2026-02-08',contractMonths:3,monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:80000,memberIds:{director:'u2',editor:'u4'},links:{drive:'',gemini:'https://gemini.google.com/share/8c93f25efb20'}},
+    {id:'c4',name:'YURAMEKI協同組合',contactName:'白頭さん',industry:'古民家経営',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2025-01-01',contractMonths:12,monthlyCount:8,postDays:['金'],goal:'集客をしていきたい',memo:'古民家UTSUWA・古民家SO 各4本',contractAmount:100000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c5',name:'スポットライト',contactName:'和田さん',industry:'補助金助成金',planType:'subscription',serviceType:'内製化研修',platforms:['Instagram'],postingIncluded:false,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:6,monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:200000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c6',name:'中京ストレージ',contactName:'長岡さん',industry:'電気通信',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:12,monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c7',name:'江島産業',contactName:'稲積さん',industry:'ゼネコン',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:12,monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u6'},links:{drive:'',gemini:''}},
+    {id:'c8',name:'Suzu Trade Japan',contactName:'高瀬さん',industry:'英語レッスン',planType:'spot',serviceType:'SNSアドバイザー',platforms:['Instagram'],postingIncluded:false,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:0,monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:50000,memberIds:{director:'u3',editor:'u2'},links:{drive:'',gemini:''}},
+    {id:'c9',name:'マナビズム',contactName:'今井さん',industry:'学習塾',planType:'spot',serviceType:'動画編集のみ',platforms:['YouTube'],postingIncluded:false,referrer:'和田さん',status:'active',contractStart:'2026-01-01',contractMonths:0,monthlyCount:8,postDays:['金'],goal:'',memo:'',contractAmount:60000,memberIds:{director:'u3',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c10',name:'中元大介',contactName:'中元さん',industry:'スポーツMC',planType:'spot',serviceType:'動画編集のみ',platforms:['YouTube'],postingIncluded:false,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:6,monthlyCount:2,postDays:['金'],goal:'',memo:'',contractAmount:40000,memberIds:{director:'u3',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c11',name:'スズキ＆アソシエイツ',contactName:'伊豫田さん',industry:'ハーレー',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram','TikTok'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2026-04-12',contractMonths:12,monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:150000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:'https://gemini.google.com/share/001e40e4e9a6'}},
+    {id:'c12',name:'アシスト',contactName:'秋山さん',industry:'HP制作/営業',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2026-05-01',contractMonths:0,monthlyCount:6,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c13',name:'はりきゅう治療院山小屋',contactName:'近藤さん',industry:'治療院',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'',status:'active',contractStart:'',contractMonths:0,monthlyCount:5,postDays:['金'],goal:'集客',memo:'月4本',contractAmount:80000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:''}},
+    {id:'c14',name:'GOLGODA13',contactName:'長流さん',industry:'スノボーショップ',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'ロルバーン',status:'active',contractStart:'2026-01-01',contractMonths:0,monthlyCount:8,postDays:['水','金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u1',editor:'u4'},links:{drive:'',gemini:''}},
+    {id:'c15',name:'高鷲スノーパーク',contactName:'大城さん',industry:'ゲレンデ',planType:'spot',serviceType:'広告動画制作',platforms:['YouTube'],postingIncluded:false,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u1',editor:'u1'},links:{drive:'',gemini:''}},
+    {id:'c16',name:'GLOVA',contactName:'みづきさん',industry:'物販',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'active',contractStart:'2026-01-01',contractMonths:0,monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:80000,memberIds:{director:'u1',editor:'u1'},links:{drive:'',gemini:''}},
+    {id:'c17',name:'日章運輸',contactName:'勝田さん',industry:'ディーゼルマフラー洗浄',planType:'spot',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'negotiating',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'提携店を増やしたい',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c18',name:'アイズ継手技巧',contactName:'石橋さん',industry:'継手専門建設業',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'negotiating',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'採用800万使っても0人',memo:'グループ会社もまとめて',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c19',name:'ネイルサロン kiyomi',contactName:'kiyomiさん',industry:'ネイルサロン',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'negotiating',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'4月ごろ運用開始の可能性大',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c20',name:'MLABO',contactName:'西山さん',industry:'経営コンサル',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'和田さん',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c21',name:'Sauna Base SHIFUKU',contactName:'船屋さん',industry:'サウナ',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c22',name:'龍城サウナ',contactName:'隼人さん',industry:'サウナ',planType:'spot',serviceType:'広告動画制作',platforms:['YouTube'],postingIncluded:false,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c23',name:'駒井さん',contactName:'駒井さん',industry:'雀荘',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u1',editor:''},links:{drive:'',gemini:''}},
+    {id:'c24',name:'愛知牧場',contactName:'つばささん',industry:'牧場',planType:'spot',serviceType:'',platforms:[],postingIncluded:false,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u1',editor:''},links:{drive:'',gemini:''}},
+    {id:'c25',name:'悠久サロン',contactName:'渡辺さん',industry:'美容サロン',planType:'subscription',serviceType:'',platforms:[],postingIncluded:false,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c26',name:'眉毛サロン',contactName:'宮城さん',industry:'眉毛サロン',planType:'subscription',serviceType:'',platforms:[],postingIncluded:false,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c27',name:'株式会社AILAS',contactName:'平澤さん',industry:'建設業（海外拠点あり）',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c28',name:'株式会社YOU1',contactName:'籾山さん',industry:'福祉施設',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c29',name:'那須くん',contactName:'那須くん',industry:'出張バーバー',planType:'spot',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c30',name:'Harinezumi',contactName:'佐藤さん',industry:'リフォーム',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c31',name:'バントラ',contactName:'林さん',industry:'トラック販売',planType:'spot',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'lost',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c32',name:'エステサロン永瀬',contactName:'永瀬さん',industry:'エステサロン',planType:'spot',serviceType:'投稿代行',platforms:['Instagram'],postingIncluded:true,referrer:'しゅうへいさん',status:'lost',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c33',name:'税理士事務所杉原さん',contactName:'杉原さん',industry:'税理士事務所',planType:'spot',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'成田さん',status:'lost',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c34',name:'taikei建設',contactName:'むねくん',industry:'建設業',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'直接',status:'lost',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c35',name:'アドプランナー',contactName:'植松さん',industry:'求人メディア',planType:'spot',serviceType:'',platforms:[],postingIncluded:false,referrer:'',status:'lost',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c36',name:'mirAI塾',contactName:'鈴木さん',industry:'生成AI塾',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'',status:'ended',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c37',name:'日本教育総合学校',contactName:'今井さん',industry:'塾/チア/福祉',planType:'subscription',serviceType:'SNS運用代行',platforms:['Instagram'],postingIncluded:true,referrer:'',status:'ended',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+    {id:'c38',name:'アグリサポート',contactName:'立松さん',industry:'農業法人',planType:'spot',serviceType:'PV制作',platforms:['YouTube'],postingIncluded:false,referrer:'古閑さん',status:'consulting',contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:'',memo:'',contractAmount:0,memberIds:{director:'u2',editor:''},links:{drive:'',gemini:''}},
+  ],
+  videos:[
+    {id:'v1',clientId:'c1',videoNo:87,status:'posted',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3'},
+    {id:'v2',clientId:'c1',videoNo:88,status:'posted',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-11',postDate:'2026-05-13',editorId:'u3'},
+    {id:'v3',clientId:'c1',videoNo:89,status:'submitted_to_client',editDueDate:'2026-05-11',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3'},
+    {id:'v4',clientId:'c1',videoNo:90,status:'editing',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
+    {id:'v5',clientId:'c2',videoNo:32,status:'posted',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3'},
+    {id:'v6',clientId:'c2',videoNo:33,status:'submitted_to_client',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3'},
+    {id:'v7',clientId:'c2',videoNo:34,status:'editing',editDueDate:'2026-05-14',clientSubmitDate:'2026-05-15',postDate:'2026-05-20',editorId:'u3'},
+    {id:'v8',clientId:'c3',videoNo:1,status:'material_submitted',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-11',postDate:'2026-05-13',editorId:'u4'},
+    {id:'v9',clientId:'c4',videoNo:19,status:'posted',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3'},
+    {id:'v10',clientId:'c4',videoNo:20,status:'editing',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
+    {id:'v11',clientId:'c7',videoNo:13,status:'posted',editDueDate:'2026-05-06',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u6'},
+    {id:'v12',clientId:'c7',videoNo:14,status:'editing',editDueDate:'2026-05-20',clientSubmitDate:'2026-05-22',postDate:'2026-05-29',editorId:'u6'},
+    {id:'v13',clientId:'c11',videoNo:6,status:'posted',editDueDate:'2026-05-06',clientSubmitDate:'2026-05-08',postDate:'2026-05-08',editorId:'u3'},
+    {id:'v14',clientId:'c11',videoNo:7,status:'submitted_to_client',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
+    {id:'v15',clientId:'c12',videoNo:1,status:'material_submitted',editDueDate:'2026-05-17',clientSubmitDate:'2026-05-19',postDate:'2026-05-22',editorId:'u3'},
+  ]
+};
 
-const DEFAULT_VIDEOS=[
-  {id:'v1',clientId:'c1',videoNo:87,status:'posted',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3'},
-  {id:'v2',clientId:'c1',videoNo:88,status:'posted',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-11',postDate:'2026-05-13',editorId:'u3'},
-  {id:'v3',clientId:'c1',videoNo:89,status:'submitted_to_client',editDueDate:'2026-05-11',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3'},
-  {id:'v4',clientId:'c1',videoNo:90,status:'editing',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
-  {id:'v5',clientId:'c2',videoNo:32,status:'posted',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3'},
-  {id:'v6',clientId:'c2',videoNo:33,status:'submitted_to_client',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u3'},
-  {id:'v7',clientId:'c2',videoNo:34,status:'editing',editDueDate:'2026-05-14',clientSubmitDate:'2026-05-15',postDate:'2026-05-20',editorId:'u3'},
-  {id:'v8',clientId:'c3',videoNo:1,status:'material_submitted',editDueDate:'2026-05-09',clientSubmitDate:'2026-05-11',postDate:'2026-05-13',editorId:'u4'},
-  {id:'v9',clientId:'c4',videoNo:19,status:'posted',editDueDate:'2026-05-04',clientSubmitDate:'2026-05-06',postDate:'2026-05-08',editorId:'u3'},
-  {id:'v10',clientId:'c4',videoNo:20,status:'editing',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
-  {id:'v11',clientId:'c7',videoNo:13,status:'posted',editDueDate:'2026-05-06',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u6'},
-  {id:'v12',clientId:'c7',videoNo:14,status:'editing',editDueDate:'2026-05-20',clientSubmitDate:'2026-05-22',postDate:'2026-05-29',editorId:'u6'},
-  {id:'v13',clientId:'c11',videoNo:6,status:'posted',editDueDate:'2026-05-06',clientSubmitDate:'2026-05-08',postDate:'2026-05-08',editorId:'u3'},
-  {id:'v14',clientId:'c11',videoNo:7,status:'submitted_to_client',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
-  {id:'v15',clientId:'c12',videoNo:1,status:'material_submitted',editDueDate:'2026-05-17',clientSubmitDate:'2026-05-19',postDate:'2026-05-22',editorId:'u3'},
-];
-
-const DEFAULT_USERS=[
-  {id:'u1',name:'村瀬',email:'admin@crm.com',password:'admin123',role:'admin',isActive:true},
-  {id:'u2',name:'服部',email:'director@crm.com',password:'dir123',role:'director',isActive:true},
-  {id:'u3',name:'青木',email:'editor@crm.com',password:'edit123',role:'editor',isActive:true},
-  {id:'u4',name:'京層',email:'kyoso@crm.com',password:'kyoso123',role:'editor',isActive:true},
-  {id:'u5',name:'中村',email:'nakamura@crm.com',password:'naka123',role:'editor',isActive:true},
-  {id:'u6',name:'うりさん',email:'uri@crm.com',password:'uri123',role:'editor',isActive:true},
-  {id:'u7',name:'ファミリア',email:'familia@crm.com',password:'fam123',role:'editor',isActive:true},
-];
-
-let CU=null,PAGE='calendar',CALVIEW='post',CALY=2026,CALM=4,PS='',PF='';
+let CU=null,PAGE='calendar',CALVIEW='post',CALY=2026,CALM=4,PS='',PF='',OV_TAB='subscription';
 let db={};
 
 function loadDB(){
-  const s=localStorage.getItem('crm_v6');
+  const s=localStorage.getItem('crm_v7');
   if(s){db=JSON.parse(s);}
-  else{db={users:JSON.parse(JSON.stringify(DEFAULT_USERS)),clients:JSON.parse(JSON.stringify(ALL_CLIENTS)),videos:JSON.parse(JSON.stringify(DEFAULT_VIDEOS))};saveDB();}
+  else{db=JSON.parse(JSON.stringify(DEFAULT_DATA));saveDB();}
 }
-function saveDB(){localStorage.setItem('crm_v6',JSON.stringify(db));}
+function saveDB(){localStorage.setItem('crm_v7',JSON.stringify(db));}
 function gid(){return'i'+Math.random().toString(36).substr(2,8);}
 function isAdmin(){return CU?.role==='admin';}
 function isDir(){return CU?.role==='director';}
@@ -333,7 +340,7 @@ function daysUntil(d){if(!d)return null;const t=new Date();t.setHours(0,0,0,0);c
 function fmt(d){if(!d)return'-';const dt=new Date(d);return`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;}
 function toDS(y,m,d){return`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
 function viewDate(v){if(CALVIEW==='edit')return v.editDueDate;if(CALVIEW==='submit')return v.clientSubmitDate;return v.postDate;}
-function addDays(dateStr,n){const d=new Date(dateStr);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
+function addDays(ds,n){const d=new Date(ds);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
 
 function doLogin(){
   const em=document.getElementById('login-email').value.trim();
@@ -345,7 +352,10 @@ function doLogin(){
   CU=user;
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('app-shell').classList.remove('hidden');
-  if(isAdmin())document.getElementById('bnav-members').classList.remove('hidden');
+  if(isAdmin()||isDir()){
+    document.getElementById('bnav-overview').classList.remove('hidden');
+    document.getElementById('bnav-members').classList.remove('hidden');
+  }
   setupDrawer();
   const t=new Date();CALY=t.getFullYear();CALM=t.getMonth();
   navigate('calendar');
@@ -360,9 +370,8 @@ function setupDrawer(){
   const db2=document.getElementById('drawer-btns');
   if(isAdmin()||isDir()){
     db2.innerHTML=`
-      <button class="btn-ghost" style="width:100%;justify-content:center;margin-bottom:8px" onclick="closeDrawer();showQuickAddModal()"><i class="ti ti-plus"></i>案件をすばやく追加</button>
-      <button class="btn-ghost" style="width:100%;justify-content:center;margin-bottom:8px" onclick="closeDrawer();showAddClientModal()"><i class="ti ti-building"></i>クライアント追加</button>
-      <button class="btn-ghost" style="width:100%;justify-content:center" onclick="closeDrawer();showAddVideoModal()"><i class="ti ti-video"></i>動画を追加</button>`;
+      <button class="btn-ghost" style="width:100%;justify-content:center;margin-bottom:8px" onclick="closeDrawer();showAddModal()"><i class="ti ti-plus"></i>案件を追加</button>
+      <button class="btn-ghost" style="width:100%;justify-content:center" onclick="closeDrawer();showAddClientModal()"><i class="ti ti-building"></i>クライアント追加</button>`;
   }else{db2.innerHTML='';}
 }
 function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawer-overlay').classList.add('open');}
@@ -370,23 +379,62 @@ function closeDrawer(){document.getElementById('drawer').classList.remove('open'
 
 function navigate(page){
   PAGE=page;
-  const titles={calendar:'カレンダー',prospects:'見込み顧客',members:'設定'};
+  const titles={calendar:'カレンダー',overview:'管理',prospects:'見込み顧客',members:'設定'};
   document.getElementById('topbar-title').textContent=titles[page]||'';
   document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
   const bn=document.getElementById('bnav-'+page);if(bn)bn.classList.add('active');
-  const fns={calendar:renderCalendar,prospects:renderProspects,members:renderMembers};
+  const fns={calendar:renderCalendar,overview:renderOverview,prospects:renderProspects,members:renderMembers};
   if(fns[page])document.getElementById('content').innerHTML=fns[page]();
 }
 
+/* ========== SCHEDULE GENERATION ========== */
+function genSchedule(startDate,postDays,count){
+  const dm={'日':0,'月':1,'火':2,'水':3,'木':4,'金':5,'土':6};
+  const td=postDays.map(d=>dm[d]).filter(d=>d!==undefined);
+  if(!td.length)return[];
+  const res=[];const cur=new Date(startDate);cur.setHours(0,0,0,0);
+  while(res.length<count){
+    if(td.includes(cur.getDay())){
+      const p=cur.toISOString().split('T')[0];
+      res.push({postDate:p,clientSubmitDate:addDays(p,-2),editDueDate:addDays(p,-4),shootDate:addDays(p,-8)});
+    }
+    cur.setDate(cur.getDate()+1);
+  }
+  return res;
+}
+
+// Regenerate future videos when postDays change
+function regenerateFutureVideos(clientId,newPostDays){
+  const todayStr=new Date().toISOString().split('T')[0];
+  const c=getClient(clientId);if(!c)return;
+  // Keep posted/delivered videos
+  const kept=db.videos.filter(v=>v.clientId===clientId&&(v.status==='posted'||v.status==='delivered'));
+  const removed=db.videos.filter(v=>v.clientId===clientId&&v.status!=='posted'&&v.status!=='delivered');
+  // Find next video number
+  const maxNo=kept.length?Math.max(...kept.map(v=>v.videoNo)):0;
+  // Generate from today, enough for remaining contract or 3 months
+  const months=c.contractMonths||3;
+  const count=Math.max(months*c.monthlyCount,c.monthlyCount*3);
+  const schedules=genSchedule(todayStr,newPostDays,count);
+  const newVids=schedules.map((s,i)=>({
+    id:gid(),clientId,videoNo:maxNo+i+1,status:'material_submitted',
+    editDueDate:s.editDueDate,clientSubmitDate:s.clientSubmitDate,postDate:s.postDate,
+    editorId:c.memberIds.editor||''
+  }));
+  db.videos=db.videos.filter(v=>v.clientId!==clientId||(v.status==='posted'||v.status==='delivered'));
+  db.videos.push(...newVids);
+}
+
+/* ========== CALENDAR ========== */
 function renderCalendar(){
   const y=CALY,m=CALM;
   const firstDow=new Date(y,m,1).getDay();
   const daysInMonth=new Date(y,m+1,0).getDate();
   const prevLast=new Date(y,m,0).getDate();
   const todayStr=new Date().toISOString().split('T')[0];
+  const videos=visVids();
 
   // Alerts
-  const videos=visVids();
   const alerts=[];
   videos.filter(v=>v.status!=='posted'&&v.status!=='delivered').forEach(v=>{
     const c=getClient(v.clientId);const cn=c?c.name:'不明';
@@ -399,27 +447,16 @@ function renderCalendar(){
       alerts.push({type:'info',msg:`${cn} No.${v.videoNo} — 本日が投稿日です`});
   });
   const alertHtml=alerts.length
-    ?alerts.map(a=>`<div class="alert alert-${a.type}"><i class="ti ti-bell"></i><span>${a.msg}</span></div>`).join('')
-    :`<div class="alert alert-ok"><i class="ti ti-check"></i><span>本日のリマインドはありません</span></div>`;
+    ?`<div style="margin-bottom:10px">${alerts.map(a=>`<div class="alert alert-${a.type}"><i class="ti ti-bell"></i><span>${a.msg}</span></div>`).join('')}</div>`
+    :`<div class="alert alert-ok" style="margin-bottom:10px"><i class="ti ti-check"></i><span>本日のリマインドはありません</span></div>`;
 
-  // Build date→videos map
   const byDate={};
   videos.forEach(v=>{const d=viewDate(v);if(!d)return;if(!byDate[d])byDate[d]=[];byDate[d].push(v);});
 
-  // View tabs
   const tabsHtml=isAdmin()
-    ?`<div class="view-tabs">
-        <button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button>
-        <button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button>
-        <button class="view-tab ${CALVIEW==='edit'?'active':''}" onclick="setCalView('edit')">編集完了日</button>
-      </div>`
-    :isDir()
-    ?`<div class="view-tabs">
-        <button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button>
-        <button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button>
-      </div>`:'';
+    ?`<div class="view-tabs"><button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button><button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button><button class="view-tab ${CALVIEW==='edit'?'active':''}" onclick="setCalView('edit')">編集完了日</button></div>`
+    :isDir()?`<div class="view-tabs"><button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button><button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button></div>`:'';
 
-  // Calendar grid
   const hdrs=['日','月','火','水','木','金','土'].map((d,i)=>`<div class="cal-hdr ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join('');
   const totalCells=Math.ceil((firstDow+daysInMonth)/7)*7;
   let cells='';
@@ -431,11 +468,10 @@ function renderCalendar(){
     const ds=toDS(yr,mo,day);
     const isToday=ds===todayStr;
     const dow=new Date(yr,mo,day).getDay();
-    const dayVids=(byDate[ds]||[]);
+    const dayVids=byDate[ds]||[];
     const evHtml=dayVids.slice(0,3).map(v=>{
       const c=getClient(v.clientId);
-      const cls=getEvClass(v);
-      return`<div class="cal-ev ${cls}" onclick="showVideoModal('${v.id}');event.stopPropagation()">${c?.name||'?'} No.${v.videoNo}</div>`;
+      return`<div class="cal-ev ${getEvCls(v,CALVIEW)}" onclick="showVideoModal('${v.id}');event.stopPropagation()">${c?.name||'?'} No.${v.videoNo}</div>`;
     }).join('');
     const more=dayVids.length>3?`<div style="font-size:10px;color:var(--tx2)">+${dayVids.length-3}</div>`:'';
     cells+=`<div class="cal-cell${isOther?' other':''}${isToday?' today':''}" onclick="showDayModal('${ds}')">
@@ -444,33 +480,28 @@ function renderCalendar(){
     </div>`;
   }
 
-  const legend=`<div style="font-size:11px;color:var(--tx2);margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap">
-    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--ambbg);border:1px solid var(--ambbr);display:inline-block"></span>素材提出済</span>
-    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--blubg);border:1px solid var(--blubr);display:inline-block"></span>編集中</span>
-    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--purbg);border:1px solid var(--purbr);display:inline-block"></span>お客様提出済</span>
-    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--grnbg);border:1px solid var(--grnbr);display:inline-block"></span>投稿済/納品完了</span>
-    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#fff3cd;border:1px solid #e8b566;display:inline-block"></span>期限2日以内</span>
-    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--redbg);border:1px solid var(--redbr);display:inline-block"></span>期限超過</span>
+  const legend=`<div style="font-size:11px;color:var(--tx2);margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap">
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--ambbg);border:1px solid var(--ambbr)"></span> 素材提出済</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--blubg);border:1px solid var(--blubr)"></span> 編集中</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--purbg);border:1px solid var(--purbr)"></span> お客様提出済</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--grnbg);border:1px solid var(--grnbr)"></span> 投稿済/納品完了</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#fff3cd;border:1px solid #e8b566"></span> 期限2日以内</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--redbg);border:1px solid var(--redbr)"></span> 期限超過</span>
   </div>`;
 
-  const quickAdd=isAdmin()||isDir()?`<div class="quick-add-banner">
-    <div>
-      <div style="font-weight:600;font-size:14px">案件をすばやく追加</div>
-      <div style="font-size:12px;color:var(--tx2);margin-top:2px">投稿日を入力するだけで日程を自動生成</div>
-    </div>
-    <button class="btn-ghost" onclick="showQuickAddModal()"><i class="ti ti-plus"></i>追加</button>
+  const quickBtn=isAdmin()||isDir()?`<div class="quick-add-banner">
+    <div><div style="font-weight:600;font-size:14px">案件を追加</div><div style="font-size:12px;color:var(--tx2);margin-top:2px">投稿日から自動でスケジュール生成</div></div>
+    <button class="btn-ghost" onclick="showAddModal()"><i class="ti ti-plus"></i>追加</button>
   </div>`:'';
 
-  return`<div style="margin-bottom:10px">${alertHtml}</div>
-    ${quickAdd}
+  return`${alertHtml}${quickBtn}
     <div class="cal-nav">
       <button class="cal-nav-btn" onclick="prevMonth()"><i class="ti ti-chevron-left"></i></button>
       <div class="cal-title">${y}年 ${MONTHS[m]}</div>
       <button class="cal-nav-btn" onclick="nextMonth()"><i class="ti ti-chevron-right"></i></button>
       <button class="cal-nav-btn" onclick="goToday()" style="font-size:12px">今月</button>
     </div>
-    ${tabsHtml}
-    ${legend}
+    ${tabsHtml}${legend}
     <div class="cal-grid">${hdrs}${cells}</div>`;
 }
 
@@ -483,12 +514,10 @@ function showDayModal(ds){
   const videos=visVids().filter(v=>viewDate(v)===ds);
   if(!videos.length)return;
   const dt=new Date(ds);
-  const title=`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;
   const rows=videos.map(v=>{
     const c=getClient(v.clientId);const ed=getUser(v.editorId);
-    const barCls=getBarClass(v);
     return`<div class="video-card" onclick="closeModal();showVideoModal('${v.id}')">
-      <div class="vc-bar ${barCls}"></div>
+      <div class="vc-bar ${getBarCls(v,CALVIEW)}"></div>
       <div class="vc-body">
         <div class="vc-name">${c?.name||'-'} <span style="font-weight:400;color:var(--tx2)">No.${v.videoNo}</span></div>
         <div class="vc-meta">${SM[v.status]}${ed?' · '+ed.name:''}</div>
@@ -498,7 +527,7 @@ function showDayModal(ds){
   }).join('');
   showModal(`<div class="modal">
     <div class="modal-handle"></div>
-    <h2>${title}</h2>
+    <h2>${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})</h2>
     ${rows}
     <div class="modal-footer"><button class="btn-ghost" onclick="closeModal()">閉じる</button></div>
   </div>`);
@@ -507,9 +536,9 @@ function showDayModal(ds){
 function showVideoModal(videoId){
   const v=db.videos.find(x=>x.id===videoId);if(!v)return;
   const c=getClient(v.clientId);const ed=getUser(v.editorId);
-  const isDelivery=c?.contractType==='delivery';
+  const isDelivery=c?.planType==='spot'&&!c?.postingIncluded;
   const opts=isDelivery?['material_submitted','editing','delivered']:['material_submitted','editing','submitted_to_client','posted'];
-  const optRows=opts.map(s=>`<div class="ss-option" onclick="updateStatus('${v.id}','${s}')">
+  const optRows=opts.map(s=>`<div class="ss-opt" onclick="updateStatus('${v.id}','${s}')">
     <div class="ss-dot" style="background:${DOT_COLOR[s]}"></div>
     <div style="font-size:15px;font-weight:500;flex:1">${SM[s]}</div>
     ${v.status===s?'<i class="ti ti-check" style="color:var(--tx);font-size:18px"></i>':''}
@@ -524,7 +553,7 @@ function showVideoModal(videoId){
       <div style="font-size:18px;font-weight:700">${c?.name||'-'}</div>
       <div style="font-size:14px;color:var(--tx2);margin-top:2px">No.${v.videoNo} · ${ed?.name||'-'}</div>
     </div>
-    <div style="font-size:12px;color:var(--tx2);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em">ステータス</div>
+    <div style="font-size:12px;color:var(--tx2);font-weight:600;margin-bottom:6px;letter-spacing:0.05em">ステータス</div>
     <div style="border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">${optRows}</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px;margin-bottom:12px">
       <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">編集完了</div><div style="font-weight:500">${fmt(v.editDueDate)}</div></div>
@@ -542,75 +571,326 @@ function updateStatus(videoId,newStatus){
   closeModal();navigate(PAGE);
 }
 
-// Quick add: just pick client + post date → auto-calculate all dates
-function showQuickAddModal(){
+/* ========== ADD MODAL (Step 1: type select) ========== */
+function showAddModal(){
+  showModal(`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2>案件を追加</h2>
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:16px">契約タイプを選んでください</p>
+    <div class="type-selector">
+      <div class="type-btn" onclick="showSubscriptionForm()">
+        <i class="ti ti-refresh"></i>
+        <div class="type-label">サブスク</div>
+        <div class="type-desc">毎月定期投稿</div>
+      </div>
+      <div class="type-btn" onclick="showSpotForm()">
+        <i class="ti ti-bolt"></i>
+        <div class="type-label">単発</div>
+        <div class="type-desc">都度ご依頼</div>
+      </div>
+    </div>
+  </div>`);
+}
+
+/* ========== SUBSCRIPTION FORM ========== */
+function showSubscriptionForm(clientId){
   const activeClients=db.clients.filter(c=>c.status==='active');
   const copts=activeClients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
   const eopts=db.users.filter(u=>u.isActive&&(u.role==='editor'||u.role==='admin')).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+  const sel=clientId?`<option value="${clientId}" selected>${getClient(clientId)?.name}</option>`:copts;
   const today=new Date().toISOString().split('T')[0];
   showModal(`<div class="modal">
     <div class="modal-handle"></div>
-    <h2>案件をすばやく追加</h2>
-    <p style="font-size:13px;color:var(--tx2);margin-bottom:16px;line-height:1.6">投稿日を入力するだけで、編集完了日・お客様提出日・素材提出日が自動で計算されます。</p>
+    <h2>🔄 サブスク案件を追加</h2>
     <div class="form-grid">
-      <div class="full field"><label>クライアント *</label><select id="qa-client">${copts}</select></div>
-      <div class="full field"><label>投稿日 *</label><input type="date" id="qa-post" value="${today}" oninput="updateQuickAddPreview()"></div>
+      <div class="full field"><label>クライアント *</label><select id="sf-client">${sel}</select></div>
+      <div class="field"><label>月本数 *</label><input type="number" id="sf-count" value="8" min="1"></div>
+      <div class="field"><label>契約期間（ヶ月）</label><input type="number" id="sf-months" value="12" min="1" placeholder="12"></div>
       <div class="full field">
-        <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;font-size:13px" id="qa-preview">
-          <div style="font-weight:600;margin-bottom:8px;color:var(--tx2)">自動計算される日程</div>
-          <div id="qa-preview-dates"></div>
+        <label>投稿曜日 *</label>
+        <div class="check-group" id="sf-days-group">
+          ${['月','火','水','木','金','土','日'].map(d=>`<div class="check-item" onclick="toggleDay(this,'${d}')" data-day="${d}">${d}</div>`).join('')}
         </div>
       </div>
-      <div class="field"><label>動画No.</label><input type="number" id="qa-no" min="1" placeholder="例: 91"></div>
-      <div class="full field"><label>編集担当</label><select id="qa-editor"><option value="">-</option>${eopts}</select></div>
+      <div class="field"><label>開始日</label><input type="date" id="sf-start" value="${today}"></div>
+      <div class="full field">
+        <label>プラットフォーム</label>
+        <div class="check-group">
+          ${['Instagram','TikTok','YouTube','X'].map(p=>`<div class="check-item" onclick="togglePlatform(this,'${p}')" data-plat="${p}">${p}</div>`).join('')}
+        </div>
+      </div>
+      <div class="full field">
+        <label>投稿代行</label>
+        <div class="check-group">
+          <div class="check-item selected" id="post-yes" onclick="setPosting(true)">投稿まで代行</div>
+          <div class="check-item" id="post-no" onclick="setPosting(false)">コンテンツ渡して完了</div>
+        </div>
+      </div>
+      <div class="full field"><label>編集担当</label><select id="sf-editor"><option value="">-</option>${eopts}</select></div>
     </div>
+    <p style="font-size:12px;color:var(--tx2);margin-top:4px">※ 契約期間分のスケジュールを自動生成します</p>
     <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal()">キャンセル</button>
-      <button class="btn" style="width:auto;padding:10px 20px" onclick="saveQuickAdd()">追加する</button>
+      <button class="btn-ghost" onclick="showAddModal()">戻る</button>
+      <button class="btn" style="width:auto;padding:10px 20px" onclick="saveSubscription()">追加する</button>
     </div>
   </div>`);
-  updateQuickAddPreview();
+  window._postingIncluded=true;
+  window._selectedDays=[];
+  window._selectedPlatforms=[];
 }
 
-function updateQuickAddPreview(){
-  const postDateEl=document.getElementById('qa-post');
-  const previewEl=document.getElementById('qa-preview-dates');
-  if(!postDateEl||!previewEl)return;
-  const postDate=postDateEl.value;
-  if(!postDate){previewEl.innerHTML='<span style="color:var(--tx2)">投稿日を入力してください</span>';return;}
-  const clientSubmit=addDays(postDate,-2);
-  const editDue=addDays(postDate,-4);
-  const shootDate=addDays(postDate,-8);
-  previewEl.innerHTML=`
+function toggleDay(el,day){
+  if(!window._selectedDays)window._selectedDays=[];
+  if(window._selectedDays.includes(day)){window._selectedDays=window._selectedDays.filter(d=>d!==day);el.classList.remove('selected');}
+  else{window._selectedDays.push(day);el.classList.add('selected');}
+}
+function togglePlatform(el,p){
+  if(!window._selectedPlatforms)window._selectedPlatforms=[];
+  if(window._selectedPlatforms.includes(p)){window._selectedPlatforms=window._selectedPlatforms.filter(x=>x!==p);el.classList.remove('selected');}
+  else{window._selectedPlatforms.push(p);el.classList.add('selected');}
+}
+function setPosting(val){
+  window._postingIncluded=val;
+  document.getElementById('post-yes')?.classList.toggle('selected',val);
+  document.getElementById('post-no')?.classList.toggle('selected',!val);
+}
+
+function saveSubscription(){
+  const clientId=document.getElementById('sf-client').value;
+  const count=parseInt(document.getElementById('sf-count').value)||8;
+  const months=parseInt(document.getElementById('sf-months').value)||12;
+  const startDate=document.getElementById('sf-start').value;
+  const days=window._selectedDays||[];
+  const editorId=document.getElementById('sf-editor').value;
+  if(!clientId){alert('クライアントを選択してください');return;}
+  if(!days.length){alert('投稿曜日を選択してください');return;}
+  // Update client info
+  const c=getClient(clientId);
+  if(c){
+    c.planType='subscription';
+    c.monthlyCount=count;
+    c.contractMonths=months;
+    c.postDays=days;
+    c.contractStart=startDate;
+    c.platforms=window._selectedPlatforms||[];
+    c.postingIncluded=window._postingIncluded!==false;
+    if(editorId)c.memberIds.editor=editorId;
+  }
+  // Generate full schedule
+  const total=count*months;
+  const schedules=genSchedule(startDate,days,total);
+  const maxNo=db.videos.filter(v=>v.clientId===clientId&&(v.status==='posted'||v.status==='delivered')).length;
+  schedules.forEach((s,i)=>{
+    db.videos.push({id:gid(),clientId,videoNo:maxNo+i+1,status:'material_submitted',
+      editDueDate:s.editDueDate,clientSubmitDate:s.clientSubmitDate,postDate:s.postDate,editorId});
+  });
+  const pd=new Date(startDate);CALY=pd.getFullYear();CALM=pd.getMonth();
+  saveDB();closeModal();navigate('calendar');
+}
+
+/* ========== SPOT FORM ========== */
+function showSpotForm(clientId){
+  const activeClients=db.clients.filter(c=>c.status==='active');
+  const copts=activeClients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  const eopts=db.users.filter(u=>u.isActive&&(u.role==='editor'||u.role==='admin')).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+  const sel=clientId?`<option value="${clientId}" selected>${getClient(clientId)?.name}</option>`:copts;
+  const today=new Date().toISOString().split('T')[0];
+  showModal(`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2>⚡ 単発案件を追加</h2>
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:16px">投稿日を入力するとスケジュールが自動計算されます</p>
+    <div class="form-grid">
+      <div class="full field"><label>クライアント *</label><select id="sp-client">${sel}</select></div>
+      <div class="full field"><label>投稿日 *</label><input type="date" id="sp-post" value="${today}" oninput="updateSpotPreview()"></div>
+      <div class="full" id="sp-preview" style="background:var(--bg2);border-radius:var(--r2);padding:12px;font-size:13px;margin-bottom:4px"></div>
+      <div class="field"><label>動画No.（空白で自動）</label><input type="number" id="sp-no" min="1" placeholder="自動"></div>
+      <div class="full field">
+        <label>プラットフォーム</label>
+        <div class="check-group">
+          ${['Instagram','TikTok','YouTube','X'].map(p=>`<div class="check-item" onclick="togglePlatform(this,'${p}')" data-plat="${p}">${p}</div>`).join('')}
+        </div>
+      </div>
+      <div class="full field">
+        <label>納品形態</label>
+        <div class="check-group">
+          <div class="check-item selected" id="sp-post-yes" onclick="setPosting(true)">投稿まで代行</div>
+          <div class="check-item" id="sp-post-no" onclick="setPosting(false)">コンテンツ渡して完了</div>
+        </div>
+      </div>
+      <div class="full field"><label>編集担当</label><select id="sp-editor"><option value="">-</option>${eopts}</select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="showAddModal()">戻る</button>
+      <button class="btn" style="width:auto;padding:10px 20px" onclick="saveSpot()">追加する</button>
+    </div>
+  </div>`);
+  window._postingIncluded=true;window._selectedPlatforms=[];
+  updateSpotPreview();
+}
+
+function updateSpotPreview(){
+  const el=document.getElementById('sp-post');const prev=document.getElementById('sp-preview');
+  if(!el||!prev)return;
+  const p=el.value;
+  if(!p){prev.innerHTML='<span style="color:var(--tx2)">投稿日を入力してください</span>';return;}
+  prev.innerHTML=`<div style="font-weight:600;margin-bottom:8px;color:var(--tx2)">自動計算される日程</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📷 素材提出日</div><div style="font-weight:600">${fmt(shootDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了日</div><div style="font-weight:600">${fmt(editDue)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出日</div><div style="font-weight:600">${fmt(clientSubmit)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📅 投稿日</div><div style="font-weight:600">${fmt(postDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📷 素材提出日</div><div style="font-weight:600">${fmt(addDays(p,-8))}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了日</div><div style="font-weight:600">${fmt(addDays(p,-4))}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出日</div><div style="font-weight:600">${fmt(addDays(p,-2))}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📅 投稿日</div><div style="font-weight:600">${fmt(p)}</div></div>
     </div>`;
 }
 
-function saveQuickAdd(){
-  const clientId=document.getElementById('qa-client').value;
-  const postDate=document.getElementById('qa-post').value;
-  const no=parseInt(document.getElementById('qa-no').value)||null;
+function saveSpot(){
+  const clientId=document.getElementById('sp-client').value;
+  const postDate=document.getElementById('sp-post').value;
   if(!clientId||!postDate){alert('クライアントと投稿日を入力してください');return;}
-  const clientSubmit=addDays(postDate,-2);
-  const editDue=addDays(postDate,-4);
-  const shootDate=addDays(postDate,-8);
-  // Auto-assign video number if not specified
+  const no=parseInt(document.getElementById('sp-no').value)||null;
   const existingNos=db.videos.filter(v=>v.clientId===clientId).map(v=>v.videoNo);
   const videoNo=no||(existingNos.length?Math.max(...existingNos)+1:1);
-  db.videos.push({
-    id:gid(),clientId,videoNo,status:'material_submitted',
-    shootDate,editDueDate:editDue,clientSubmitDate:clientSubmit,postDate,
-    editorId:document.getElementById('qa-editor').value
-  });
-  // Jump to the month of the post date
+  const c=getClient(clientId);
+  if(c){c.planType='spot';c.platforms=window._selectedPlatforms||[];c.postingIncluded=window._postingIncluded!==false;}
+  db.videos.push({id:gid(),clientId,videoNo,status:'material_submitted',
+    editDueDate:addDays(postDate,-4),clientSubmitDate:addDays(postDate,-2),postDate,
+    editorId:document.getElementById('sp-editor').value});
   const pd=new Date(postDate);CALY=pd.getFullYear();CALM=pd.getMonth();
   saveDB();closeModal();navigate('calendar');
 }
 
+/* ========== OVERVIEW ========== */
+function renderOverview(){
+  const today=new Date().toISOString().split('T')[0];
+  const ym=today.substr(0,7);
+  const tabs=`<div class="view-tabs" style="margin-bottom:1rem">
+    <button class="view-tab ${OV_TAB==='subscription'?'active':''}" onclick="setOvTab('subscription')">🔄 サブスク</button>
+    <button class="view-tab ${OV_TAB==='spot'?'active':''}" onclick="setOvTab('spot')">⚡ 単発</button>
+  </div>`;
+
+  const activeClients=db.clients.filter(c=>c.status==='active'&&c.planType===OV_TAB);
+
+  if(!activeClients.length)return`<div style="font-size:18px;font-weight:700;margin-bottom:1rem">管理</div>${tabs}<div class="empty">該当するクライアントがいません</div>`;
+
+  const rows=activeClients.map(c=>{
+    const vids=db.videos.filter(v=>v.clientId===c.id);
+    const thisMonth=vids.filter(v=>v.postDate&&v.postDate.startsWith(ym));
+    const posted=thisMonth.filter(v=>v.status==='posted'||v.status==='delivered').length;
+    const total=c.monthlyCount||thisMonth.length||0;
+    const overdue=vids.filter(v=>v.status!=='posted'&&v.status!=='delivered'&&v.postDate&&daysUntil(v.postDate)<0).length;
+    const upcoming=vids.filter(v=>v.status!=='posted'&&v.status!=='delivered').sort((a,b)=>(a.postDate||'').localeCompare(b.postDate||''))[0];
+    const pct=total>0?Math.round(posted/total*100):0;
+    const fillCls=overdue>0?'danger':pct>=80?'':'warn';
+    const editor=getUser(c.memberIds?.editor);
+    const statusDot=overdue>0?'var(--red)':pct===100?'var(--grn)':'var(--amb)';
+
+    return`<tr onclick="showClientOverview('${c.id}')" style="cursor:pointer">
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="width:8px;height:8px;border-radius:50%;background:${statusDot};flex-shrink:0;display:inline-block"></span>
+          <div>
+            <div style="font-weight:600;font-size:13px">${c.name}</div>
+            ${c.postDays?.length?`<div style="font-size:11px;color:var(--tx2)">${c.postDays.join('・')} / 月${c.monthlyCount}本</div>`:''}
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center">
+        <div style="font-size:13px;font-weight:600">${posted}/${total}</div>
+        <div class="progress-bar" style="margin-top:4px"><div class="progress-fill ${fillCls}" style="width:${pct}%"></div></div>
+      </td>
+      <td style="text-align:center">${overdue>0?`<span style="color:var(--red);font-weight:600">${overdue}本遅延</span>`:'<span style="color:var(--grn)">順調</span>'}</td>
+      <td style="font-size:12px;color:var(--tx2)">${upcoming?fmt(upcoming.postDate):'-'}</td>
+      <td style="font-size:12px;color:var(--tx2)">${editor?.name||'-'}</td>
+    </tr>`;
+  }).join('');
+
+  return`<div style="font-size:18px;font-weight:700;margin-bottom:1rem">管理</div>
+    ${tabs}
+    <div style="background:var(--bg);border-radius:var(--r);border:1px solid var(--bd);overflow:auto">
+      <table class="overview-table">
+        <thead><tr>
+          <th>クライアント</th>
+          <th style="text-align:center">今月の進捗</th>
+          <th style="text-align:center">状態</th>
+          <th>次の投稿日</th>
+          <th>編集担当</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--tx2);margin-top:8px;text-align:center">行をタップで詳細を表示</p>`;
+}
+
+function setOvTab(t){OV_TAB=t;navigate('overview');}
+
+function showClientOverview(clientId){
+  const c=getClient(clientId);if(!c)return;
+  const vids=db.videos.filter(v=>v.clientId===clientId&&v.status!=='posted'&&v.status!=='delivered').sort((a,b)=>(a.postDate||'').localeCompare(b.postDate||'')).slice(0,5);
+  const editor=getUser(c.memberIds?.editor);const dir=getUser(c.memberIds?.director);
+  const vidRows=vids.map(v=>`<div class="video-card" onclick="closeModal();showVideoModal('${v.id}')">
+    <div class="vc-bar ${getBarCls(v,CALVIEW)}"></div>
+    <div class="vc-body"><div class="vc-name">No.${v.videoNo}</div><div class="vc-meta">${SM[v.status]} · ${fmt(v.postDate)}</div></div>
+    <i class="ti ti-chevron-right" style="color:var(--tx3)"></i>
+  </div>`).join('')||'<div class="empty" style="padding:1rem">進行中の動画はありません</div>';
+
+  const links=[
+    c.links?.drive?`<a href="${c.links.drive}" target="_blank" class="lbtn"><i class="ti ti-folder"></i>Drive</a>`:'',
+    c.links?.gemini?`<a href="${c.links.gemini}" target="_blank" class="lbtn"><i class="ti ti-sparkles"></i>Gemini</a>`:'',
+  ].filter(Boolean).join('');
+
+  const dayEditBtn=isAdmin()||isDir()?`<button class="btn-ghost" style="font-size:12px;padding:6px 10px" onclick="showChangeDaysModal('${c.id}')"><i class="ti ti-edit"></i>投稿曜日を変更</button>`:'';
+
+  showModal(`<div class="modal">
+    <div class="modal-handle"></div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:18px;font-weight:700">${c.name}</div>
+      <div style="font-size:13px;color:var(--tx2);margin-top:4px">${c.planType==='subscription'?'🔄 サブスク':'⚡ 単発'} · ${c.postDays?.join('・')||'-'} · 月${c.monthlyCount}本</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;margin-bottom:14px">
+      <div><div style="font-size:11px;color:var(--tx2);margin-bottom:2px">契約期間</div><div style="font-weight:500">${c.contractMonths?c.contractMonths+'ヶ月':'-'}</div></div>
+      <div><div style="font-size:11px;color:var(--tx2);margin-bottom:2px">開始日</div><div style="font-weight:500">${fmt(c.contractStart)}</div></div>
+      <div><div style="font-size:11px;color:var(--tx2);margin-bottom:2px">ディレクター</div><div style="font-weight:500">${dir?.name||'-'}</div></div>
+      <div><div style="font-size:11px;color:var(--tx2);margin-bottom:2px">編集担当</div><div style="font-weight:500">${editor?.name||'-'}</div></div>
+    </div>
+    ${links?`<div style="display:flex;gap:6px;margin-bottom:12px">${links}</div>`:''}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:13px;font-weight:600">進行中の動画</div>
+      ${dayEditBtn}
+    </div>
+    ${vidRows}
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeModal()">閉じる</button></div>
+  </div>`);
+}
+
+function showChangeDaysModal(clientId){
+  const c=getClient(clientId);if(!c)return;
+  window._selectedDays=[...(c.postDays||[])];
+  showModal(`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2>${c.name} の投稿曜日を変更</h2>
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:16px">変更後、今日以降の未投稿スケジュールを自動で再生成します。</p>
+    <div class="field">
+      <label>新しい投稿曜日</label>
+      <div class="check-group">
+        ${['月','火','水','木','金','土','日'].map(d=>`<div class="check-item ${(c.postDays||[]).includes(d)?'selected':''}" onclick="toggleDay(this,'${d}')" data-day="${d}">${d}</div>`).join('')}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn" style="width:auto;padding:10px 20px" onclick="saveChangeDays('${clientId}')">変更して再生成</button>
+    </div>
+  </div>`);
+}
+
+function saveChangeDays(clientId){
+  const newDays=window._selectedDays||[];
+  if(!newDays.length){alert('投稿曜日を選択してください');return;}
+  const c=getClient(clientId);if(!c)return;
+  c.postDays=newDays;
+  regenerateFutureVideos(clientId,newDays);
+  saveDB();closeModal();navigate('overview');
+}
+
+/* ========== PROSPECTS ========== */
 function renderProspects(){
   const search=PS.toLowerCase();const sf=PF;
   const nonActive=db.clients.filter(c=>c.status!=='active').filter(c=>{
@@ -621,12 +901,12 @@ function renderProspects(){
   const groups=[
     {key:'negotiating',label:'商談中',color:'var(--amb)'},
     {key:'consulting',label:'ご相談',color:'var(--blu)'},
-    {key:'ended',label:'契約終了',color:'var(--tx3)'},
+    {key:'ended',label:'契約終了',color:'var(--tx2)'},
     {key:'lost',label:'失注',color:'var(--red)'},
   ];
   const addBtn=isAdmin()?`<button class="btn-ghost" onclick="showAddClientModal()"><i class="ti ti-plus"></i>追加</button>`:'';
   const filterHtml=`<div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px">
-    ${[{v:'',l:'すべて'},{v:'negotiating',l:'商談中'},{v:'consulting',l:'ご相談'},{v:'ended',l:'終了'},{v:'lost',l:'失注'}].map(o=>`<button class="view-tab ${PF===o.v?'active':''}" onclick="setPF('${o.v}')" style="flex-shrink:0">${o.l}</button>`).join('')}
+    ${[{v:'',l:'すべて'},{v:'negotiating',l:'商談中'},{v:'consulting',l:'ご相談'},{v:'ended',l:'終了'},{v:'lost',l:'失注'}].map(o=>`<button class="view-tab ${PF===o.v?'active':''}" onclick="setPF('${o.v}')">${o.l}</button>`).join('')}
   </div>`;
   const searchHtml=`<input type="text" placeholder="名前・業種で検索..." value="${PS}" oninput="setPS(this.value)" style="width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);font-size:14px;margin-bottom:12px">`;
   const groupsHtml=groups.map(g=>{
@@ -657,7 +937,7 @@ function setPF(v){PF=v;navigate('prospects');}
 function showProspectModal(clientId){
   const c=db.clients.find(x=>x.id===clientId);if(!c)return;
   const dir=getUser(c.memberIds?.director);
-  const scolor={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx3)',lost:'var(--red)',active:'var(--grn)'};
+  const scolor={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx2)',lost:'var(--red)',active:'var(--grn)'};
   showModal(`<div class="modal">
     <div class="modal-handle"></div>
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
@@ -673,10 +953,18 @@ function showProspectModal(clientId){
     ${c.goal?`<div style="padding:12px;background:var(--bg2);border-radius:var(--r2);font-size:14px;margin-bottom:10px"><div style="font-size:11px;color:var(--tx2);margin-bottom:4px">目標・課題</div>${c.goal}</div>`:''}
     ${c.memo?`<div style="padding:12px;background:var(--bg2);border-radius:var(--r2);font-size:14px;margin-bottom:10px"><div style="font-size:11px;color:var(--tx2);margin-bottom:4px">備考</div>${c.memo}</div>`:''}
     <div class="modal-footer">
+      ${isAdmin()?`<button class="btn-red" onclick="deleteClient('${c.id}')"><i class="ti ti-trash"></i>削除</button>`:''}
       ${isAdmin()?`<button class="btn-ghost" onclick="closeModal();showEditProspectModal('${c.id}')"><i class="ti ti-edit"></i>編集</button>`:''}
       <button class="btn-ghost" onclick="closeModal()">閉じる</button>
     </div>
   </div>`);
+}
+
+function deleteClient(clientId){
+  if(!confirm('このクライアントを削除しますか？\nこの操作は元に戻せません。'))return;
+  db.clients=db.clients.filter(c=>c.id!==clientId);
+  db.videos=db.videos.filter(v=>v.clientId!==clientId);
+  saveDB();closeModal();navigate('prospects');
 }
 
 function showEditProspectModal(clientId){
@@ -709,6 +997,7 @@ function saveEditProspect(id){
   saveDB();closeModal();navigate('prospects');
 }
 
+/* ========== MEMBERS ========== */
 function renderMembers(){
   const rows=db.users.map(u=>`<tr>
     <td style="font-weight:500">${u.name}</td>
@@ -731,18 +1020,9 @@ function showAddClientModal(){
       <div class="full field"><label>クライアント名 *</label><input id="nc-n" placeholder="株式会社〇〇"></div>
       <div class="field"><label>担当者名</label><input id="nc-c" placeholder="山田さん"></div>
       <div class="field"><label>業種</label><input id="nc-i" placeholder="建設業"></div>
-      <div class="full field"><label>契約タイプ</label><select id="nc-ct"><option value="regular">定期投稿型</option><option value="spot">単発型</option><option value="delivery">納品型</option></select></div>
-      <div class="full field"><label>施策内容</label><select id="nc-sv"><option>SNS運用代行</option><option>動画編集のみ</option><option>内製化研修</option><option>広告動画制作</option><option>SNSアドバイザー</option></select></div>
       <div class="field"><label>ステータス</label><select id="nc-st"><option value="consulting">ご相談</option><option value="negotiating">商談中</option><option value="active">契約中</option></select></div>
       <div class="field"><label>紹介者</label><input id="nc-r" placeholder="直接 / 〇〇さん"></div>
-      <div class="field"><label>契約開始日</label><input type="date" id="nc-s"></div>
-      <div class="field"><label>月本数</label><input type="number" id="nc-cnt" value="8" min="1"></div>
-      <div class="field"><label>投稿曜日（例: 水,金）</label><input id="nc-d" placeholder="水,金"></div>
-      <div class="field"><label>ディレクター</label><select id="nc-dir"><option value="">-</option>${uopts}</select></div>
-      <div class="field"><label>編集者</label><select id="nc-ed"><option value="">-</option>${uopts}</select></div>
-      <div class="full field"><label>Google Drive URL</label><input id="nc-drive" placeholder="https://drive.google.com/..."></div>
-      <div class="full field"><label>Gemini URL</label><input id="nc-gem" placeholder="https://gemini.google.com/..."></div>
-      ${isAdmin()?'<div class="full field"><label>契約金額</label><input type="number" id="nc-amt" placeholder="150000"></div>':''}
+      <div class="full field"><label>担当ディレクター</label><select id="nc-dir"><option value="">-</option>${uopts}</select></div>
       <div class="full field"><label>目標・課題</label><textarea id="nc-g" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
@@ -755,64 +1035,9 @@ function showAddClientModal(){
 function saveNewClient(){
   const name=document.getElementById('nc-n').value.trim();
   if(!name){alert('クライアント名を入力してください');return;}
-  const days=document.getElementById('nc-d').value.split(',').map(d=>d.trim()).filter(Boolean);
-  const nc={id:gid(),name,contactName:document.getElementById('nc-c').value.trim(),industry:document.getElementById('nc-i').value.trim(),contractType:document.getElementById('nc-ct').value,serviceType:document.getElementById('nc-sv').value,referrer:document.getElementById('nc-r').value.trim(),status:document.getElementById('nc-st').value,contractStart:document.getElementById('nc-s').value,contractPeriod:'',monthlyCount:parseInt(document.getElementById('nc-cnt').value)||0,postDays:days,goal:document.getElementById('nc-g').value.trim(),memo:'',contractAmount:isAdmin()?(parseInt(document.getElementById('nc-amt')?.value)||0):0,memberIds:{director:document.getElementById('nc-dir').value,editor:document.getElementById('nc-ed').value},links:{drive:document.getElementById('nc-drive').value.trim(),gemini:document.getElementById('nc-gem').value.trim(),sheet:''}};
+  const nc={id:gid(),name,contactName:document.getElementById('nc-c').value.trim(),industry:document.getElementById('nc-i').value.trim(),planType:'subscription',serviceType:'',platforms:[],postingIncluded:true,referrer:document.getElementById('nc-r').value.trim(),status:document.getElementById('nc-st').value,contractStart:'',contractMonths:0,monthlyCount:0,postDays:[],goal:document.getElementById('nc-g').value.trim(),memo:'',contractAmount:0,memberIds:{director:document.getElementById('nc-dir').value,editor:''},links:{drive:'',gemini:''}};
   db.clients.push(nc);
-  if(nc.status==='active'&&days.length&&nc.monthlyCount>0){
-    genSched(nc.contractStart||new Date().toISOString().split('T')[0],days,nc.monthlyCount*2).forEach((s,i)=>{
-      db.videos.push({id:gid(),clientId:nc.id,videoNo:i+1,status:'material_submitted',shootDate:s.shootDate,editDueDate:s.editDueDate,clientSubmitDate:s.clientSubmitDate,postDate:s.postDate,editorId:nc.memberIds.editor||''});
-    });
-  }
-  saveDB();closeModal();navigate(nc.status==='active'?'calendar':'prospects');
-}
-
-function genSched(start,pdays,count){
-  const dm={'日':0,'月':1,'火':2,'水':3,'木':4,'金':5,'土':6};
-  const td=pdays.map(d=>dm[d]).filter(d=>d!==undefined);
-  if(!td.length)return[];
-  const res=[];const cur=new Date(start);cur.setHours(0,0,0,0);
-  while(res.length<count){
-    if(td.includes(cur.getDay())){
-      const p=new Date(cur);
-      res.push({
-        postDate:p.toISOString().split('T')[0],
-        clientSubmitDate:addDays(p.toISOString().split('T')[0],-2),
-        editDueDate:addDays(p.toISOString().split('T')[0],-4),
-        shootDate:addDays(p.toISOString().split('T')[0],-8)
-      });
-    }
-    cur.setDate(cur.getDate()+1);
-  }
-  return res;
-}
-
-function showAddVideoModal(){
-  const copts=db.clients.filter(c=>c.status==='active').map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
-  const eopts=db.users.filter(u=>u.isActive&&(u.role==='editor'||u.role==='admin')).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
-  showModal(`<div class="modal">
-    <div class="modal-handle"></div>
-    <h2>動画追加</h2>
-    <div class="form-grid">
-      <div class="full field"><label>クライアント</label><select id="nv-c">${copts}</select></div>
-      <div class="field"><label>動画No.</label><input type="number" id="nv-no" min="1"></div>
-      <div class="field"><label>ステータス</label><select id="nv-s"><option value="material_submitted">素材提出済</option><option value="editing">編集中</option><option value="submitted_to_client">お客様提出済</option><option value="posted">投稿済</option><option value="delivered">納品完了</option></select></div>
-      <div class="field"><label>編集完了日</label><input type="date" id="nv-e"></div>
-      <div class="field"><label>お客様提出日</label><input type="date" id="nv-cs"></div>
-      <div class="field"><label>投稿日</label><input type="date" id="nv-p"></div>
-      <div class="full field"><label>編集担当</label><select id="nv-ed"><option value="">-</option>${eopts}</select></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal()">キャンセル</button>
-      <button class="btn" style="width:auto;padding:10px 20px" onclick="saveNewVideo()">追加</button>
-    </div>
-  </div>`);
-}
-
-function saveNewVideo(){
-  const clientId=document.getElementById('nv-c').value;const no=parseInt(document.getElementById('nv-no').value);
-  if(!clientId||!no){alert('クライアントと動画No.を入力してください');return;}
-  db.videos.push({id:gid(),clientId,videoNo:no,status:document.getElementById('nv-s').value,editDueDate:document.getElementById('nv-e').value,clientSubmitDate:document.getElementById('nv-cs').value,postDate:document.getElementById('nv-p').value,editorId:document.getElementById('nv-ed').value});
-  saveDB();closeModal();navigate('calendar');
+  saveDB();closeModal();navigate('prospects');
 }
 
 function showAddMemberModal(){
