@@ -10,13 +10,12 @@
   --bg:#fff;--bg2:#f7f7f5;--bg3:#efefec;
   --tx:#111;--tx2:#888;--tx3:#bbb;
   --bd:#e8e8e4;
-  --acc:#111;
-  --grn:#2d7a3a;--grnbg:#eaf5ec;
-  --blu:#1a5fa0;--blubg:#e8f0fb;
-  --amb:#8a5200;--ambbg:#fdf3e3;
-  --pur:#5c44c2;--purbg:#f0eeff;
-  --red:#b03030;--redbg:#fdeaea;
-  --teal:#0e6b58;--tealbg:#e4f5f1;
+  --grn:#2d7a3a;--grnbg:#eaf5ec;--grnbr:#a8d8b0;
+  --blu:#1a5fa0;--blubg:#e8f0fb;--blubr:#93baea;
+  --amb:#8a5200;--ambbg:#fdf3e3;--ambbr:#e8b566;
+  --pur:#5c44c2;--purbg:#f0eeff;--purbr:#b3a5e8;
+  --red:#b03030;--redbg:#fdeaea;--redbr:#e8a0a0;
+  --teal:#0e6b58;--tealbg:#e4f5f1;--tealbr:#7dcfbe;
   --r:12px;--r2:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -26,53 +25,43 @@ input,select,textarea,button{font-family:inherit;font-size:15px}
 button{cursor:pointer}
 a{color:var(--blu);text-decoration:none}
 
-/* Login */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem;background:var(--bg2)}
 .login-card{background:var(--bg);border-radius:var(--r);padding:2rem;width:100%;max-width:360px;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
 .login-card h1{font-size:22px;font-weight:600;margin-bottom:6px}
 .login-card p{font-size:13px;color:var(--tx2);margin-bottom:1.5rem}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:12px;color:var(--tx2);margin-bottom:5px;font-weight:500}
-.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);color:var(--tx);font-size:15px}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--acc)}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);color:var(--tx)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#aaa}
 .field textarea{resize:vertical}
-.btn{padding:13px;background:var(--acc);color:#fff;border:none;border-radius:var(--r2);font-size:15px;font-weight:600;width:100%;cursor:pointer}
+.btn{padding:13px;background:var(--tx);color:#fff;border:none;border-radius:var(--r2);font-size:15px;font-weight:600;width:100%;cursor:pointer}
 .btn:active{opacity:0.85}
 .btn-ghost{padding:10px 16px;background:transparent;color:var(--tx);border:1px solid var(--bd);border-radius:var(--r2);font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .btn-ghost:active{background:var(--bg2)}
-.btn-danger{padding:10px 16px;background:transparent;color:var(--red);border:1px solid #f0b8b8;border-radius:var(--r2);font-size:14px;cursor:pointer}
 .err{color:var(--red);font-size:13px;margin-top:8px}
 
-/* App shell */
 #app-shell{display:flex;flex-direction:column;min-height:100vh}
-
-/* Top bar */
 #topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1rem;height:52px;background:var(--bg);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:20}
 #topbar-title{font-size:16px;font-weight:600}
 .icon-btn{width:36px;height:36px;background:none;border:none;cursor:pointer;color:var(--tx);display:flex;align-items:center;justify-content:center;border-radius:var(--r2)}
 .icon-btn:active{background:var(--bg2)}
 .icon-btn i{font-size:20px}
 
-/* Bottom nav */
 #bottom-nav{display:flex;background:var(--bg);border-top:1px solid var(--bd);position:fixed;bottom:0;left:0;right:0;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
 .bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0;cursor:pointer;color:var(--tx3);font-size:10px;gap:3px;border:none;background:none}
 .bnav-item i{font-size:22px}
-.bnav-item.active{color:var(--acc)}
+.bnav-item.active{color:var(--tx)}
 .bnav-item span{font-weight:500}
 
-/* Content */
-#content{flex:1;padding:1rem;padding-bottom:80px;max-width:600px;margin:0 auto;width:100%}
+#content{flex:1;padding:1rem;padding-bottom:80px;max-width:640px;margin:0 auto;width:100%}
 
-/* Drawer */
 #drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:30}
 #drawer-overlay.open{display:block}
 #drawer{position:fixed;top:0;right:0;bottom:0;width:280px;background:var(--bg);z-index:40;transform:translateX(100%);transition:transform 0.25s;display:flex;flex-direction:column;padding:1.5rem}
 #drawer.open{transform:translateX(0)}
 .drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.drawer-user{display:flex;align-items:center;gap:10px}
 .avatar{width:38px;height:38px;border-radius:50%;background:var(--blubg);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--blu);flex-shrink:0}
 
-/* Modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .modal{background:var(--bg);border-radius:var(--r) var(--r) 0 0;padding:1.5rem;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
 .modal-handle{width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 1.25rem}
@@ -81,45 +70,63 @@ a{color:var(--blu);text-decoration:none}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form-grid .full{grid-column:1/-1}
 
-/* Status pill */
-.pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap}
-.p-material{background:var(--ambbg);color:var(--amb)}
-.p-editing{background:var(--blubg);color:var(--blu)}
-.p-submitted{background:var(--purbg);color:var(--pur)}
-.p-posted{background:var(--grnbg);color:var(--grn)}
-.p-delivered{background:var(--tealbg);color:var(--teal)}
-.p-active{background:var(--grnbg);color:var(--grn)}
-.p-negotiating{background:var(--ambbg);color:var(--amb)}
-.p-consulting{background:var(--blubg);color:var(--blu)}
-.p-ended{background:var(--bg3);color:var(--tx2)}
-.p-lost{background:var(--redbg);color:var(--red)}
+/* Calendar */
+.cal-nav{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.cal-nav-btn{background:none;border:1px solid var(--bd);border-radius:var(--r2);padding:7px 12px;cursor:pointer;color:var(--tx);font-size:13px;display:flex;align-items:center}
+.cal-nav-btn:active{background:var(--bg2)}
+.cal-title{font-size:16px;font-weight:600;flex:1;text-align:center}
+.view-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.view-tab{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid var(--bd);cursor:pointer;background:var(--bg);color:var(--tx2);white-space:nowrap;flex-shrink:0}
+.view-tab.active{background:var(--tx);color:#fff;border-color:var(--tx)}
 
-/* Calendar list */
-.day-group{margin-bottom:1.25rem}
-.day-label{font-size:12px;font-weight:600;color:var(--tx2);padding:6px 0;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.day-label.today-label{color:var(--acc)}
-.day-dot{width:6px;height:6px;border-radius:50%;background:var(--tx3)}
-.day-dot.today-dot{background:var(--acc)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.cal-hdr{background:var(--bg2);text-align:center;padding:7px 2px;font-size:11px;font-weight:600;color:var(--tx2)}
+.cal-hdr.sun{color:var(--red)}
+.cal-hdr.sat{color:var(--blu)}
+.cal-cell{background:var(--bg);min-height:72px;padding:4px 3px;cursor:pointer;position:relative}
+.cal-cell:active{background:var(--bg2)}
+.cal-cell.other{background:#fafaf8}
+.cal-cell.today .cal-dn{background:var(--tx);color:#fff;border-radius:50%}
+.cal-dn{width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;margin-bottom:2px}
+.cal-dn.sun{color:var(--red)}
+.cal-dn.sat{color:var(--blu)}
+.cal-ev{font-size:10px;padding:2px 4px;border-radius:3px;margin-bottom:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;line-height:1.4;cursor:pointer}
+/* Event colors by status */
+.ev-material{background:var(--ambbg);color:var(--amb)}
+.ev-editing{background:var(--blubg);color:var(--blu)}
+.ev-submitted{background:var(--purbg);color:var(--pur)}
+.ev-posted{background:var(--grnbg);color:var(--grn)}
+.ev-delivered{background:var(--tealbg);color:var(--teal)}
+.ev-overdue{background:var(--redbg);color:var(--red)}
+.ev-urgent{background:#fff3cd;color:#7a5000}
 
-.video-card{background:var(--bg);border-radius:var(--r2);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1px solid var(--bd);transition:background 0.1s}
+/* Left bar colors for video cards */
+.bar-material{background:var(--amb)}
+.bar-editing{background:var(--blu)}
+.bar-submitted{background:var(--pur)}
+.bar-posted{background:var(--grn)}
+.bar-delivered{background:var(--teal)}
+.bar-overdue{background:var(--red)}
+.bar-urgent{background:#e08a00}
+
+.video-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r2);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer}
 .video-card:active{background:var(--bg2)}
-.video-card-left{width:4px;align-self:stretch;border-radius:4px;flex-shrink:0}
-.vc-grn{background:var(--grn)}
-.vc-blu{background:var(--blu)}
-.vc-amb{background:#e08a00}
-.vc-red{background:var(--red)}
-.vc-teal{background:var(--teal)}
-.video-card-body{flex:1;min-width:0}
+.vc-bar{width:4px;align-self:stretch;border-radius:4px;flex-shrink:0}
+.vc-body{flex:1;min-width:0}
 .vc-name{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vc-meta{font-size:12px;color:var(--tx2);margin-top:2px}
-.vc-arrow{color:var(--tx3);flex-shrink:0}
 
-/* View tabs */
-.view-tabs{display:flex;gap:6px;margin-bottom:1rem;overflow-x:auto;padding-bottom:2px}
-.view-tab{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid var(--bd);cursor:pointer;background:var(--bg);color:var(--tx2);white-space:nowrap;flex-shrink:0}
-.view-tab.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.ss-option{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;border-bottom:1px solid var(--bd)}
+.ss-option:last-child{border-bottom:none}
+.ss-option:active{background:var(--bg2)}
+.ss-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-/* Prospect */
+.alert{display:flex;align-items:flex-start;gap:8px;padding:12px;border-radius:var(--r2);margin-bottom:8px;font-size:13px;line-height:1.5}
+.alert-warn{background:var(--ambbg);color:var(--amb)}
+.alert-info{background:var(--blubg);color:var(--blu)}
+.alert-ok{background:var(--grnbg);color:var(--grn)}
+.alert i{font-size:16px;flex-shrink:0;margin-top:1px}
+
 .section-label{font-size:12px;font-weight:600;color:var(--tx2);padding:8px 0 6px;border-bottom:1px solid var(--bd);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
 .prow{background:var(--bg);border-radius:var(--r2);padding:14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;border:1px solid var(--bd)}
 .prow:active{background:var(--bg2)}
@@ -128,35 +135,22 @@ a{color:var(--blu);text-decoration:none}
 .prow-name{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prow-meta{font-size:12px;color:var(--tx2);margin-top:2px}
 
-/* Alert */
-.alert{display:flex;align-items:flex-start;gap:8px;padding:12px;border-radius:var(--r2);margin-bottom:8px;font-size:13px;line-height:1.5}
-.alert-warn{background:var(--ambbg);color:var(--amb)}
-.alert-info{background:var(--blubg);color:var(--blu)}
-.alert-ok{background:var(--grnbg);color:var(--grn)}
-.alert i{font-size:16px;flex-shrink:0;margin-top:1px}
-
-/* Status select sheet */
-.status-sheet{padding:0}
-.ss-option{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;border-bottom:1px solid var(--bd)}
-.ss-option:last-child{border-bottom:none}
-.ss-option:active{background:var(--bg2)}
-.ss-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.ss-label{font-size:15px;font-weight:500}
-.ss-check{margin-left:auto;color:var(--acc);font-size:18px}
-
-.empty{text-align:center;padding:3rem 1rem;color:var(--tx2);font-size:14px}
-.lbtn{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--r2);font-size:12px;background:var(--bg2);color:var(--tx2);border:1px solid var(--bd);text-decoration:none}
-
-/* Members table */
 table{width:100%;border-collapse:collapse}
 th{text-align:left;font-size:12px;font-weight:500;color:var(--tx2);padding:8px;border-bottom:1px solid var(--bd)}
 td{padding:12px 8px;border-bottom:1px solid var(--bd);font-size:14px;vertical-align:middle}
 tr:last-child td{border-bottom:none}
+
+.pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:500}
+
+.lbtn{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--r2);font-size:12px;background:var(--bg2);color:var(--tx2);border:1px solid var(--bd);text-decoration:none}
+.empty{text-align:center;padding:3rem 1rem;color:var(--tx2);font-size:14px}
+
+/* Quick add */
+.quick-add-banner{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r2);padding:14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 </style>
 </head>
 <body>
 
-<!-- Login -->
 <div id="login-screen">
   <div class="login-card">
     <h1>CRM</h1>
@@ -165,59 +159,90 @@ tr:last-child td{border-bottom:none}
     <div class="field"><label>パスワード</label><input type="password" id="login-password" placeholder="1 でテストログイン" autocomplete="current-password"></div>
     <div id="login-error" class="err hidden"></div>
     <button class="btn" onclick="doLogin()" style="margin-top:4px">ログイン</button>
-    <p style="font-size:11px;color:var(--tx2);margin-top:12px;text-align:center;line-height:1.8">
-      1 / 1 → 経営層<br>
-      director@crm.com / dir123 → ディレクター<br>
-      editor@crm.com / edit123 → 編集者
-    </p>
+    <p style="font-size:11px;color:var(--tx2);margin-top:12px;text-align:center;line-height:1.8">1/1→経営層　director@crm.com/dir123→ディレクター　editor@crm.com/edit123→編集者</p>
   </div>
 </div>
 
-<!-- App -->
 <div id="app-shell" class="hidden">
   <div id="topbar">
     <div id="topbar-title">カレンダー</div>
-    <button class="icon-btn" onclick="openDrawer()" aria-label="メニュー"><i class="ti ti-user-circle"></i></button>
+    <button class="icon-btn" onclick="openDrawer()"><i class="ti ti-user-circle"></i></button>
   </div>
   <div id="content"></div>
   <nav id="bottom-nav">
-    <button class="bnav-item active" id="bnav-calendar" onclick="navigate('calendar')">
-      <i class="ti ti-calendar"></i><span>カレンダー</span>
-    </button>
-    <button class="bnav-item" id="bnav-prospects" onclick="navigate('prospects')">
-      <i class="ti ti-users"></i><span>見込み</span>
-    </button>
-    <button class="bnav-item hidden" id="bnav-members" onclick="navigate('members')">
-      <i class="ti ti-settings"></i><span>設定</span>
-    </button>
+    <button class="bnav-item active" id="bnav-calendar" onclick="navigate('calendar')"><i class="ti ti-calendar"></i><span>カレンダー</span></button>
+    <button class="bnav-item" id="bnav-prospects" onclick="navigate('prospects')"><i class="ti ti-users"></i><span>見込み</span></button>
+    <button class="bnav-item hidden" id="bnav-members" onclick="navigate('members')"><i class="ti ti-settings"></i><span>設定</span></button>
   </nav>
 </div>
 
-<!-- Drawer -->
 <div id="drawer-overlay" onclick="closeDrawer()"></div>
 <div id="drawer">
   <div class="drawer-header">
-    <div class="drawer-user">
+    <div style="display:flex;align-items:center;gap:10px">
       <div class="avatar" id="drawer-avatar"></div>
-      <div>
-        <div style="font-weight:600;font-size:15px" id="drawer-name"></div>
-        <div style="font-size:12px;color:var(--tx2)" id="drawer-role"></div>
-      </div>
+      <div><div style="font-weight:600;font-size:15px" id="drawer-name"></div><div style="font-size:12px;color:var(--tx2)" id="drawer-role"></div></div>
     </div>
     <button class="icon-btn" onclick="closeDrawer()"><i class="ti ti-x"></i></button>
   </div>
-  <div id="drawer-add-btn"></div>
+  <div id="drawer-btns"></div>
   <div style="flex:1"></div>
-  <button class="btn-ghost" style="width:100%;justify-content:center;margin-top:1rem" onclick="doLogout()">
-    <i class="ti ti-logout"></i>ログアウト
-  </button>
+  <button class="btn-ghost" style="width:100%;justify-content:center;margin-top:1rem" onclick="doLogout()"><i class="ti ti-logout"></i>ログアウト</button>
 </div>
 
-<!-- Modal -->
 <div id="modal-container"></div>
 
 <script>
 const DAYS=['日','月','火','水','木','金','土'];
+const MONTHS=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+// Status → color class for calendar events
+const EV_CLS={
+  material_submitted:'ev-material',
+  editing:'ev-editing',
+  submitted_to_client:'ev-submitted',
+  posted:'ev-posted',
+  delivered:'ev-delivered'
+};
+// Status → bar color class for video cards
+const BAR_CLS={
+  material_submitted:'bar-material',
+  editing:'bar-editing',
+  submitted_to_client:'bar-submitted',
+  posted:'bar-posted',
+  delivered:'bar-delivered'
+};
+// Status → dot color
+const DOT_COLOR={
+  material_submitted:'#c07800',
+  editing:'#1a5fa0',
+  submitted_to_client:'#5c44c2',
+  posted:'#2d7a3a',
+  delivered:'#0e6b58'
+};
+const SM={material_submitted:'素材提出済',editing:'編集中',submitted_to_client:'お客様提出済',posted:'投稿済',delivered:'納品完了'};
+const CSM={active:'契約中',negotiating:'商談中',consulting:'ご相談',ended:'契約終了',lost:'失注'};
+const PROSPECT_COLOR={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx3)',lost:'var(--red)'};
+
+function getEvClass(v){
+  const s=v.status;
+  if(s==='posted'||s==='delivered')return EV_CLS[s];
+  // Check urgency based on current view date
+  const ref=CALVIEW==='edit'?v.editDueDate:CALVIEW==='submit'?v.clientSubmitDate:v.postDate;
+  const d=daysUntil(ref);
+  if(d!==null&&d<0)return'ev-overdue';
+  if(d!==null&&d<=2)return'ev-urgent';
+  return EV_CLS[s]||'ev-editing';
+}
+function getBarClass(v){
+  const s=v.status;
+  if(s==='posted'||s==='delivered')return BAR_CLS[s];
+  const ref=CALVIEW==='edit'?v.editDueDate:CALVIEW==='submit'?v.clientSubmitDate:v.postDate;
+  const d=daysUntil(ref);
+  if(d!==null&&d<0)return'bar-overdue';
+  if(d!==null&&d<=2)return'bar-urgent';
+  return BAR_CLS[s]||'bar-editing';
+}
 
 const ALL_CLIENTS=[
   {id:'c1',name:'成田モータース',contactName:'成田さん',industry:'車屋',serviceType:'SNS運用代行',contractType:'regular',referrer:'ゆうしくん',status:'active',contractStart:'2025-12-01',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['水','金'],goal:'中古車を販売したい',memo:'',contractAmount:150000,memberIds:{director:'u2',editor:'u3'},links:{drive:'https://drive.google.com/drive/folders/19qALv5P8mWiM4xLKDfmwZUPABV7rrmmu',gemini:'https://gemini.google.com/share/694eb38ea70f',sheet:''}},
@@ -226,7 +251,7 @@ const ALL_CLIENTS=[
   {id:'c4',name:'YURAMEKI協同組合',contactName:'白頭さん',industry:'古民家経営',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2025-01-01',contractPeriod:'12ヶ月',monthlyCount:8,postDays:['金'],goal:'集客をしていきたい',memo:'古民家UTSUWA・古民家SO 各4本',contractAmount:100000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
   {id:'c5',name:'スポットライト',contactName:'和田さん',industry:'補助金助成金',serviceType:'内製化研修',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'6ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:200000,memberIds:{director:'u1',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
   {id:'c6',name:'中京ストレージ',contactName:'長岡さん',industry:'電気通信',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'12ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
-  {id:'c7',name:'江島産業',contactName:'稲積さん',industry:'ゼネコン',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'12ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u6'},links:{drive:'',gemini:'',sheet:'動画編集【江島産業様】納品管理表'}},
+  {id:'c7',name:'江島産業',contactName:'稲積さん',industry:'ゼネコン',serviceType:'SNS運用代行',contractType:'regular',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'12ヶ月',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:100000,memberIds:{director:'u2',editor:'u6'},links:{drive:'',gemini:'',sheet:''}},
   {id:'c8',name:'Suzu Trade Japan',contactName:'高瀬さん',industry:'英語レッスン',serviceType:'SNSアドバイザー',contractType:'delivery',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:4,postDays:['金'],goal:'',memo:'',contractAmount:50000,memberIds:{director:'u3',editor:'u2'},links:{drive:'',gemini:'',sheet:''}},
   {id:'c9',name:'マナビズム',contactName:'今井さん',industry:'学習塾',serviceType:'動画編集のみ',contractType:'delivery',referrer:'和田さん',status:'active',contractStart:'2026-01-01',contractPeriod:'',monthlyCount:8,postDays:['金'],goal:'',memo:'',contractAmount:60000,memberIds:{director:'u3',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
   {id:'c10',name:'中元大介',contactName:'中元さん',industry:'スポーツMC',serviceType:'動画編集のみ',contractType:'delivery',referrer:'直接',status:'active',contractStart:'2026-01-01',contractPeriod:'6ヶ月',monthlyCount:2,postDays:['金'],goal:'',memo:'',contractAmount:40000,memberIds:{director:'u3',editor:'u3'},links:{drive:'',gemini:'',sheet:''}},
@@ -288,61 +313,27 @@ const DEFAULT_USERS=[
   {id:'u7',name:'ファミリア',email:'familia@crm.com',password:'fam123',role:'editor',isActive:true},
 ];
 
-let CU=null,PAGE='calendar',CALVIEW='post',PS='',PF='';
+let CU=null,PAGE='calendar',CALVIEW='post',CALY=2026,CALM=4,PS='',PF='';
 let db={};
 
 function loadDB(){
-  const s=localStorage.getItem('crm_v5');
+  const s=localStorage.getItem('crm_v6');
   if(s){db=JSON.parse(s);}
   else{db={users:JSON.parse(JSON.stringify(DEFAULT_USERS)),clients:JSON.parse(JSON.stringify(ALL_CLIENTS)),videos:JSON.parse(JSON.stringify(DEFAULT_VIDEOS))};saveDB();}
 }
-function saveDB(){localStorage.setItem('crm_v5',JSON.stringify(db));}
-function gid(){return 'i'+Math.random().toString(36).substr(2,8);}
+function saveDB(){localStorage.setItem('crm_v6',JSON.stringify(db));}
+function gid(){return'i'+Math.random().toString(36).substr(2,8);}
 function isAdmin(){return CU?.role==='admin';}
 function isDir(){return CU?.role==='director';}
 function isEditor(){return CU?.role==='editor';}
 function getUser(id){return db.users.find(u=>u.id===id)||null;}
 function getClient(id){return db.clients.find(c=>c.id===id)||null;}
-
-function visVids(){
-  if(isAdmin()||isDir())return db.videos;
-  return db.videos.filter(v=>v.editorId===CU.id);
-}
-
-function daysUntil(d){
-  if(!d)return null;
-  const t=new Date();t.setHours(0,0,0,0);
-  const x=new Date(d);x.setHours(0,0,0,0);
-  return Math.round((x-t)/86400000);
-}
-function fmt(d){
-  if(!d)return'-';
-  const dt=new Date(d);
-  return`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;
-}
-
-const SM={material_submitted:'素材提出済',editing:'編集中',submitted_to_client:'お客様提出済',posted:'投稿済',delivered:'納品完了'};
-const SC={material_submitted:'p-material',editing:'p-editing',submitted_to_client:'p-submitted',posted:'p-posted',delivered:'p-delivered'};
-const SDOT={material_submitted:'#c07800',editing:'#1a5fa0',submitted_to_client:'#5c44c2',posted:'#2d7a3a',delivered:'#0e6b58'};
-
-function pill(t,c){return`<span class="pill ${c}">${t}</span>`;}
-function sPill(s){return pill(SM[s]||s,SC[s]||'');}
-
-function vcColor(v){
-  const s=v.status;
-  if(s==='posted'||s==='delivered')return'vc-grn';
-  const ref=CALVIEW==='edit'?v.editDueDate:CALVIEW==='submit'?v.clientSubmitDate:v.postDate;
-  const d=daysUntil(ref);
-  if(d===null)return'vc-blu';
-  if(d<0)return'vc-red';
-  if(d<=2)return'vc-amb';
-  return'vc-blu';
-}
-function viewDate(v){
-  if(CALVIEW==='edit')return v.editDueDate;
-  if(CALVIEW==='submit')return v.clientSubmitDate;
-  return v.postDate;
-}
+function visVids(){if(isAdmin()||isDir())return db.videos;return db.videos.filter(v=>v.editorId===CU.id);}
+function daysUntil(d){if(!d)return null;const t=new Date();t.setHours(0,0,0,0);const x=new Date(d);x.setHours(0,0,0,0);return Math.round((x-t)/86400000);}
+function fmt(d){if(!d)return'-';const dt=new Date(d);return`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;}
+function toDS(y,m,d){return`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function viewDate(v){if(CALVIEW==='edit')return v.editDueDate;if(CALVIEW==='submit')return v.clientSubmitDate;return v.postDate;}
+function addDays(dateStr,n){const d=new Date(dateStr);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
 
 function doLogin(){
   const em=document.getElementById('login-email').value.trim();
@@ -356,27 +347,23 @@ function doLogin(){
   document.getElementById('app-shell').classList.remove('hidden');
   if(isAdmin())document.getElementById('bnav-members').classList.remove('hidden');
   setupDrawer();
+  const t=new Date();CALY=t.getFullYear();CALM=t.getMonth();
   navigate('calendar');
 }
-function doLogout(){
-  CU=null;
-  document.getElementById('login-screen').classList.remove('hidden');
-  document.getElementById('app-shell').classList.add('hidden');
-  closeDrawer();
-  document.getElementById('login-email').value='';
-  document.getElementById('login-password').value='';
-}
+function doLogout(){CU=null;document.getElementById('login-screen').classList.remove('hidden');document.getElementById('app-shell').classList.add('hidden');closeDrawer();}
 
 function setupDrawer(){
   document.getElementById('drawer-avatar').textContent=CU.name.charAt(0);
   document.getElementById('drawer-name').textContent=CU.name;
   const rm={admin:'経営層',director:'ディレクター',editor:'編集者'};
   document.getElementById('drawer-role').textContent=rm[CU.role]||'';
-  const ab=document.getElementById('drawer-add-btn');
+  const db2=document.getElementById('drawer-btns');
   if(isAdmin()||isDir()){
-    ab.innerHTML=`<button class="btn-ghost" style="width:100%;justify-content:center;margin-bottom:8px" onclick="closeDrawer();showAddClientModal()"><i class="ti ti-plus"></i>クライアント追加</button>
-    <button class="btn-ghost" style="width:100%;justify-content:center" onclick="closeDrawer();showAddVideoModal()"><i class="ti ti-plus"></i>動画追加</button>`;
-  }else{ab.innerHTML='';}
+    db2.innerHTML=`
+      <button class="btn-ghost" style="width:100%;justify-content:center;margin-bottom:8px" onclick="closeDrawer();showQuickAddModal()"><i class="ti ti-plus"></i>案件をすばやく追加</button>
+      <button class="btn-ghost" style="width:100%;justify-content:center;margin-bottom:8px" onclick="closeDrawer();showAddClientModal()"><i class="ti ti-building"></i>クライアント追加</button>
+      <button class="btn-ghost" style="width:100%;justify-content:center" onclick="closeDrawer();showAddVideoModal()"><i class="ti ti-video"></i>動画を追加</button>`;
+  }else{db2.innerHTML='';}
 }
 function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawer-overlay').classList.add('open');}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawer-overlay').classList.remove('open');}
@@ -386,27 +373,20 @@ function navigate(page){
   const titles={calendar:'カレンダー',prospects:'見込み顧客',members:'設定'};
   document.getElementById('topbar-title').textContent=titles[page]||'';
   document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
-  const bn=document.getElementById('bnav-'+page);
-  if(bn)bn.classList.add('active');
+  const bn=document.getElementById('bnav-'+page);if(bn)bn.classList.add('active');
   const fns={calendar:renderCalendar,prospects:renderProspects,members:renderMembers};
   if(fns[page])document.getElementById('content').innerHTML=fns[page]();
 }
 
 function renderCalendar(){
-  const today=new Date();today.setHours(0,0,0,0);
-  const end=new Date(today);end.setDate(end.getDate()+21);
+  const y=CALY,m=CALM;
+  const firstDow=new Date(y,m,1).getDay();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const prevLast=new Date(y,m,0).getDate();
+  const todayStr=new Date().toISOString().split('T')[0];
 
+  // Alerts
   const videos=visVids();
-  const byDate={};
-  videos.forEach(v=>{
-    const d=viewDate(v);if(!d)return;
-    const vd=new Date(d);vd.setHours(0,0,0,0);
-    if(vd>=today&&vd<=end){
-      if(!byDate[d])byDate[d]=[];
-      byDate[d].push(v);
-    }
-  });
-
   const alerts=[];
   videos.filter(v=>v.status!=='posted'&&v.status!=='delivered').forEach(v=>{
     const c=getClient(v.clientId);const cn=c?c.name:'不明';
@@ -418,99 +398,217 @@ function renderCalendar(){
     if((isAdmin()||isDir())&&pd===0&&v.status==='submitted_to_client')
       alerts.push({type:'info',msg:`${cn} No.${v.videoNo} — 本日が投稿日です`});
   });
-
   const alertHtml=alerts.length
     ?alerts.map(a=>`<div class="alert alert-${a.type}"><i class="ti ti-bell"></i><span>${a.msg}</span></div>`).join('')
     :`<div class="alert alert-ok"><i class="ti ti-check"></i><span>本日のリマインドはありません</span></div>`;
 
-  const viewTabsHtml=isAdmin()
-    ?`<button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button>
-      <button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button>
-      <button class="view-tab ${CALVIEW==='edit'?'active':''}" onclick="setCalView('edit')">編集完了日</button>`
+  // Build date→videos map
+  const byDate={};
+  videos.forEach(v=>{const d=viewDate(v);if(!d)return;if(!byDate[d])byDate[d]=[];byDate[d].push(v);});
+
+  // View tabs
+  const tabsHtml=isAdmin()
+    ?`<div class="view-tabs">
+        <button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button>
+        <button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button>
+        <button class="view-tab ${CALVIEW==='edit'?'active':''}" onclick="setCalView('edit')">編集完了日</button>
+      </div>`
     :isDir()
-    ?`<button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button>
-      <button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button>`
-    :'';
+    ?`<div class="view-tabs">
+        <button class="view-tab ${CALVIEW==='post'?'active':''}" onclick="setCalView('post')">投稿日</button>
+        <button class="view-tab ${CALVIEW==='submit'?'active':''}" onclick="setCalView('submit')">お客様提出日</button>
+      </div>`:'';
 
-  const sortedDates=Object.keys(byDate).sort();
-  const daysHtml=sortedDates.length?sortedDates.map(dateStr=>{
-    const dt=new Date(dateStr);dt.setHours(0,0,0,0);
-    const isToday=dt.getTime()===today.getTime();
-    const dow=dt.getDay();
-    const label=`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dow]})`;
-    const cards=byDate[dateStr].map(v=>{
+  // Calendar grid
+  const hdrs=['日','月','火','水','木','金','土'].map((d,i)=>`<div class="cal-hdr ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join('');
+  const totalCells=Math.ceil((firstDow+daysInMonth)/7)*7;
+  let cells='';
+  for(let i=0;i<totalCells;i++){
+    let day,mo,yr,isOther=false;
+    if(i<firstDow){day=prevLast-firstDow+i+1;mo=m-1;yr=y;isOther=true;}
+    else if(i>=firstDow+daysInMonth){day=i-firstDow-daysInMonth+1;mo=m+1;yr=y;isOther=true;}
+    else{day=i-firstDow+1;mo=m;yr=y;}
+    const ds=toDS(yr,mo,day);
+    const isToday=ds===todayStr;
+    const dow=new Date(yr,mo,day).getDay();
+    const dayVids=(byDate[ds]||[]);
+    const evHtml=dayVids.slice(0,3).map(v=>{
       const c=getClient(v.clientId);
-      const col=vcColor(v);
-      const editor=getUser(v.editorId);
-      return`<div class="video-card" onclick="showVideoModal('${v.id}')">
-        <div class="video-card-left ${col}"></div>
-        <div class="video-card-body">
-          <div class="vc-name">${c?.name||'-'} <span style="font-weight:400;color:var(--tx2)">No.${v.videoNo}</span></div>
-          <div class="vc-meta">${SM[v.status]} ${editor?'· '+editor.name:''}</div>
-        </div>
-        <i class="ti ti-chevron-right vc-arrow"></i>
-      </div>`;
+      const cls=getEvClass(v);
+      return`<div class="cal-ev ${cls}" onclick="showVideoModal('${v.id}');event.stopPropagation()">${c?.name||'?'} No.${v.videoNo}</div>`;
     }).join('');
-    return`<div class="day-group">
-      <div class="day-label ${isToday?'today-label':''}">
-        <div class="day-dot ${isToday?'today-dot':''}"></div>
-        ${label}${isToday?' · 今日':''}
-      </div>
-      ${cards}
+    const more=dayVids.length>3?`<div style="font-size:10px;color:var(--tx2)">+${dayVids.length-3}</div>`:'';
+    cells+=`<div class="cal-cell${isOther?' other':''}${isToday?' today':''}" onclick="showDayModal('${ds}')">
+      <div class="cal-dn${dow===0?' sun':dow===6?' sat':''}">${day}</div>
+      ${evHtml}${more}
     </div>`;
-  }).join(''):`<div class="empty">この期間に動画の予定はありません</div>`;
+  }
 
-  return`<div style="margin-bottom:12px">${alertHtml}</div>
-    ${viewTabsHtml?`<div class="view-tabs">${viewTabsHtml}</div>`:''}
-    ${daysHtml}`;
+  const legend=`<div style="font-size:11px;color:var(--tx2);margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap">
+    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--ambbg);border:1px solid var(--ambbr);display:inline-block"></span>素材提出済</span>
+    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--blubg);border:1px solid var(--blubr);display:inline-block"></span>編集中</span>
+    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--purbg);border:1px solid var(--purbr);display:inline-block"></span>お客様提出済</span>
+    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--grnbg);border:1px solid var(--grnbr);display:inline-block"></span>投稿済/納品完了</span>
+    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#fff3cd;border:1px solid #e8b566;display:inline-block"></span>期限2日以内</span>
+    <span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:var(--redbg);border:1px solid var(--redbr);display:inline-block"></span>期限超過</span>
+  </div>`;
+
+  const quickAdd=isAdmin()||isDir()?`<div class="quick-add-banner">
+    <div>
+      <div style="font-weight:600;font-size:14px">案件をすばやく追加</div>
+      <div style="font-size:12px;color:var(--tx2);margin-top:2px">投稿日を入力するだけで日程を自動生成</div>
+    </div>
+    <button class="btn-ghost" onclick="showQuickAddModal()"><i class="ti ti-plus"></i>追加</button>
+  </div>`:'';
+
+  return`<div style="margin-bottom:10px">${alertHtml}</div>
+    ${quickAdd}
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="prevMonth()"><i class="ti ti-chevron-left"></i></button>
+      <div class="cal-title">${y}年 ${MONTHS[m]}</div>
+      <button class="cal-nav-btn" onclick="nextMonth()"><i class="ti ti-chevron-right"></i></button>
+      <button class="cal-nav-btn" onclick="goToday()" style="font-size:12px">今月</button>
+    </div>
+    ${tabsHtml}
+    ${legend}
+    <div class="cal-grid">${hdrs}${cells}</div>`;
 }
 
 function setCalView(v){CALVIEW=v;navigate('calendar');}
+function prevMonth(){if(CALM===0){CALM=11;CALY--;}else{CALM--;}navigate('calendar');}
+function nextMonth(){if(CALM===11){CALM=0;CALY++;}else{CALM++;}navigate('calendar');}
+function goToday(){const t=new Date();CALY=t.getFullYear();CALM=t.getMonth();navigate('calendar');}
+
+function showDayModal(ds){
+  const videos=visVids().filter(v=>viewDate(v)===ds);
+  if(!videos.length)return;
+  const dt=new Date(ds);
+  const title=`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;
+  const rows=videos.map(v=>{
+    const c=getClient(v.clientId);const ed=getUser(v.editorId);
+    const barCls=getBarClass(v);
+    return`<div class="video-card" onclick="closeModal();showVideoModal('${v.id}')">
+      <div class="vc-bar ${barCls}"></div>
+      <div class="vc-body">
+        <div class="vc-name">${c?.name||'-'} <span style="font-weight:400;color:var(--tx2)">No.${v.videoNo}</span></div>
+        <div class="vc-meta">${SM[v.status]}${ed?' · '+ed.name:''}</div>
+      </div>
+      <i class="ti ti-chevron-right" style="color:var(--tx3)"></i>
+    </div>`;
+  }).join('');
+  showModal(`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2>${title}</h2>
+    ${rows}
+    <div class="modal-footer"><button class="btn-ghost" onclick="closeModal()">閉じる</button></div>
+  </div>`);
+}
 
 function showVideoModal(videoId){
   const v=db.videos.find(x=>x.id===videoId);if(!v)return;
   const c=getClient(v.clientId);const ed=getUser(v.editorId);
   const isDelivery=c?.contractType==='delivery';
-  const opts=isDelivery
-    ?['material_submitted','editing','delivered']
-    :['material_submitted','editing','submitted_to_client','posted'];
-
+  const opts=isDelivery?['material_submitted','editing','delivered']:['material_submitted','editing','submitted_to_client','posted'];
   const optRows=opts.map(s=>`<div class="ss-option" onclick="updateStatus('${v.id}','${s}')">
-    <div class="ss-dot" style="background:${SDOT[s]}"></div>
-    <div class="ss-label">${SM[s]}</div>
-    ${v.status===s?'<i class="ti ti-check ss-check"></i>':''}
+    <div class="ss-dot" style="background:${DOT_COLOR[s]}"></div>
+    <div style="font-size:15px;font-weight:500;flex:1">${SM[s]}</div>
+    ${v.status===s?'<i class="ti ti-check" style="color:var(--tx);font-size:18px"></i>':''}
   </div>`).join('');
-
   const links=[
     c?.links?.drive?`<a href="${c.links.drive}" target="_blank" class="lbtn"><i class="ti ti-folder"></i>Drive</a>`:'',
     c?.links?.gemini?`<a href="${c.links.gemini}" target="_blank" class="lbtn"><i class="ti ti-sparkles"></i>Gemini</a>`:'',
   ].filter(Boolean).join('');
-
   showModal(`<div class="modal">
     <div class="modal-handle"></div>
     <div style="margin-bottom:16px">
       <div style="font-size:18px;font-weight:700">${c?.name||'-'}</div>
       <div style="font-size:14px;color:var(--tx2);margin-top:2px">No.${v.videoNo} · ${ed?.name||'-'}</div>
     </div>
-    <div style="font-size:13px;color:var(--tx2);font-weight:600;margin-bottom:6px">ステータスを選択</div>
+    <div style="font-size:12px;color:var(--tx2);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em">ステータス</div>
     <div style="border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">${optRows}</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px;margin-bottom:12px">
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">編集完了</div><div style="font-weight:500">${fmt(v.editDueDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">お客様提出</div><div style="font-weight:500">${fmt(v.clientSubmitDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">投稿日</div><div style="font-weight:500">${fmt(v.postDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">編集完了</div><div style="font-weight:500">${fmt(v.editDueDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">お客様提出</div><div style="font-weight:500">${fmt(v.clientSubmitDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">投稿日</div><div style="font-weight:500">${fmt(v.postDate)}</div></div>
     </div>
-    ${links?`<div style="display:flex;gap:6px;margin-bottom:12px">${links}</div>`:''}
+    ${links?`<div style="display:flex;gap:6px;margin-bottom:4px">${links}</div>`:''}
     <div class="modal-footer"><button class="btn-ghost" onclick="closeModal()">閉じる</button></div>
   </div>`);
 }
 
 function updateStatus(videoId,newStatus){
-  const v=db.videos.find(x=>x.id===videoId);
-  if(!v)return;
-  v.status=newStatus;
-  saveDB();
-  closeModal();
-  navigate(PAGE);
+  const v=db.videos.find(x=>x.id===videoId);if(!v)return;
+  v.status=newStatus;saveDB();
+  closeModal();navigate(PAGE);
+}
+
+// Quick add: just pick client + post date → auto-calculate all dates
+function showQuickAddModal(){
+  const activeClients=db.clients.filter(c=>c.status==='active');
+  const copts=activeClients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  const eopts=db.users.filter(u=>u.isActive&&(u.role==='editor'||u.role==='admin')).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+  const today=new Date().toISOString().split('T')[0];
+  showModal(`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2>案件をすばやく追加</h2>
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:16px;line-height:1.6">投稿日を入力するだけで、編集完了日・お客様提出日・素材提出日が自動で計算されます。</p>
+    <div class="form-grid">
+      <div class="full field"><label>クライアント *</label><select id="qa-client">${copts}</select></div>
+      <div class="full field"><label>投稿日 *</label><input type="date" id="qa-post" value="${today}" oninput="updateQuickAddPreview()"></div>
+      <div class="full field">
+        <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;font-size:13px" id="qa-preview">
+          <div style="font-weight:600;margin-bottom:8px;color:var(--tx2)">自動計算される日程</div>
+          <div id="qa-preview-dates"></div>
+        </div>
+      </div>
+      <div class="field"><label>動画No.</label><input type="number" id="qa-no" min="1" placeholder="例: 91"></div>
+      <div class="full field"><label>編集担当</label><select id="qa-editor"><option value="">-</option>${eopts}</select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn" style="width:auto;padding:10px 20px" onclick="saveQuickAdd()">追加する</button>
+    </div>
+  </div>`);
+  updateQuickAddPreview();
+}
+
+function updateQuickAddPreview(){
+  const postDateEl=document.getElementById('qa-post');
+  const previewEl=document.getElementById('qa-preview-dates');
+  if(!postDateEl||!previewEl)return;
+  const postDate=postDateEl.value;
+  if(!postDate){previewEl.innerHTML='<span style="color:var(--tx2)">投稿日を入力してください</span>';return;}
+  const clientSubmit=addDays(postDate,-2);
+  const editDue=addDays(postDate,-4);
+  const shootDate=addDays(postDate,-8);
+  previewEl.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📷 素材提出日</div><div style="font-weight:600">${fmt(shootDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了日</div><div style="font-weight:600">${fmt(editDue)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出日</div><div style="font-weight:600">${fmt(clientSubmit)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📅 投稿日</div><div style="font-weight:600">${fmt(postDate)}</div></div>
+    </div>`;
+}
+
+function saveQuickAdd(){
+  const clientId=document.getElementById('qa-client').value;
+  const postDate=document.getElementById('qa-post').value;
+  const no=parseInt(document.getElementById('qa-no').value)||null;
+  if(!clientId||!postDate){alert('クライアントと投稿日を入力してください');return;}
+  const clientSubmit=addDays(postDate,-2);
+  const editDue=addDays(postDate,-4);
+  const shootDate=addDays(postDate,-8);
+  // Auto-assign video number if not specified
+  const existingNos=db.videos.filter(v=>v.clientId===clientId).map(v=>v.videoNo);
+  const videoNo=no||(existingNos.length?Math.max(...existingNos)+1:1);
+  db.videos.push({
+    id:gid(),clientId,videoNo,status:'material_submitted',
+    shootDate,editDueDate:editDue,clientSubmitDate:clientSubmit,postDate,
+    editorId:document.getElementById('qa-editor').value
+  });
+  // Jump to the month of the post date
+  const pd=new Date(postDate);CALY=pd.getFullYear();CALM=pd.getMonth();
+  saveDB();closeModal();navigate('calendar');
 }
 
 function renderProspects(){
@@ -527,29 +625,29 @@ function renderProspects(){
     {key:'lost',label:'失注',color:'var(--red)'},
   ];
   const addBtn=isAdmin()?`<button class="btn-ghost" onclick="showAddClientModal()"><i class="ti ti-plus"></i>追加</button>`:'';
-  const filterHtml=`<div style="display:flex;gap:8px;margin-bottom:1rem;overflow-x:auto;padding-bottom:2px">
-    ${[{v:'',l:'すべて'},{v:'negotiating',l:'商談中'},{v:'consulting',l:'ご相談'},{v:'ended',l:'契約終了'},{v:'lost',l:'失注'}].map(o=>`<button class="view-tab ${PF===o.v?'active':''}" onclick="setPF('${o.v}')" style="flex-shrink:0">${o.l}</button>`).join('')}
+  const filterHtml=`<div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px">
+    ${[{v:'',l:'すべて'},{v:'negotiating',l:'商談中'},{v:'consulting',l:'ご相談'},{v:'ended',l:'終了'},{v:'lost',l:'失注'}].map(o=>`<button class="view-tab ${PF===o.v?'active':''}" onclick="setPF('${o.v}')" style="flex-shrink:0">${o.l}</button>`).join('')}
   </div>`;
-  const searchHtml=`<input type="text" placeholder="名前・業種で検索..." value="${PS}" oninput="setPS(this.value)" style="width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);font-size:14px;margin-bottom:1rem">`;
+  const searchHtml=`<input type="text" placeholder="名前・業種で検索..." value="${PS}" oninput="setPS(this.value)" style="width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);font-size:14px;margin-bottom:12px">`;
   const groupsHtml=groups.map(g=>{
     const items=nonActive.filter(c=>c.status===g.key);
     if(!items.length)return'';
     return`<div style="margin-bottom:1.25rem">
-      <div class="section-label"><span>${g.label} <span style="color:var(--tx2);font-weight:400">${items.length}件</span></span></div>
+      <div class="section-label"><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${g.color};display:inline-block"></span>${g.label} <span style="font-weight:400">${items.length}件</span></span></div>
       ${items.map(c=>{
         const dir=getUser(c.memberIds?.director);
         return`<div class="prow" onclick="showProspectModal('${c.id}')">
           <div class="prow-bar" style="background:${g.color}"></div>
           <div class="prow-body">
             <div class="prow-name">${c.name}</div>
-            <div class="prow-meta">${c.contactName||''} ${c.industry?'· '+c.industry:''}</div>
+            <div class="prow-meta">${c.contactName||''}${c.industry?' · '+c.industry:''}</div>
           </div>
-          ${dir?`<div style="font-size:12px;color:var(--tx2)">${dir.name}</div>`:''}
+          ${dir?`<div style="font-size:12px;color:var(--tx2);flex-shrink:0">${dir.name}</div>`:''}
         </div>`;
       }).join('')}
     </div>`;
   }).join('')||'<div class="empty">該当する顧客がいません</div>';
-  return`<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><span style="font-size:18px;font-weight:700">見込み顧客</span>${addBtn}</div>
+  return`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span style="font-size:18px;font-weight:700">見込み顧客</span>${addBtn}</div>
     ${filterHtml}${searchHtml}${groupsHtml}`;
 }
 
@@ -559,16 +657,12 @@ function setPF(v){PF=v;navigate('prospects');}
 function showProspectModal(clientId){
   const c=db.clients.find(x=>x.id===clientId);if(!c)return;
   const dir=getUser(c.memberIds?.director);
-  const statusColors={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx3)',lost:'var(--red)',active:'var(--grn)'};
-  const statusLabels={active:'契約中',negotiating:'商談中',consulting:'ご相談',ended:'契約終了',lost:'失注'};
+  const scolor={negotiating:'var(--amb)',consulting:'var(--blu)',ended:'var(--tx3)',lost:'var(--red)',active:'var(--grn)'};
   showModal(`<div class="modal">
     <div class="modal-handle"></div>
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
-      <div>
-        <div style="font-size:18px;font-weight:700">${c.name}</div>
-        <div style="font-size:14px;color:var(--tx2);margin-top:2px">${c.contactName||''}</div>
-      </div>
-      <span class="pill" style="background:${statusColors[c.status]}22;color:${statusColors[c.status]}">${statusLabels[c.status]||c.status}</span>
+      <div><div style="font-size:18px;font-weight:700">${c.name}</div><div style="font-size:14px;color:var(--tx2);margin-top:2px">${c.contactName||''}</div></div>
+      <span class="pill" style="background:${scolor[c.status]}22;color:${scolor[c.status]}">${CSM[c.status]||c.status}</span>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14px;margin-bottom:16px">
       <div><div style="font-size:11px;color:var(--tx2);margin-bottom:3px">業種</div><div style="font-weight:500">${c.industry||'-'}</div></div>
@@ -576,8 +670,8 @@ function showProspectModal(clientId){
       <div><div style="font-size:11px;color:var(--tx2);margin-bottom:3px">紹介者</div><div style="font-weight:500">${c.referrer||'-'}</div></div>
       <div><div style="font-size:11px;color:var(--tx2);margin-bottom:3px">担当</div><div style="font-weight:500">${dir?.name||'-'}</div></div>
     </div>
-    ${c.goal?`<div style="padding:12px;background:var(--bg2);border-radius:var(--r2);font-size:14px;margin-bottom:12px"><div style="font-size:11px;color:var(--tx2);margin-bottom:4px">目標・課題</div>${c.goal}</div>`:''}
-    ${c.memo?`<div style="padding:12px;background:var(--bg2);border-radius:var(--r2);font-size:14px;margin-bottom:12px"><div style="font-size:11px;color:var(--tx2);margin-bottom:4px">備考</div>${c.memo}</div>`:''}
+    ${c.goal?`<div style="padding:12px;background:var(--bg2);border-radius:var(--r2);font-size:14px;margin-bottom:10px"><div style="font-size:11px;color:var(--tx2);margin-bottom:4px">目標・課題</div>${c.goal}</div>`:''}
+    ${c.memo?`<div style="padding:12px;background:var(--bg2);border-radius:var(--r2);font-size:14px;margin-bottom:10px"><div style="font-size:11px;color:var(--tx2);margin-bottom:4px">備考</div>${c.memo}</div>`:''}
     <div class="modal-footer">
       ${isAdmin()?`<button class="btn-ghost" onclick="closeModal();showEditProspectModal('${c.id}')"><i class="ti ti-edit"></i>編集</button>`:''}
       <button class="btn-ghost" onclick="closeModal()">閉じる</button>
@@ -592,15 +686,7 @@ function showEditProspectModal(clientId){
     <div class="modal-handle"></div>
     <h2>${c.name} の編集</h2>
     <div class="form-grid">
-      <div class="full field"><label>ステータス</label>
-        <select id="ep-s">
-          <option value="active" ${c.status==='active'?'selected':''}>契約中</option>
-          <option value="negotiating" ${c.status==='negotiating'?'selected':''}>商談中</option>
-          <option value="consulting" ${c.status==='consulting'?'selected':''}>ご相談</option>
-          <option value="ended" ${c.status==='ended'?'selected':''}>契約終了</option>
-          <option value="lost" ${c.status==='lost'?'selected':''}>失注</option>
-        </select>
-      </div>
+      <div class="full field"><label>ステータス</label><select id="ep-s"><option value="active" ${c.status==='active'?'selected':''}>契約中</option><option value="negotiating" ${c.status==='negotiating'?'selected':''}>商談中</option><option value="consulting" ${c.status==='consulting'?'selected':''}>ご相談</option><option value="ended" ${c.status==='ended'?'selected':''}>契約終了</option><option value="lost" ${c.status==='lost'?'selected':''}>失注</option></select></div>
       <div class="full field"><label>担当者</label><select id="ep-d"><option value="">-</option>${uopts}</select></div>
       <div class="full field"><label>施策内容</label><input id="ep-sv" value="${c.serviceType||''}"></div>
       <div class="full field"><label>目標・課題</label><textarea id="ep-g" rows="3">${c.goal||''}</textarea></div>
@@ -627,9 +713,7 @@ function renderMembers(){
   const rows=db.users.map(u=>`<tr>
     <td style="font-weight:500">${u.name}</td>
     <td style="font-size:12px;color:var(--tx2)">${u.email}</td>
-    <td>
-      <button class="btn-ghost" style="padding:6px 10px;font-size:12px" onclick="showEditMemberModal('${u.id}')"><i class="ti ti-edit"></i></button>
-    </td>
+    <td><button class="btn-ghost" style="padding:6px 10px;font-size:12px" onclick="showEditMemberModal('${u.id}')"><i class="ti ti-edit"></i></button></td>
   </tr>`).join('');
   return`<div style="font-size:18px;font-weight:700;margin-bottom:1rem">メンバー管理</div>
     <div style="background:var(--bg);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;margin-bottom:1rem">
@@ -647,15 +731,9 @@ function showAddClientModal(){
       <div class="full field"><label>クライアント名 *</label><input id="nc-n" placeholder="株式会社〇〇"></div>
       <div class="field"><label>担当者名</label><input id="nc-c" placeholder="山田さん"></div>
       <div class="field"><label>業種</label><input id="nc-i" placeholder="建設業"></div>
-      <div class="full field"><label>契約タイプ</label>
-        <select id="nc-ct"><option value="regular">定期投稿型</option><option value="spot">単発型</option><option value="delivery">納品型</option></select>
-      </div>
-      <div class="full field"><label>施策内容</label>
-        <select id="nc-sv"><option>SNS運用代行</option><option>動画編集のみ</option><option>内製化研修</option><option>広告動画制作</option><option>SNSアドバイザー</option></select>
-      </div>
-      <div class="field"><label>ステータス</label>
-        <select id="nc-st"><option value="consulting">ご相談</option><option value="negotiating">商談中</option><option value="active">契約中</option></select>
-      </div>
+      <div class="full field"><label>契約タイプ</label><select id="nc-ct"><option value="regular">定期投稿型</option><option value="spot">単発型</option><option value="delivery">納品型</option></select></div>
+      <div class="full field"><label>施策内容</label><select id="nc-sv"><option>SNS運用代行</option><option>動画編集のみ</option><option>内製化研修</option><option>広告動画制作</option><option>SNSアドバイザー</option></select></div>
+      <div class="field"><label>ステータス</label><select id="nc-st"><option value="consulting">ご相談</option><option value="negotiating">商談中</option><option value="active">契約中</option></select></div>
       <div class="field"><label>紹介者</label><input id="nc-r" placeholder="直接 / 〇〇さん"></div>
       <div class="field"><label>契約開始日</label><input type="date" id="nc-s"></div>
       <div class="field"><label>月本数</label><input type="number" id="nc-cnt" value="8" min="1"></div>
@@ -682,7 +760,7 @@ function saveNewClient(){
   db.clients.push(nc);
   if(nc.status==='active'&&days.length&&nc.monthlyCount>0){
     genSched(nc.contractStart||new Date().toISOString().split('T')[0],days,nc.monthlyCount*2).forEach((s,i)=>{
-      db.videos.push({id:gid(),clientId:nc.id,videoNo:i+1,status:'material_submitted',editDueDate:s.editDueDate,clientSubmitDate:s.clientSubmitDate,postDate:s.postDate,editorId:nc.memberIds.editor||''});
+      db.videos.push({id:gid(),clientId:nc.id,videoNo:i+1,status:'material_submitted',shootDate:s.shootDate,editDueDate:s.editDueDate,clientSubmitDate:s.clientSubmitDate,postDate:s.postDate,editorId:nc.memberIds.editor||''});
     });
   }
   saveDB();closeModal();navigate(nc.status==='active'?'calendar':'prospects');
@@ -696,9 +774,12 @@ function genSched(start,pdays,count){
   while(res.length<count){
     if(td.includes(cur.getDay())){
       const p=new Date(cur);
-      const cs=new Date(cur);cs.setDate(cs.getDate()-2);
-      const ed=new Date(cur);ed.setDate(ed.getDate()-4);
-      res.push({postDate:p.toISOString().split('T')[0],clientSubmitDate:cs.toISOString().split('T')[0],editDueDate:ed.toISOString().split('T')[0]});
+      res.push({
+        postDate:p.toISOString().split('T')[0],
+        clientSubmitDate:addDays(p.toISOString().split('T')[0],-2),
+        editDueDate:addDays(p.toISOString().split('T')[0],-4),
+        shootDate:addDays(p.toISOString().split('T')[0],-8)
+      });
     }
     cur.setDate(cur.getDate()+1);
   }
@@ -714,9 +795,7 @@ function showAddVideoModal(){
     <div class="form-grid">
       <div class="full field"><label>クライアント</label><select id="nv-c">${copts}</select></div>
       <div class="field"><label>動画No.</label><input type="number" id="nv-no" min="1"></div>
-      <div class="field"><label>ステータス</label>
-        <select id="nv-s"><option value="material_submitted">素材提出済</option><option value="editing">編集中</option><option value="submitted_to_client">お客様提出済</option><option value="posted">投稿済</option><option value="delivered">納品完了</option></select>
-      </div>
+      <div class="field"><label>ステータス</label><select id="nv-s"><option value="material_submitted">素材提出済</option><option value="editing">編集中</option><option value="submitted_to_client">お客様提出済</option><option value="posted">投稿済</option><option value="delivered">納品完了</option></select></div>
       <div class="field"><label>編集完了日</label><input type="date" id="nv-e"></div>
       <div class="field"><label>お客様提出日</label><input type="date" id="nv-cs"></div>
       <div class="field"><label>投稿日</label><input type="date" id="nv-p"></div>
@@ -730,8 +809,7 @@ function showAddVideoModal(){
 }
 
 function saveNewVideo(){
-  const clientId=document.getElementById('nv-c').value;
-  const no=parseInt(document.getElementById('nv-no').value);
+  const clientId=document.getElementById('nv-c').value;const no=parseInt(document.getElementById('nv-no').value);
   if(!clientId||!no){alert('クライアントと動画No.を入力してください');return;}
   db.videos.push({id:gid(),clientId,videoNo:no,status:document.getElementById('nv-s').value,editDueDate:document.getElementById('nv-e').value,clientSubmitDate:document.getElementById('nv-cs').value,postDate:document.getElementById('nv-p').value,editorId:document.getElementById('nv-ed').value});
   saveDB();closeModal();navigate('calendar');
@@ -755,9 +833,7 @@ function showAddMemberModal(){
 }
 
 function saveNewMember(){
-  const name=document.getElementById('nm-n').value.trim();
-  const email=document.getElementById('nm-e').value.trim();
-  const pass=document.getElementById('nm-p').value;
+  const name=document.getElementById('nm-n').value.trim();const email=document.getElementById('nm-e').value.trim();const pass=document.getElementById('nm-p').value;
   if(!name||!email||!pass){alert('すべて入力してください');return;}
   if(db.users.find(u=>u.email===email)){alert('このメールアドレスは使用済みです');return;}
   db.users.push({id:gid(),name,email,password:pass,role:document.getElementById('nm-r').value,isActive:true});
@@ -791,9 +867,7 @@ function saveEditMember(id){
   saveDB();closeModal();navigate('members');
 }
 
-function showModal(html){
-  document.getElementById('modal-container').innerHTML=`<div class="modal-overlay" onclick="closeModalOnOverlay(event)">${html}</div>`;
-}
+function showModal(html){document.getElementById('modal-container').innerHTML=`<div class="modal-overlay" onclick="closeModalOnOverlay(event)">${html}</div>`;}
 function closeModal(){document.getElementById('modal-container').innerHTML='';}
 function closeModalOnOverlay(e){if(e.target.classList.contains('modal-overlay'))closeModal();}
 
