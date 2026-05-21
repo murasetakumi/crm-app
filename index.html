@@ -397,6 +397,20 @@ function navigate(page){
   const bn=document.getElementById('bnav-'+page);if(bn)bn.classList.add('active');
   const fns={calendar:renderCalendar,overview:renderOverview,prospects:renderProspects,members:renderMembers};
   if(fns[page])document.getElementById('content').innerHTML=fns[page]();
+  if(page==='calendar'){
+    requestAnimationFrame(()=>{
+      const todayCol=document.querySelector('.today-col');
+      if(todayCol){
+        const row=todayCol.closest('.day-row');
+        if(row){
+          const content=document.getElementById('content');
+          const rowTop=row.offsetTop;
+          const scrollTo=rowTop-(window.innerHeight/2)+(row.clientHeight/2);
+          content.scrollTo({top:Math.max(0,scrollTo),behavior:'auto'});
+        }
+      }
+    });
+  }
 }
 
 /* ====== SCHEDULE GENERATION ====== */
@@ -770,14 +784,39 @@ function renderOverview(){
     const thisMonth=vids.filter(v=>v.postDate&&v.postDate.startsWith(ym));
     const postedCount=thisMonth.filter(v=>v.status==='posted'||v.status==='delivered').length;
     const total=c.monthlyCount||thisMonth.length||0;
-    // Delay: postDate passed and NOT posted/delivered
-    const overdue=vids.filter(v=>v.status!=='posted'&&v.status!=='delivered'&&v.postDate&&daysUntil(v.postDate)<0);
-    const overdueNos=overdue.map(v=>`No.${v.videoNo}`).join(', ');
     const upcoming=vids.filter(v=>v.status!=='posted'&&v.status!=='delivered').sort((a,b)=>(a.postDate||'').localeCompare(b.postDate||''))[0];
     const pct=total>0?Math.round(postedCount/total*100):0;
-    const fillCls=overdue.length>0?'danger':pct>=80?'':'warn';
     const editor=getUser(c.memberIds?.editor);
-    const statusDot=overdue.length>0?'var(--red)':pct===100?'var(--grn)':'var(--amb)';
+
+    // 遅延: お客様提出日を過ぎているのに提出済になっていない
+    const delayVids=vids.filter(v=>
+      v.status!=='posted'&&v.status!=='delivered'&&v.status!=='submitted_to_client'&&
+      v.clientSubmitDate&&daysUntil(v.clientSubmitDate)<0
+    );
+    // 警告: 投稿日を過ぎているのに投稿済・納品完了になっていない
+    const warnVids=vids.filter(v=>
+      v.status!=='posted'&&v.status!=='delivered'&&
+      v.postDate&&daysUntil(v.postDate)<0
+    );
+
+    const hasDelay=delayVids.length>0;
+    const hasWarn=warnVids.length>0;
+    const noVideos=vids.length===0;
+
+    const statusDot=noVideos?'var(--tx3)':hasDelay?'var(--red)':hasWarn?'var(--amb)':pct===100?'var(--grn)':'var(--grn)';
+    const fillCls=hasDelay?'danger':hasWarn?'warn':'';
+
+    let statusHtml='';
+    if(noVideos){
+      statusHtml=`<span style="color:var(--tx2);font-size:12px">未登録</span>`;
+    } else {
+      const parts=[];
+      if(hasDelay)parts.push(`<div style="color:var(--red);font-weight:600;font-size:12px">🔴 ${delayVids.length}本遅延</div><div style="font-size:11px;color:var(--red)">${delayVids.map(v=>`No.${v.videoNo}`).join(', ')}</div>`);
+      if(hasWarn)parts.push(`<div style="color:var(--amb);font-weight:600;font-size:12px">🟡 ${warnVids.length}本未投稿</div><div style="font-size:11px;color:var(--amb)">${warnVids.map(v=>`No.${v.videoNo}`).join(', ')}</div>`);
+      if(!hasDelay&&!hasWarn)parts.push(`<span style="color:var(--grn);font-size:12px">🟢 順調</span>`);
+      statusHtml=parts.join('');
+    }
+
     return`<tr onclick="showClientOverview('${c.id}')" style="cursor:pointer">
       <td>
         <div style="display:flex;align-items:center;gap:8px">
@@ -792,11 +831,7 @@ function renderOverview(){
         <div style="font-size:13px;font-weight:600;text-align:center">${postedCount}/${total}</div>
         <div class="progress-bar" style="margin-top:4px"><div class="progress-fill ${fillCls}" style="width:${pct}%"></div></div>
       </td>
-      <td>
-        ${overdue.length>0
-          ?`<div style="color:var(--red);font-weight:600;font-size:12px">${overdue.length}本遅延</div><div style="font-size:11px;color:var(--red)">${overdueNos}</div>`
-          :`<span style="color:var(--grn);font-size:12px">順調</span>`}
-      </td>
+      <td>${statusHtml}</td>
       <td style="font-size:12px;color:var(--tx2)">${upcoming?fmt(upcoming.postDate):'-'}</td>
       <td style="font-size:12px;color:var(--tx2)">${editor?.name||'-'}</td>
     </tr>`;
