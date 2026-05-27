@@ -501,7 +501,13 @@ function getClient(id){return db.clients.find(c=>c.id===id)||null;}
 function visVids(){if(isAdmin()||isDir())return db.videos;return db.videos.filter(v=>v.editorId===CU.id);}
 function daysUntil(d){if(!d)return null;const t=new Date();t.setHours(0,0,0,0);const x=new Date(d);x.setHours(0,0,0,0);return Math.round((x-t)/86400000);}
 function fmt(d){if(!d)return'-';const dt=new Date(d);return`${dt.getMonth()+1}/${dt.getDate()}(${DAYS[dt.getDay()]})`;}
-function viewDate(v){if(CALVIEW==='edit')return v.editDueDate;if(CALVIEW==='submit')return v.clientSubmitDate;return v.postDate;}
+function viewDate(v){
+  const c=getClient(v.clientId);
+  const editOnly=c&&!c.postingIncluded;
+  if(CALVIEW==='edit')return v.editDueDate;
+  if(CALVIEW==='submit')return editOnly?null:v.clientSubmitDate;
+  return v.postDate;
+}
 
 function doLogin(){
   const em=document.getElementById('login-email').value.trim();
@@ -622,7 +628,7 @@ function renderCalendar(){
       return`<div class="ev-chip ${chipCls}" onclick="showVideoModal('${v.id}')">
         <div class="ev-bar ${barCls}"></div>
         <div class="ev-name">${c?.name||'?'} No.${v.videoNo}</div>
-        <span class="ev-badge ${badgeCls}">${SM[v.status]}</span>
+        <span class="ev-badge ${badgeCls}">${(c&&!c.postingIncluded&&(v.status==='posted'||v.status==='delivered'))?'納品済':SM[v.status]}</span>
       </div>`;
     }).join('');
     dayRows+=`<div class="day-row" id="day-${ds}">
@@ -676,12 +682,13 @@ function showVideoModal(videoId){
     </div>
     <div style="font-size:12px;color:var(--tx2);font-weight:600;margin-bottom:6px">ステータス</div>
     <div style="border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">${optRows}</div>
+    ${(()=>{const editOnly=c&&!c.postingIncluded;return`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;margin-bottom:12px">
       <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📦 素材提出日</div><div style="font-weight:500">${v.postDate?fmt(addDays(v.postDate,-8)):'-'}</div></div>
       <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">✂️ 編集完了日</div><div style="font-weight:500">${fmt(v.editDueDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📤 お客様提出日</div><div style="font-weight:500">${fmt(v.clientSubmitDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📅 投稿日</div><div style="font-weight:500">${fmt(v.postDate)}</div></div>
-    </div>
+      ${editOnly?'':`<div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📤 お客様提出日</div><div style="font-weight:500">${fmt(v.clientSubmitDate)}</div></div>`}
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">${editOnly?'📦 納品日':'📅 投稿日'}</div><div style="font-weight:500">${fmt(v.postDate)}</div></div>
+    </div>`;})()}
     ${links?`<div style="display:flex;gap:6px;margin-bottom:4px">${links}</div>`:''}
     <div class="modal-footer"><button class="btn-ghost" onclick="closeModal()">閉じる</button></div>
   </div>`);
