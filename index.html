@@ -279,7 +279,7 @@ function genSchedule(startDate, postDays, count){
     safety++;
     if(matchesPostDay(cur,postDays,dm)){
       const p=cur.toISOString().split('T')[0];
-      res.push({postDate:p,clientSubmitDate:addDays(p,-2),editDueDate:addDays(p,-4)});
+      res.push({postDate:p,clientSubmitDate:addDays(p,-3),editDueDate:addDays(p,-4)});
     }
     cur.setDate(cur.getDate()+1);
   }
@@ -289,21 +289,19 @@ function genSchedule(startDate, postDays, count){
 // Check if date matches postDays pattern
 function matchesPostDay(date,postDays,dm){
   const dow=date.getDay();
-  // Calculate which Nth occurrence of this weekday in the month
-  // e.g. 第2水曜 = the 2nd Wednesday of the month
   const dayOfMonth=date.getDate();
-  const nthOfWeekday=Math.ceil(dayOfMonth/7); // how many times this weekday has occurred in month so far
+  const weekOfMonth=Math.ceil(dayOfMonth/7); // 1-5
   for(const pd of postDays){
-    // Special patterns: 第N曜 e.g. 第2水, 第4金
+    // Special patterns: 第N曜
     const m=pd.match(/^第(\d)(.+)$/);
     if(m){
       const nth=parseInt(m[1]);
       const dayName=m[2];
       const dayNum=dm[dayName];
       if(dayNum===undefined)continue;
-      if(dow===dayNum&&nthOfWeekday===nth)return true;
+      if(dow===dayNum&&weekOfMonth===nth)return true;
     } else {
-      // Regular day e.g. 水, 金
+      // Regular day
       const dayNum=dm[pd];
       if(dayNum!==undefined&&dow===dayNum)return true;
     }
@@ -399,25 +397,25 @@ const DEFAULT_DATA={
     {id:'v4',clientId:'c2',videoNo:'35',status:'posted',editDueDate:'2026-05-16',clientSubmitDate:'2026-05-18',postDate:'2026-05-20',editorId:'u3'},
     {id:'v5',clientId:'c2',videoNo:'36',status:'submitted_to_client',editDueDate:'2026-05-18',clientSubmitDate:'2026-05-20',postDate:'2026-05-22',editorId:'u3'},
     {id:'v6',clientId:'c2',videoNo:'37',status:'editing',editDueDate:'2026-05-20',clientSubmitDate:'2026-05-22',postDate:'2026-05-27',editorId:'u3'},
-    // スズキ＆アソシエイツ：No.7投稿済（水・金で正しく生成）3ヶ月24本
-    {id:'v13',clientId:'c11',videoNo:'7',status:'posted',editDueDate:'2026-05-16',clientSubmitDate:'2026-05-18',postDate:'2026-05-20',editorId:'u3'},
-    {id:'v13b',clientId:'c11',videoNo:'8',status:'material_submitted',editDueDate:'2026-05-20',clientSubmitDate:'2026-05-22',postDate:'2026-05-22',editorId:'u3'},
-    {id:'v13c',clientId:'c11',videoNo:'9',status:'material_submitted',editDueDate:'2026-05-22',clientSubmitDate:'2026-05-24',postDate:'2026-05-27',editorId:'u3'},
-    {id:'v13d',clientId:'c11',videoNo:'10',status:'material_submitted',editDueDate:'2026-05-25',clientSubmitDate:'2026-05-27',postDate:'2026-05-29',editorId:'u3'},
-    {id:'v13e',clientId:'c11',videoNo:'11',status:'material_submitted',editDueDate:'2026-05-29',clientSubmitDate:'2026-06-01',postDate:'2026-06-03',editorId:'u3'},
-    {id:'v13f',clientId:'c11',videoNo:'12',status:'material_submitted',editDueDate:'2026-06-01',clientSubmitDate:'2026-06-03',postDate:'2026-06-05',editorId:'u3'},
-    {id:'v13g',clientId:'c11',videoNo:'13',status:'material_submitted',editDueDate:'2026-06-05',clientSubmitDate:'2026-06-08',postDate:'2026-06-10',editorId:'u3'},
-    {id:'v13h',clientId:'c11',videoNo:'14',status:'material_submitted',editDueDate:'2026-06-08',clientSubmitDate:'2026-06-10',postDate:'2026-06-12',editorId:'u3'},
-    {id:'v13i',clientId:'c11',videoNo:'15',status:'material_submitted',editDueDate:'2026-06-12',clientSubmitDate:'2026-06-15',postDate:'2026-06-17',editorId:'u3'},
-    {id:'v13j',clientId:'c11',videoNo:'16',status:'material_submitted',editDueDate:'2026-06-15',clientSubmitDate:'2026-06-17',postDate:'2026-06-19',editorId:'u3'},
-    {id:'v13k',clientId:'c11',videoNo:'17',status:'material_submitted',editDueDate:'2026-06-19',clientSubmitDate:'2026-06-22',postDate:'2026-06-24',editorId:'u3'},
-    {id:'v13l',clientId:'c11',videoNo:'18',status:'material_submitted',editDueDate:'2026-06-22',clientSubmitDate:'2026-06-24',postDate:'2026-06-26',editorId:'u3'},
-    {id:'v13m',clientId:'c11',videoNo:'19',status:'material_submitted',editDueDate:'2026-06-26',clientSubmitDate:'2026-06-29',postDate:'2026-07-01',editorId:'u3'},
-    {id:'v13n',clientId:'c11',videoNo:'20',status:'material_submitted',editDueDate:'2026-06-29',clientSubmitDate:'2026-07-01',postDate:'2026-07-03',editorId:'u3'},
-    {id:'v13o',clientId:'c11',videoNo:'21',status:'material_submitted',editDueDate:'2026-07-03',clientSubmitDate:'2026-07-06',postDate:'2026-07-08',editorId:'u3'},
-    {id:'v13p',clientId:'c11',videoNo:'22',status:'material_submitted',editDueDate:'2026-07-06',clientSubmitDate:'2026-07-08',postDate:'2026-07-10',editorId:'u3'},
-    {id:'v13q',clientId:'c11',videoNo:'23',status:'material_submitted',editDueDate:'2026-07-10',clientSubmitDate:'2026-07-13',postDate:'2026-07-15',editorId:'u3'},
-    {id:'v13r',clientId:'c11',videoNo:'24',status:'material_submitted',editDueDate:'2026-07-13',clientSubmitDate:'2026-07-15',postDate:'2026-07-17',editorId:'u3'},
+    // スズキ＆アソシエイツ：No.7投稿済、No.8〜24水・金交互（3ヶ月24本・逆算-3/-4）
+    {id:'v13',clientId:'c11',videoNo:'7',status:'posted',editDueDate:'2026-05-16',clientSubmitDate:'2026-05-17',postDate:'2026-05-20',editorId:'u3'},
+    {id:'v13b',clientId:'c11',videoNo:'8',status:'material_submitted',editDueDate:'2026-05-23',clientSubmitDate:'2026-05-24',postDate:'2026-05-27',editorId:'u3'},
+    {id:'v13c',clientId:'c11',videoNo:'9',status:'material_submitted',editDueDate:'2026-05-25',clientSubmitDate:'2026-05-26',postDate:'2026-05-29',editorId:'u3'},
+    {id:'v13d',clientId:'c11',videoNo:'10',status:'material_submitted',editDueDate:'2026-05-30',clientSubmitDate:'2026-05-31',postDate:'2026-06-03',editorId:'u3'},
+    {id:'v13e',clientId:'c11',videoNo:'11',status:'material_submitted',editDueDate:'2026-06-01',clientSubmitDate:'2026-06-02',postDate:'2026-06-05',editorId:'u3'},
+    {id:'v13f',clientId:'c11',videoNo:'12',status:'material_submitted',editDueDate:'2026-06-06',clientSubmitDate:'2026-06-07',postDate:'2026-06-10',editorId:'u3'},
+    {id:'v13g',clientId:'c11',videoNo:'13',status:'material_submitted',editDueDate:'2026-06-08',clientSubmitDate:'2026-06-09',postDate:'2026-06-12',editorId:'u3'},
+    {id:'v13h',clientId:'c11',videoNo:'14',status:'material_submitted',editDueDate:'2026-06-13',clientSubmitDate:'2026-06-14',postDate:'2026-06-17',editorId:'u3'},
+    {id:'v13i',clientId:'c11',videoNo:'15',status:'material_submitted',editDueDate:'2026-06-15',clientSubmitDate:'2026-06-16',postDate:'2026-06-19',editorId:'u3'},
+    {id:'v13j',clientId:'c11',videoNo:'16',status:'material_submitted',editDueDate:'2026-06-20',clientSubmitDate:'2026-06-21',postDate:'2026-06-24',editorId:'u3'},
+    {id:'v13k',clientId:'c11',videoNo:'17',status:'material_submitted',editDueDate:'2026-06-22',clientSubmitDate:'2026-06-23',postDate:'2026-06-26',editorId:'u3'},
+    {id:'v13l',clientId:'c11',videoNo:'18',status:'material_submitted',editDueDate:'2026-06-27',clientSubmitDate:'2026-06-28',postDate:'2026-07-01',editorId:'u3'},
+    {id:'v13m',clientId:'c11',videoNo:'19',status:'material_submitted',editDueDate:'2026-06-29',clientSubmitDate:'2026-06-30',postDate:'2026-07-03',editorId:'u3'},
+    {id:'v13n',clientId:'c11',videoNo:'20',status:'material_submitted',editDueDate:'2026-07-04',clientSubmitDate:'2026-07-05',postDate:'2026-07-08',editorId:'u3'},
+    {id:'v13o',clientId:'c11',videoNo:'21',status:'material_submitted',editDueDate:'2026-07-06',clientSubmitDate:'2026-07-07',postDate:'2026-07-10',editorId:'u3'},
+    {id:'v13p',clientId:'c11',videoNo:'22',status:'material_submitted',editDueDate:'2026-07-11',clientSubmitDate:'2026-07-12',postDate:'2026-07-15',editorId:'u3'},
+    {id:'v13q',clientId:'c11',videoNo:'23',status:'material_submitted',editDueDate:'2026-07-13',clientSubmitDate:'2026-07-14',postDate:'2026-07-17',editorId:'u3'},
+    {id:'v13r',clientId:'c11',videoNo:'24',status:'material_submitted',editDueDate:'2026-07-18',clientSubmitDate:'2026-07-19',postDate:'2026-07-22',editorId:'u3'},
     // サウナバグ：No.17投稿済、No.18お客様提出済
     {id:'v15',clientId:'c3',videoNo:'17',status:'posted',editDueDate:'2026-05-11',clientSubmitDate:'2026-05-13',postDate:'2026-05-15',editorId:'u7'},
     {id:'v16',clientId:'c3',videoNo:'18',status:'submitted_to_client',editDueDate:'2026-05-16',clientSubmitDate:'2026-05-18',postDate:'2026-05-22',editorId:'u7'},
@@ -640,10 +638,11 @@ function showVideoModal(videoId){
     </div>
     <div style="font-size:12px;color:var(--tx2);font-weight:600;margin-bottom:6px">ステータス</div>
     <div style="border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">${optRows}</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px;margin-bottom:12px">
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">編集完了</div><div style="font-weight:500">${fmt(v.editDueDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">お客様提出</div><div style="font-weight:500">${fmt(v.clientSubmitDate)}</div></div>
-      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">投稿日</div><div style="font-weight:500">${fmt(v.postDate)}</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;margin-bottom:12px">
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📦 素材提出日</div><div style="font-weight:500">${v.postDate?fmt(addDays(v.postDate,-8)):'-'}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">✂️ 編集完了日</div><div style="font-weight:500">${fmt(v.editDueDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📤 お客様提出日</div><div style="font-weight:500">${fmt(v.clientSubmitDate)}</div></div>
+      <div><div style="color:var(--tx2);font-size:11px;margin-bottom:3px">📅 投稿日</div><div style="font-weight:500">${fmt(v.postDate)}</div></div>
     </div>
     ${links?`<div style="display:flex;gap:6px;margin-bottom:4px">${links}</div>`:''}
     <div class="modal-footer"><button class="btn-ghost" onclick="closeModal()">閉じる</button></div>
@@ -672,9 +671,10 @@ function showEditVideoModal(videoId){
 function updateEditPreview(){
   const el=document.getElementById('ev-post');const prev=document.getElementById('ev-preview');
   if(!el||!prev)return;const p=el.value;if(!p){prev.innerHTML='';return;}
-  prev.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了日</div><div style="font-weight:600">${fmt(addDays(p,-4))}</div></div>
-    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出日</div><div style="font-weight:600">${fmt(addDays(p,-2))}</div></div>
+  prev.innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📦 素材提出</div><div style="font-weight:600">${fmt(addDays(p,-8))}</div></div>
+    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了</div><div style="font-weight:600">${fmt(addDays(p,-4))}</div></div>
+    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出</div><div style="font-weight:600">${fmt(addDays(p,-3))}</div></div>
     <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📅 投稿日</div><div style="font-weight:600">${fmt(p)}</div></div>
   </div>`;
 }
@@ -684,7 +684,7 @@ function saveEditVideo(videoId){
   const postDate=document.getElementById('ev-post').value;
   const no=document.getElementById('ev-no').value.trim();
   if(!postDate){alert('投稿日を入力してください');return;}
-  v.postDate=postDate;v.clientSubmitDate=addDays(postDate,-2);v.editDueDate=addDays(postDate,-4);
+  v.postDate=postDate;v.clientSubmitDate=addDays(postDate,-3);v.editDueDate=addDays(postDate,-4);
   if(no)v.videoNo=no;
   const pd=new Date(postDate);CALY=pd.getFullYear();CALM=pd.getMonth();
   saveDB();closeModal();navigate('calendar');
@@ -805,9 +805,10 @@ function setPosting(val,pre){
 function updateSpotPrev(){
   const el=document.getElementById('sp-p');const prev=document.getElementById('sp-prev');
   if(!el||!prev)return;const p=el.value;if(!p){prev.innerHTML='';return;}
-  prev.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了日</div><div style="font-weight:600">${fmt(addDays(p,-4))}</div></div>
-    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出日</div><div style="font-weight:600">${fmt(addDays(p,-2))}</div></div>
+  prev.innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📦 素材提出</div><div style="font-weight:600">${fmt(addDays(p,-8))}</div></div>
+    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">✂️ 編集完了</div><div style="font-weight:600">${fmt(addDays(p,-4))}</div></div>
+    <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📤 お客様提出</div><div style="font-weight:600">${fmt(addDays(p,-3))}</div></div>
     <div><div style="color:var(--tx2);font-size:11px;margin-bottom:2px">📅 投稿日</div><div style="font-weight:600">${fmt(p)}</div></div>
   </div>`;
 }
@@ -844,7 +845,7 @@ function saveSpot(){
   const c=getClient(clientId);
   if(c){c.planType='spot';c.platforms=window._selPlat||[];c.postingIncluded=window._posting!==false;}
   db.videos.push({id:gid(),clientId,videoNo:no,status:'material_submitted',
-    editDueDate:addDays(postDate,-4),clientSubmitDate:addDays(postDate,-2),postDate,
+    editDueDate:addDays(postDate,-4),clientSubmitDate:addDays(postDate,-3),postDate,
     editorId:document.getElementById('sp-ed').value});
   const pd=new Date(postDate);CALY=pd.getFullYear();CALM=pd.getMonth();
   saveDB();closeModal();navigate('calendar');
@@ -905,7 +906,9 @@ function renderOverview(){
       <div class="ov-bottom">
         <div class="ov-count">${postedCount}/${total}本</div>
         <div class="progress-bar"><div class="progress-fill ${fillCls}" style="width:${pct}%"></div></div>
-        ${totalContract?`<div class="contract-info">残り<strong>${Math.max(0,remaining)}本</strong>（No.${postedTotal+1}〜${totalContract}）· ${endMonth||''}終了</div>`:''}
+        ${totalContract
+          ?`<div class="contract-info"><strong>No.1〜No.${totalContract}</strong>（${c.contractMonths}ヶ月×${c.monthlyCount}本）· 残り${Math.max(0,remaining)}本 · ${endMonth||''}終了</div>`
+          :`<div style="margin-top:4px;padding:5px 8px;background:var(--redbg);border:1px solid var(--redbr);border-radius:var(--r2);font-size:11px;font-weight:600;color:var(--red)">⚠️ 契約期間未設定 — 管理画面で設定してください</div>`}
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--tx2)">
         <span>次の投稿: ${upcoming?fmt(upcoming.postDate):'-'}</span>
